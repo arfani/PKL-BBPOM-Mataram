@@ -8,31 +8,26 @@ if (isset($_SESSION['username'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
+    $nama = $_POST['nama'];
     $email = $_POST['email'];
     $no_hp = $_POST['no_hp'];
     $password = $_POST['password'];
-    $cpassword = $_POST['cpassword'];
     $role = $_POST['role'];
 
-    if ($password == $cpassword) {
-        $sql = "SELECT * FROM $role WHERE email='$email' AND username='$username'";
-        $result = mysqli_query($conn, $sql);
-        if (!$result->num_rows > 0) {
-            $sql = "INSERT INTO $role (username, email, no_hp, password)
+    $sql = "SELECT * FROM $role WHERE email='$email' OR no_hp='$no_hp'";
+    $result = mysqli_query($conn, $sql);
+    if (!$result->num_rows > 0) {
+        $sql = "INSERT INTO $role (nama, email, no_hp, password)
                     VALUES ('$username', '$email', '$no_hp', '$password')";
-            $result = mysqli_query($conn, $sql);
-            if ($result) {
-                echo "<script>alert('Wow! Pendaftaran Berhasil.')</script>";
-                echo "<script>window.location.href = 'login.php';</script>";
-            } else {
-                echo "<script>alert('Woops! Ada Kesalahan.')</script>";
-            }
+        $result = mysqli_query($conn, $sql);
+        if ($result) {
+            echo "<script>alert('Wow! Pendaftaran Berhasil.')</script>";
+            echo "<script>window.location.href = 'login.php';</script>";
         } else {
-            echo "<script>alert('Woops! Email Sudah Terdaftar.')</script>";
+            echo "<script>alert('Woops! Ada Kesalahan.')</script>";
         }
     } else {
-        echo "<script>alert('Password Tidak Sama.')</script>";
+        echo "<script>alert('Woops! Email Sudah Terdaftar.')</script>";
     }
 }
 ?>
@@ -53,7 +48,7 @@ if (isset($_POST['submit'])) {
         <form action="" method="POST" class="login-email">
             <p class="login-text" style="font-size: 2rem; font-weight: 800;">Pendaftaran Akun</p>
             <div class="input-group">
-                <input type="text" placeholder="Username" name="username" value="<?php echo $username; ?>" required>
+                <input type="text" placeholder="Nama Lengkap" name="nama" value="<?php echo $nama; ?>" required>
             </div>
             <div class="input-group">
                 <input type="email" placeholder="Email" name="email" value="<?php echo $email; ?>" required>
@@ -63,9 +58,6 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="input-group">
                 <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required>
-            </div>
-            <div class="input-group">
-                <input type="password" placeholder="Confirm Password" name="cpassword" value="<?php echo $_POST['cpassword']; ?>" required>
             </div>
             <div class="input-group select-container">
                 <select name="role" required>

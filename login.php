@@ -6,7 +6,7 @@ error_reporting(0);
 
 
 if (isset($_POST['submit'])) {
-    $input = $_POST['email_username'];
+    $input = $_POST['email_nohp'];
     $password = ($_POST['password']);
     $role = $_POST['role'];
     if (strpos($input, '@') !== false) {
@@ -15,21 +15,21 @@ if (isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         if ($result->num_rows > 0) {
             $row = mysqli_fetch_assoc($result);
-            $_SESSION['username'] = $row['username'];
+            $_SESSION['email'] = $row['email'];
             header("Location: $role.php");
         } else {
             echo "<script>alert('Woops! Email Atau Password anda Salah.')</script>";
         }
     } else {
-        $user = $input;
-        $sql = "SELECT * FROM $role WHERE username='$user' AND password='$password'";
+        $nohp = $input;
+        $sql = "SELECT * FROM $role WHERE no_hp='$nohp' AND password='$password'";
         $result = mysqli_query($conn, $sql);
         if ($result->num_rows > 0) {
             $row = mysqli_fetch_assoc($result);
-            $_SESSION['username'] = $row['username'];
+            $_SESSION['nohp'] = $row['no_hp'];
             header("Location: $role.php");
         } else {
-            echo "<script>alert('Woops! Email Atau Password anda Salah.')</script>";
+            echo "<script>alert('Woops! No Hp Atau Password anda Salah.')</script>";
         }
     }
 }
@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="Asset/CSS/style.css">
     <!-- logo web -->
@@ -49,19 +50,19 @@ if (isset($_POST['submit'])) {
     <title>PKL-BBPOM-MATARAM</title>
 </head>
 
-<body style="background-color:#FFFFFF">
+<body>
     <div class="container">
         <form action="" method="POST" class="login-email">
             <p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
             <div class="input-group">
-                <input type="text" placeholder="Email / Username" name="email_username" value="<?php echo $email; ?>" required>
+                <input type="text" placeholder="Email / No HP" name="email_nohp" value="<?php echo $email; ?>" required>
             </div>
             <div class="input-group">
                 <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required>
             </div>
             <div class="input-group select-container">
                 <select name="role" required>
-                    <option value="" disabled selected>Pilih Jenis Pendaftaran</option>
+                    <option value="" disabled selected>Pilih Tipe Login</option>
                     <option value="pkl">Pendaftar PKL</option>
                     <option value="tamu">Pengunjung</option>
                     <option value="narasumber">Narasumber</option>
