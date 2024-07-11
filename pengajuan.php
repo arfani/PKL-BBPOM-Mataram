@@ -1,11 +1,16 @@
 <?php
 include 'koneksi.php';
 session_start();
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+    $sql = "SELECT * FROM pkl where email ='$email'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $nama = $row['nama'];
+    $no_hp = $row['no_hp'];
+}
 
 if (isset($_POST['kirim'])) {
-    $name = $_POST['name'];
-    $email = $_SESSION['email'];
-    $phone = $_POST['phone'];
     $university = $_POST['university'];
     $department = $_POST['department'];
     $posisi = implode(', ', $_POST['posisi']);
@@ -15,9 +20,11 @@ if (isset($_POST['kirim'])) {
     $proposal = $_FILES['proposal']['name'];
     $sumber_proposal = $_FILES['proposal']['tmp_name'];
     $folder = './Asset/Document/';
+    $surat_path = $folder . $surat;
+    $proposal_path = $folder . $proposal;
     move_uploaded_file($sumber_surat, $folder . $surat);
     move_uploaded_file($sumber_proposal, $folder . $proposal);
-    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal) VALUES ('$name', '$email', '$phone', '$university', '$department', '$posisi', '$periode', '$surat', '$proposal')");
+    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal) VALUES ('$nama', '$email', '$no_hp', '$university', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path')");
     if ($insert) {
         header("Location: pkl.php");
         exit();
@@ -66,20 +73,20 @@ if (isset($_POST['kirim'])) {
 <body>
 
     <div class="container">
-        <div class="form-container">
+        <div class="formn-container">
             <h2 class="form-header">Form Pengajuan PKL BPOM</h2>
             <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama Lengkap</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama lengkap Anda" required>
+                    <input type="text" class="form-control" id="name" name="name" value="<?php echo $nama ?>" placeholder="<?php echo $nama ?>" disabled>
                 </div>
-                <div class="mb-3">
+                <div class=" mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['email']; ?>" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="<?php echo $email; ?>" value="<?php echo $email; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Nomor Telepon</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Masukkan nomor telepon Anda" required>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="<?php echo $no_hp; ?>" value="<?php echo $no_hp; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="university" class="form-label">Universitas</label>

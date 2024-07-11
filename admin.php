@@ -8,7 +8,8 @@ include 'koneksi.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/admin.css">
     <title>Dashboard Admin</title>
 </head>
@@ -22,35 +23,63 @@ include 'koneksi.php';
                 <tr>
                     <th scope="col" rowspan="2">No</th>
                     <th scope="col" rowspan="2">Nama</th>
+                    <th scope="col" rowspan="2">Email</th>
                     <th scope="col" rowspan="2">No HP</th>
-                    <th scope="col" rowspan="2">Posisi dan Tempat Penempatan yang Dipilih</th>
-                    <th scope="col" colspan="3">Persyaratan</th>
+                    <th scope="col" rowspan="2">Universitas</th>
+                    <th scope="col" rowspan="2">Jurusan</th>
+                    <th scope="col" rowspan="2">Posisi</th>
+                    <th scope="col" rowspan="2">Periode</th>
+                    <th scope="col" colspan="2">Persyaratan</th>
+                    <th scope="col" rowspan="2">Status</th>
                     <th scope="col" rowspan="2">Surat Balasan</th>
                 </tr>
                 <tr>
-                    <th scope="col">Data 1</th>
-                    <th scope="col">Data 2</th>
-                    <th scope="col">Data 3</th>
+                    <th scope="col">Surat Pengajuan</th>
+                    <th scope="col">Proposal</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM pkl";
-                $result = mysqli_query($conn, $sql);
-                $sql = "SELECT * FROM pkl";
+                $sql = "SELECT * FROM pengajuan_pkl";
                 $result = mysqli_query($conn, $sql);
                 $no = 1;
 
                 while ($row = mysqli_fetch_assoc($result)) {
+                    if ($row['surat'] != null && $row['proposal'] != null) {
+                        $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary' download>Download Surat</a>" : "Belum upload";
+                        $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary' download>Download Proposal</a>" : "Belum upload";
+                        $status = $row['status'] ? $row['status'] : "
+                        <form action='update_status.php' method='post'>
+                            <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
+                            <button type='submit' name='status' value='Diterima' class='btn btn-success'>Terima</button>
+                            <button type='submit' name='status' value='Ditolak' class='btn btn-danger'>Tolak</button>
+                        </form>";
+
+                        $suratBalasan = "";
+                        if ($row['status'] == 'Diterima') {
+                            $suratBalasan = "
+                            <form action='upload_surat_balasan.php' method='post' enctype='multipart/form-data'>
+                                <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
+                                <input type='file' name='surat_balasan' class='form-control' required>
+                                <button type='submit' class='btn btn-primary mt-2'>Upload Surat Balasan</button>
+                            </form>";
+                        } elseif ($row['status'] == 'Ditolak') {
+                            $suratBalasan = "Maaf, Anda tidak diterima.";
+                        }
+                    }
                     echo "<tr>";
                     echo "<th scope='row'>{$no}</th>";
                     echo "<td>{$row['nama']}</td>";
-                    echo "<td>{$row['no_hp']}</td>";
-                    echo "<td>{$row['posisi_tempat']}</td>";
-                    echo "<td>{$row['data1']}</td>";
-                    echo "<td>{$row['data2']}</td>";
-                    echo "<td>{$row['data3']}</td>";
-                    echo "<td>{$row['surat_balasan']}</td>";
+                    echo "<td>{$row['email']}</td>";
+                    echo "<td>{$row['phone']}</td>";
+                    echo "<td>{$row['university']}</td>";
+                    echo "<td>{$row['department']}</td>";
+                    echo "<td>{$row['posisi']}</td>";
+                    echo "<td>{$row['periode']}</td>";
+                    echo "<td>{$surat}</td>";
+                    echo "<td>{$proposal}</td>";
+                    echo "<td>{$status}</td>";
+                    echo "<td>{$suratBalasan}</td>";
                     echo "</tr>";
                     $no++;
                 }
@@ -196,7 +225,8 @@ include 'koneksi.php';
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 </body>
 
