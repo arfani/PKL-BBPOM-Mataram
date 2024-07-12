@@ -14,5 +14,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     mysqli_close($conn);
-    header('Location: admin.php');
+    header('Location: admin_pkl.php');
 }
