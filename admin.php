@@ -8,226 +8,71 @@ include 'koneksi.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="Asset/CSS/admin.css">
-    <title>Dashboard Admin</title>
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="Asset/CSS/custom2.css">
 </head>
 
 <body>
-    <h1>Tampilan Admin</h1>
-
-    <div class="container mt-5">
-        <table class="table table-bordered table-striped table-hover text-center">
-            <thead class="table-dark" style="vertical-align: middle;">
-                <tr>
-                    <th scope="col" rowspan="2">No</th>
-                    <th scope="col" rowspan="2">Nama</th>
-                    <th scope="col" rowspan="2">Email</th>
-                    <th scope="col" rowspan="2">No HP</th>
-                    <th scope="col" rowspan="2">Universitas</th>
-                    <th scope="col" rowspan="2">Jurusan</th>
-                    <th scope="col" rowspan="2">Posisi</th>
-                    <th scope="col" rowspan="2">Periode</th>
-                    <th scope="col" colspan="2">Persyaratan</th>
-                    <th scope="col" rowspan="2">Status</th>
-                    <th scope="col" rowspan="2">Surat Balasan</th>
-                </tr>
-                <tr>
-                    <th scope="col">Surat Pengajuan</th>
-                    <th scope="col">Proposal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT * FROM pengajuan_pkl";
-                $result = mysqli_query($conn, $sql);
-                $no = 1;
-
-                while ($row = mysqli_fetch_assoc($result)) {
-                    if ($row['surat'] != null && $row['proposal'] != null) {
-                        $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary' download>Download Surat</a>" : "Belum upload";
-                        $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary' download>Download Proposal</a>" : "Belum upload";
-                        $status = $row['status'] ? $row['status'] : "
-                        <form action='update_status.php' method='post'>
-                            <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
-                            <button type='submit' name='status' value='Diterima' class='btn btn-success'>Terima</button>
-                            <button type='submit' name='status' value='Ditolak' class='btn btn-danger'>Tolak</button>
-                        </form>";
-
-                        $suratBalasan = "";
-                        if ($row['status'] == 'Diterima') {
-                            $suratBalasan = "
-                            <form action='upload_surat_balasan.php' method='post' enctype='multipart/form-data'>
-                                <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
-                                <input type='file' name='surat_balasan' class='form-control' required>
-                                <button type='submit' class='btn btn-primary mt-2'>Upload Surat Balasan</button>
-                            </form>";
-                        } elseif ($row['status'] == 'Ditolak') {
-                            $suratBalasan = "Maaf, Anda tidak diterima.";
-                        }
-                    }
-                    echo "<tr>";
-                    echo "<th scope='row'>{$no}</th>";
-                    echo "<td>{$row['nama']}</td>";
-                    echo "<td>{$row['email']}</td>";
-                    echo "<td>{$row['phone']}</td>";
-                    echo "<td>{$row['university']}</td>";
-                    echo "<td>{$row['department']}</td>";
-                    echo "<td>{$row['posisi']}</td>";
-                    echo "<td>{$row['periode']}</td>";
-                    echo "<td>{$surat}</td>";
-                    echo "<td>{$proposal}</td>";
-                    echo "<td>{$status}</td>";
-                    echo "<td>{$suratBalasan}</td>";
-                    echo "</tr>";
-                    $no++;
-                }
-                ?>
-
-            </tbody>
-        </table>
-    </div>
-
-    <div class="container mt-5">
-        <div class="text-center">
-            <h2 class="fw-bold">Data PKL Realtime</h2>
-        </div>
-        <div class="d-flex justify-content-center mt-4 flex-wrap">
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/happy.png" alt="Icon Selesai">
-                    </div>
-                    <h3 class="text-primary">21</h3>
-                    <p class="text-muted">PKL Selesai</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/FFA500/report-card.png" alt="Icon Sedang PKL">
-                    </div>
-                    <h3 class="text-primary">5</h3>
-                    <p class="text-muted">Sedang PKL</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/32CD32/customer-support.png" alt="Icon Batal">
-                    </div>
-                    <h3 class="text-primary">3</h3>
-                    <p class="text-muted">Batal</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/DC143C/conference.png" alt="Icon Lowongan">
-                    </div>
-                    <h3 class="text-primary">4</h3>
-                    <p class="text-muted">Lowongan</p>
-                </div>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px;">
+        <a class=" navbar-brand mx-3 my-1" href="#">BBPOM MATARAM</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="logout.php">Sign out</a>
             </div>
         </div>
-    </div>
+    </header>
 
-    buat tabel disini
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="admin.php">
+                                <span data-feather="home"></span>
+                                Overview
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin_pkl.php">
+                                <span data-feather="file"></span>
+                                PKL
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin_tamu.php">
+                                <span data-feather="shopping-cart"></span>
+                                Pengunjung
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin_narasumber.php">
+                                <span data-feather="users"></span>
+                                Narasumber
+                            </a>
+                        </li>
+                    </ul>
 
-    <div class="container mt-5">
-        <div class="text-center">
-            <h2 class="fw-bold">Data Pengunjung Realtime</h2>
+                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+
+                    </main>
+                </div>
         </div>
-        <div class="d-flex justify-content-center mt-4 flex-wrap">
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/happy.png" alt="Icon Selesai">
-                    </div>
-                    <h3 class="text-primary">21</h3>
-                    <p class="text-muted">PKL Selesai</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/FFA500/report-card.png" alt="Icon Sedang PKL">
-                    </div>
-                    <h3 class="text-primary">5</h3>
-                    <p class="text-muted">Sedang PKL</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/32CD32/customer-support.png" alt="Icon Batal">
-                    </div>
-                    <h3 class="text-primary">3</h3>
-                    <p class="text-muted">Batal</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/DC143C/conference.png" alt="Icon Lowongan">
-                    </div>
-                    <h3 class="text-primary">4</h3>
-                    <p class="text-muted">Lowongan</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    buat tabel disini
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="container mt-5">
-        <div class="text-center">
-            <h2 class="fw-bold">Data Narasumber Realtime</h2>
-        </div>
-        <div class="d-flex justify-content-center mt-4 flex-wrap">
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/000000/happy.png" alt="Icon Selesai">
-                    </div>
-                    <h3 class="text-primary">21</h3>
-                    <p class="text-muted">PKL Selesai</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/FFA500/report-card.png" alt="Icon Sedang PKL">
-                    </div>
-                    <h3 class="text-primary">5</h3>
-                    <p class="text-muted">Sedang PKL</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/32CD32/customer-support.png" alt="Icon Batal">
-                    </div>
-                    <h3 class="text-primary">3</h3>
-                    <p class="text-muted">Batal</p>
-                </div>
-            </div>
-            <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded mx-2">
-                <div class="card-body d-flex flex-column align-items-center">
-                    <div class="icon mb-2">
-                        <img src="https://img.icons8.com/ios-filled/50/DC143C/conference.png" alt="Icon Lowongan">
-                    </div>
-                    <h3 class="text-primary">4</h3>
-                    <p class="text-muted">Lowongan</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+        <script src="script.js"></script>
 </body>
 
 </html>

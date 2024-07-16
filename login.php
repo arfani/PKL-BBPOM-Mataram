@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         if ($result->num_rows > 0) {
             $row = mysqli_fetch_assoc($result);
-            $_SESSION['email'] = $row['email'];
+            $_SESSION['id'] = $row['id'];
             header("Location: $role.php");
         } else {
             echo "<script>alert('Woops! Email Atau Password anda Salah.')</script>";
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
         $result = mysqli_query($conn, $sql);
         if ($result->num_rows > 0) {
             $row = mysqli_fetch_assoc($result);
-            $_SESSION['nohp'] = $row['no_hp'];
+            $_SESSION['id'] = $row['id'];
             header("Location: $role.php");
         } else {
             echo "<script>alert('Woops! No Hp Atau Password anda Salah.')</script>";

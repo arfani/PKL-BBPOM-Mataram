@@ -1,20 +1,25 @@
 <?php
 include 'koneksi.php';
 session_start();
-if (isset($_SESSION['email'])) {
-    $email = $_SESSION['email'];
-    $sql = "SELECT * FROM pkl where email ='$email'";
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    $sql = "SELECT * FROM pkl where id ='$id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
+    $email = $row['email'];
     $nama = $row['nama'];
     $no_hp = $row['no_hp'];
+} else {
+    $email = "";
+    $nama = "";
+    $no_hp = "";
 }
 
 if (isset($_POST['kirim'])) {
     $university = $_POST['university'];
     $department = $_POST['department'];
     $posisi = implode(', ', $_POST['posisi']);
-    $periode = $_POST['periode'] . ' ' . $_POST['satuan'];
+    $periode = $_POST['periode1'] . ' - ' . $_POST['periode2'];
     $surat = $_FILES['surat']['name'];
     $sumber_surat = $_FILES['surat']['tmp_name'];
     $proposal = $_FILES['proposal']['name'];
@@ -32,8 +37,6 @@ if (isset($_POST['kirim'])) {
         echo "Gagal memasukkan data, silakan cek kembali.";
     }
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,10 +45,11 @@ if (isset($_POST['kirim'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Pengajuan PKL BPOM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .form-container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 50px auto;
             padding: 20px;
             border: 1px solid #dee2e6;
@@ -72,21 +76,85 @@ if (isset($_POST['kirim'])) {
 
 <body>
 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px; margin-right: 10px">
+                <b>BBPOM MATARAM</b>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="profileForm" action="save_profile.php" method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="profileName" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="profileName" name="profileName" value="<?php echo $nama; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="profileEmail" name="profileEmail" value="<?php echo $email; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profilePhone" class="form-label">Nomor Telepon</label>
+                            <input type="tel" class="form-control" id="profilePhone" name="profilePhone" value="<?php echo $no_hp; ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-around">
+                        <button type="button" class="btn btn-danger"><a href="logout.php" style="text-decoration: none; color: white;">Logout</a></button>
+                        <input type="submit" class="btn btn-primary" value="Save">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-danger mt-4 ms-4" style="box-shadow: 0 3px 3px black;"><a href="pkl.php" style="color:white; text-decoration: none;">Kembali</a></button>
     <div class="container">
-        <div class="formn-container">
+        <div class="form-container">
             <h2 class="form-header">Form Pengajuan PKL BPOM</h2>
             <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama Lengkap</label>
                     <input type="text" class="form-control" id="name" name="name" value="<?php echo $nama ?>" placeholder="<?php echo $nama ?>" disabled>
+                    <span class="text-muted"><i class="fas fa-circle-info"></i>
+                        <small class="ms-1">ubah data di profile</small>
+                    </span>
                 </div>
-                <div class=" mb-3">
+                <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="<?php echo $email; ?>" value="<?php echo $email; ?>" disabled>
+                    <span class="text-muted"><i class="fas fa-circle-info"></i>
+                        <small class="ms-1">ubah data di profile</small>
+                    </span>
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Nomor Telepon</label>
                     <input type="tel" class="form-control" id="phone" name="phone" placeholder="<?php echo $no_hp; ?>" value="<?php echo $no_hp; ?>" disabled>
+                    <span class="text-muted"><i class="fas fa-circle-info"></i>
+                        <small class="ms-1">ubah data di profile</small>
+                    </span>
                 </div>
                 <div class="mb-3">
                     <label for="university" class="form-label">Universitas</label>
@@ -122,12 +190,9 @@ if (isset($_POST['kirim'])) {
                 <div class="mb-3">
                     <label for="periode" class="form-label">Rencana Priode PKL</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" id="periode" name="periode" placeholder="Masukkan periode" required>
-                        <select name="satuan" id="satuan" class="form-control" required>
-                            <option value="Minggu">Mingguan</option>
-                            <option value="Bulan">Bulanan</option>
-                            <option value="Tahun">Tahunan</option>
-                        </select>
+                        <input type="date" class="form-control me-2" id="periode1" name="periode1" required>
+                        <label for="periode" class="form-label"> - </label>
+                        <input type="date" class="form-control ms-2" id="periode2" name="periode2" required>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -139,8 +204,6 @@ if (isset($_POST['kirim'])) {
                     <input class="form-control" type="file" id="proposal" name="proposal" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100" name="kirim">Kirim Pengajuan</button>
-
-
             </form>
         </div>
     </div>
