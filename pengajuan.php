@@ -136,59 +136,79 @@ if (isset($_POST['kirim'])) {
             <h2 class="form-header">Form Pengajuan PKL BPOM</h2>
             <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nama Lengkap</label>
+                    <label for="name" class="form-label">Nama Lengkap :</label>
                     <input type="text" class="form-control" id="name" name="name" value="<?php echo $nama ?>" placeholder="<?php echo $nama ?>" disabled>
                     <span class="text-muted"><i class="fas fa-circle-info"></i>
                         <small class="ms-1">ubah data di profile</small>
                     </span>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label">Email :</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="<?php echo $email; ?>" value="<?php echo $email; ?>" disabled>
                     <span class="text-muted"><i class="fas fa-circle-info"></i>
                         <small class="ms-1">ubah data di profile</small>
                     </span>
                 </div>
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Nomor Telepon</label>
+                    <label for="phone" class="form-label">Nomor Telepon :</label>
                     <input type="tel" class="form-control" id="phone" name="phone" placeholder="<?php echo $no_hp; ?>" value="<?php echo $no_hp; ?>" disabled>
                     <span class="text-muted"><i class="fas fa-circle-info"></i>
                         <small class="ms-1">ubah data di profile</small>
                     </span>
                 </div>
                 <div class="mb-3">
-                    <label for="university" class="form-label">Universitas</label>
+                    <label for="university" class="form-label">Universitas :</label>
                     <input type="text" class="form-control" id="university" name="university" placeholder="Masukkan nama universitas Anda" required>
                 </div>
                 <div class="mb-3">
-                    <label for="department" class="form-label">Jurusan</label>
+                    <label for="department" class="form-label">Jurusan :</label>
                     <input type="text" class="form-control" id="department" name="department" placeholder="Masukkan jurusan Anda" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Posisi Penempatan : </label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia Obat" id="kimiaObat">
-                        <label class="form-check-label" for="kimiaObat">Kimia Obat</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia Kosmetik" id="kimiaKosmetik">
+                    <?php
+                    $sql2 = "SELECT * FROM penempatan_pkl";
+                    $result2 = mysqli_query($conn, $sql2);
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                    ?>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="posisi[]" value="<?php echo $row2['posisi']; ?>" id="<?php echo $row2['posisi']; ?>">
+                            <label class="form-check-label" for="<?php echo $row2['posisi']; ?>">
+                                <span style="font-weight: 600;"><?php echo $row2['posisi']; ?></span>
+                                <span class="text-muted ms-2" style="font-size: 0.9em;">(kuota tersedia:
+                                    <?php echo $row2['kuota']; ?> orang)</span>
+                            </label>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+
+
+
+                    <!-- <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia Kosmetik"
+                            id="kimiaKosmetik">
                         <label class="form-check-label" for="kimiaKosmetik">Kimia Kosmetik</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia OTSK" id="kimiaOTSK">
+                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia OTSK"
+                            id="kimiaOTSK">
                         <label class="form-check-label" for="kimiaOTSK">Kimia OTSK</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia Pangan" id="kimiaPangan">
+                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia Pangan"
+                            id="kimiaPangan">
                         <label class="form-check-label" for="kimiaPangan">Kimia Pangan</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Mikrobiologi" id="mikrobiologi">
+                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Mikrobiologi"
+                            id="mikrobiologi">
                         <label class="form-check-label" for="mikrobiologi">Mikrobiologi</label>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="mb-3">
-                    <label for="periode" class="form-label">Rencana Priode PKL</label>
+                    <label for="periode" class="form-label">Rencana Priode PKL :</label>
                     <div class="input-group">
                         <input type="date" class="form-control me-2" id="periode1" name="periode1" required>
                         <label for="periode" class="form-label"> - </label>
@@ -196,11 +216,11 @@ if (isset($_POST['kirim'])) {
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="surat" class="form-label">Upload Surat Pengajuan Dari Kampus</label>
+                    <label for="surat" class="form-label">Upload Surat Pengajuan Dari Kampus :</label>
                     <input class="form-control" type="file" id="surat" name="surat" required>
                 </div>
                 <div class="mb-3">
-                    <label for="proposal" class="form-label">Upload Proposal</label>
+                    <label for="proposal" class="form-label">Upload Proposal :</label>
                     <input class="form-control" type="file" id="proposal" name="proposal" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100" name="kirim">Kirim Pengajuan</button>

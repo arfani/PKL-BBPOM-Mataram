@@ -1,7 +1,3 @@
-<?php
-include 'koneksi.php';
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,17 +7,21 @@ include 'koneksi.php';
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/custom2.css">
+
 </head>
 
 <body>
+
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px;">
-        <a class=" navbar-brand mx-3 my-1" href="#">BBPOM MATARAM</a>
+        <a class="navbar-brand" href="#">
+            <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px; margin-right: 10px">
+            BBPOM MATARAM
+        </a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <div class="navbar-nav">
+        <input class="form-control form-control-dark w-100 order-1" type="text" placeholder="Search" aria-label="Search">
+        <div class="navbar-nav order-3">
             <div class="nav-item text-nowrap">
                 <a class="nav-link px-3" href="logout.php">Sign out</a>
             </div>
@@ -30,7 +30,7 @@ include 'koneksi.php';
 
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -58,21 +58,67 @@ include 'koneksi.php';
                             </a>
                         </li>
                     </ul>
-
-                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-
-                    </main>
                 </div>
+            </div>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="container mt-5">
+                    <div class="text-center">
+                        <h3 class="fw-bold">Data Penempatan PKL</h3>
+                    </div>
+                    <div class="d-flex justify-content-start mb-3">
+                        <a href="tambah.php" class="btn btn-success">Tambah Data</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover text-center">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Posisi & Penempatan</th>
+                                    <th>Deskripsi</th>
+                                    <th>Kualifikasi Jurusan</th>
+                                    <th>Kuota</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- PHP loop to fetch data -->
+                                <?php
+                                include 'koneksi.php';
+                                $sql2 = "SELECT * FROM penempatan_pkl";
+                                $result2 = mysqli_query($conn, $sql2);
+                                $no = 1;
+                                while ($row2 = mysqli_fetch_assoc($result2)) {
+                                    echo "<tr>";
+                                    echo "<td>{$no}</td>";
+                                    echo "<td>{$row2['posisi']}</td>";
+                                    echo "<td>{$row2['deskripsi']}</td>";
+                                    echo "<td>{$row2['jurusan']}</td>";
+                                    echo "<td>{$row2['kuota']}</td>";
+                                    echo "<td>
+                                        <form action='edit.php' method='post' style='display:inline-block;'>
+                                            <input type='hidden' name='id' value='{$row2['id']}'>
+                                            <button type='submit' name='action' value='edit' class='btn btn-warning btn-sm'>Edit</button>
+                                        </form>
+                                        <form action='actions.php' method='post' style='display:inline-block;'>
+                                            <input type='hidden' name='id' value='{$row2['id']}'>
+                                            <button type='submit' name='action' value='delete' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Hapus</button>
+                                        </form>
+                                    </td>";
+                                    echo "</tr>";
+                                    $no++;
+                                }
+                                $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
         </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-        <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

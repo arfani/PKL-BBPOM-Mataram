@@ -23,8 +23,7 @@ $no = 1;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/custom2.css">
 </head>
 
@@ -32,13 +31,10 @@ $no = 1;
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px;">
         <a class="navbar-brand mx-3 my-1" href="#">BBPOM MATARAM</a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-100" id="searchInput" type="text" placeholder="Search"
-            aria-label="Search" value="<?php echo htmlspecialchars($search); ?>">
+        <input class="form-control form-control-dark w-100" id="searchInput" type="text" placeholder="Search" aria-label="Search" value="<?php echo htmlspecialchars($search); ?>">
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
                 <a class="nav-link px-3" href="logout.php">Sign out</a>
@@ -81,7 +77,10 @@ $no = 1;
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-                <h3 class="mb-2">Daftar Nama Pendaftar PKL</h3>
+
+                <div class="text-center">
+                    <h3 class="fw-bold">Data Pendaftar PKL</h3>
+                </div>
                 <div class="container table-container mt-2">
                     <table class="table table-bordered table-striped table-hover text-center">
                         <thead class="table-dark" style="vertical-align: middle;">
@@ -152,31 +151,29 @@ $no = 1;
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXlK9jz0nEG/q1QAWJusZyW9L73L68cHwtMDtE3Ez+k8jLDutoxLSjiFo4La" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlK9jz0nEG/q1QAWJusZyW9L73L68cHwtMDtE3Ez+k8jLDutoxLSjiFo4La" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhG81vGOdnpG2z7mr6Lc5I6pR9lkv5IDZw4iDw0FKhp9K1MRf0xqY2yRgP/l" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhG81vGOdnpG2z7mr6Lc5I6pR9lkv5IDZw4iDw0FKhp9K1MRf0xqY2yRgP/l" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    $(document).ready(function() {
-        // Fungsi untuk melakukan pencarian tanpa reload halaman
-        $('#searchInput').on('input', function() {
-            var search = $(this).val().toLowerCase().trim();
+        $(document).ready(function() {
 
-            $.ajax({
-                url: 'search_pkl.php', // Ganti dengan file PHP yang menangani pencarian
-                type: 'GET',
-                data: {
-                    search: search
-                },
-                success: function(response) {
-                    $('#tableBody').html(response);
-                }
+            $('#searchInput').on('input', function() {
+                var search = $(this).val().toLowerCase().trim();
+
+                $.ajax({
+                    url: 'search_pkl.php',
+                    type: 'GET',
+                    data: {
+                        search: search
+                    },
+                    success: function(response) {
+                        $('#tableBody').html(response);
+                    }
+                });
             });
         });
-    });
     </script>
 </body>
 

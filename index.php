@@ -36,7 +36,7 @@ if (isset($_SESSION['id'])) {
                 <div class="col-md-6">
                     <h1 class="hero-title">Selamat datang di Portal Sistem Informasi Pengajuan PKL</h1>
                     <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
-                    <a href="pengajuan.php" class="btn btn-warning btn-cta">Ajukan ➔</a>
+                    <a href="login.php" class="btn btn-warning btn-cta">Mulai ➔</a>
                 </div>
                 <div class="col-md-6 text-center">
                     <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">

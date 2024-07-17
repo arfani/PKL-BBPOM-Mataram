@@ -63,7 +63,7 @@
 
                 <div class="container mt-3">
                     <div class="text-center">
-                        <h2 class="fw-bold">Data Pengunjung Realtime</h2>
+                        <h3 class="fw-bold">Data Pengunjung Realtime</h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover text-center">
