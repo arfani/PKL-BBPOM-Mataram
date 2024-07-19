@@ -11,10 +11,7 @@ body {
   vertical-align: text-bottom;
 }
 
-/*
- * Sidebar
- */
-
+/* Sidebar */
 .sidebar {
   position: fixed;
   top: 56px;
@@ -23,13 +20,9 @@ body {
   z-index: 100;
   padding-top: 20px;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
 }
 
-@media (max-width: 767.98px) {
-  .sidebar {
-    top: 6rem;
-  }
-}
 
 .sidebar-sticky {
   position: relative;
@@ -64,10 +57,7 @@ body {
   text-transform: uppercase;
 }
 
-/*
- * Navbar
- */
-
+/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
@@ -83,8 +73,8 @@ body {
 }
 
 .navbar .navbar-toggler {
-  top: 0.25rem;
-  right: 1rem;
+  border: none;
+  background: transparent;
 }
 
 .navbar .form-control {
@@ -104,14 +94,30 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
-/*
- * Main content
- */
+@media (max-width: 767.98px) {
+  .sidebar {
+    display: none; /* Hide sidebar on mobile */
+  }
+  .navbar .form-control {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .main-content {
+    padding-top: 25px;
+  }
+}
 
+/* Main content */
 .main-content {
-  margin-left: 250px;
-  margin-top: 56px;
-  padding: 20px;
+  padding-top: 70px;
+  padding-left: 250px; /* Offset for the sidebar */
+}
+
+@media (max-width: 767.98px) {
+  .main-content {
+    padding-left: 0; /* Remove offset on mobile */
+  }
 }
 
 .table-container {

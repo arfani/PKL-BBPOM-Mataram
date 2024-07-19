@@ -36,7 +36,7 @@ $no = 1;
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <input class="form-control form-control-dark w-10 order-1" type="text" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-dark w-10 order-1" type="text" id="searchInput" placeholder="Search" aria-label="Search">
         <div class="navbar-nav order-3">
             <div class="nav-item text-nowrap">
                 <a class="nav-link px-3" href="logout.php">Sign out</a>
@@ -78,105 +78,107 @@ $no = 1;
             </div>
         </div>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-
-            <div class="text-center">
-                <h3 class="fw-bold">Data Pendaftar PKL</h3>
-            </div>
-            <div class="container table-container mt-2">
-                <table class="table table-bordered table-striped table-hover text-center">
-                    <thead class="table-dark" style="vertical-align: middle;">
-                        <tr>
-                            <th scope="col" rowspan="2">No</th>
-                            <th scope="col" rowspan="2">Nama</th>
-                            <th scope="col" rowspan="2">Email</th>
-                            <th scope="col" rowspan="2">No HP</th>
-                            <th scope="col" rowspan="2">Universitas</th>
-                            <th scope="col" rowspan="2">Jurusan</th>
-                            <th scope="col" rowspan="2">Posisi</th>
-                            <th scope="col" rowspan="2">Periode</th>
-                            <th scope="col" colspan="2">Persyaratan</th>
-                            <th scope="col" rowspan="2">Status</th>
-                            <th scope="col" rowspan="2" colspan="2">Surat Balasan</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Surat Pengajuan</th>
-                            <th scope="col">Proposal</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <?php
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary btn-sm' download>Download Surat</a>" : "Belum upload";
-                            $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
-                            $status = $row['status'] ? $row['status'] : "
+        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+            <div class="container mt-2">
+                <div class="text-center">
+                    <h3 class="fw-bold">Data Pendaftar PKL</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover text-center">
+                        <thead class="table-dark" style="vertical-align: middle;">
+                            <tr>
+                                <th scope="col" rowspan="2">No</th>
+                                <th scope="col" rowspan="2">Nama</th>
+                                <th scope="col" rowspan="2">Email</th>
+                                <th scope="col" rowspan="2">No HP</th>
+                                <th scope="col" rowspan="2">Universitas</th>
+                                <th scope="col" rowspan="2">Jurusan</th>
+                                <th scope="col" rowspan="2">Posisi</th>
+                                <th scope="col" rowspan="2">Periode</th>
+                                <th scope="col" colspan="2">Persyaratan</th>
+                                <th scope="col" rowspan="2">Status</th>
+                                <th scope="col" rowspan="2" colspan="2">Surat Balasan</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Surat Pengajuan</th>
+                                <th scope="col">Proposal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <?php
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary btn-sm' download>Download Surat</a>" : "Belum upload";
+                                $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
+                                $status = $row['status'] ? $row['status'] : "
                         <form action='update_status.php' method='post'>
                             <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
                             <button type='submit' name='status' value='Diterima' class='btn btn-success btn-sm'>Terima</button>
                             <button type='submit' name='status' value='Ditolak' class='btn btn-danger btn-sm'>Tolak</button>
                         </form>";
 
-                            $suratBalasan = "";
-                            if ($row['status'] == 'Diterima') {
-                                $suratBalasan = "
+                                $suratBalasan = "";
+                                if ($row['status'] == 'Diterima') {
+                                    $suratBalasan = "
                             <form action='upload_surat_balasan.php' method='post' enctype='multipart/form-data'>
                                 <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
                                 <input type='file' name='surat_balasan' class='form-control' required>
                                 <button type='submit' class='btn btn-primary btn-sm mt-2'>Upload Surat Balasan</button>
                             </form>";
-                            } elseif ($row['status'] == 'Ditolak') {
-                                $suratBalasan = "Maaf, Anda tidak diterima.";
+                                } elseif ($row['status'] == 'Ditolak') {
+                                    $suratBalasan = "Maaf, Anda tidak diterima.";
+                                }
+
+                                echo "<tr>";
+                                echo "<th scope='row'>{$no}</th>";
+                                echo "<td>{$row['nama']}</td>";
+                                echo "<td>{$row['email']}</td>";
+                                echo "<td>{$row['phone']}</td>";
+                                echo "<td>{$row['university']}</td>";
+                                echo "<td>{$row['department']}</td>";
+                                echo "<td>{$row['posisi']}</td>";
+                                echo "<td>{$row['periode']}</td>";
+                                echo "<td>{$surat}</td>";
+                                echo "<td>{$proposal}</td>";
+                                echo "<td>{$status}</td>";
+                                echo "<td colspan='2'>{$suratBalasan}</td>";
+
+                                echo "</tr>";
+                                $no++;
                             }
-
-                            echo "<tr>";
-                            echo "<th scope='row'>{$no}</th>";
-                            echo "<td>{$row['nama']}</td>";
-                            echo "<td>{$row['email']}</td>";
-                            echo "<td>{$row['phone']}</td>";
-                            echo "<td>{$row['university']}</td>";
-                            echo "<td>{$row['department']}</td>";
-                            echo "<td>{$row['posisi']}</td>";
-                            echo "<td>{$row['periode']}</td>";
-                            echo "<td>{$surat}</td>";
-                            echo "<td>{$proposal}</td>";
-                            echo "<td>{$status}</td>";
-                            echo "<td colspan='2'>{$suratBalasan}</td>";
-
-                            echo "</tr>";
-                            $no++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                </main>
             </div>
-        </main>
-    </div>
-    </div>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlK9jz0nEG/q1QAWJusZyW9L73L68cHwtMDtE3Ez+k8jLDutoxLSjiFo4La" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhG81vGOdnpG2z7mr6Lc5I6pR9lkv5IDZw4iDw0FKhp9K1MRf0xqY2yRgP/l" crossorigin="anonymous">
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXlK9jz0nEG/q1QAWJusZyW9L73L68cHwtMDtE3Ez+k8jLDutoxLSjiFo4La" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhG81vGOdnpG2z7mr6Lc5I6pR9lkv5IDZw4iDw0FKhp9K1MRf0xqY2yRgP/l" crossorigin="anonymous">
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
 
-            $('#searchInput').on('input', function() {
-                var search = $(this).val().toLowerCase().trim();
+                $('#searchInput').on('input', function() {
+                    var search = $(this).val().toLowerCase().trim();
 
-                $.ajax({
-                    url: 'search_pkl.php',
-                    type: 'GET',
-                    data: {
-                        search: search
-                    },
-                    success: function(response) {
-                        $('#tableBody').html(response);
-                    }
+                    $.ajax({
+                        url: 'search_pkl.php',
+                        type: 'GET',
+                        data: {
+                            search: search
+                        },
+                        success: function(response) {
+                            $('#tableBody').html(response);
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
