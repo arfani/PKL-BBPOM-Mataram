@@ -19,8 +19,9 @@
             BBPOM MATARAM
         </a>
 
-        <input class="form-control form-control-dark order-1" type="text" placeholder="Search" aria-label="Search">
-        <div class="navbar-nav order-3">
+        <input class="form-control form-control-dark w-10 order-1" type="text" id="searchInput" placeholder="Search"
+            aria-label="Search">
+        <div class="navbar-nav order-3 text-nowrap">
             <div class="nav-item">
                 <a class="nav-link px-3" href="logout.php">Sign out</a>
             </div>
@@ -85,8 +86,8 @@
                 </div>
             </div>
 
-            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="container mt-3 main-content">
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+                <div class="container mt-3">
                     <div class="text-center">
                         <h3 class="fw-bold">Data Pengunjung Realtime</h3>
                     </div>
