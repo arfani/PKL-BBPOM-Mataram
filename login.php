@@ -72,7 +72,10 @@ if (isset($_POST['submit'])) {
                 <input type="text" placeholder="Email / No HP" name="email_nohp" value="<?php echo $email; ?>" required>
             </div>
             <div class="input-group">
-                <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required>
+                <input type="password" placeholder="Password" name="password" id="password" value="<?php echo $_POST['password']; ?>" required>
+            </div>
+            <div class="mb-2 ms-2">
+                <input type="checkbox" id="showPassword"> <label for="showPassword">Lihat Password</label>
             </div>
             <div class="input-group select-container">
                 <select name="role" required>
@@ -89,6 +92,20 @@ if (isset($_POST['submit'])) {
             <p class="login-register-text">Belum Memilki akun? <a href="register.php">Daftar Disini</a>.</p>
         </form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#showPassword').change(function() {
+                var passwordField = $('#password');
+                var fieldType = passwordField.attr('type');
+                if ($(this).is(':checked')) {
+                    passwordField.attr('type', 'text');
+                } else {
+                    passwordField.attr('type', 'password');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

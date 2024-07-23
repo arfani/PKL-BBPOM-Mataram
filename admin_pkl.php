@@ -119,6 +119,7 @@ $no = 1;
                                 <th scope="col" colspan="2">Persyaratan</th>
                                 <th scope="col" rowspan="2">Status</th>
                                 <th scope="col" rowspan="2" colspan="2">Surat Balasan</th>
+                                <th scope="col" rowspan="2">Tanggal Pengajuan</th>
                                 <th scope="col" rowspan="2">Waktu Tersisa</th>
                             </tr>
                             <tr>
@@ -170,6 +171,7 @@ $no = 1;
                                 echo "<td>{$proposal}</td>";
                                 echo "<td>{$status}</td>";
                                 echo "<td colspan='2'>{$suratBalasan}</td>";
+                                echo "<td>{$row['tanggal_pengajuan']}</td>";
                                 if ($row['status'] == "" or $row['status'] == null) {
                                     echo "<td class='countdown-container' data-target='{$tanggal_kadaluarsa->format('Y-m-d H:i:s')}'>
         <div class='countdown-item'>
@@ -226,10 +228,36 @@ $no = 1;
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            function addBusinessDays(date, daysToAdd) {
+                let result = new Date(date);
+                let daysAdded = 0;
+
+                while (daysAdded < daysToAdd) {
+                    result.setDate(result.getDate() + 1);
+
+                    // 0 = Sunday, 6 = Saturday
+                    if (result.getDay() !== 0 && result.getDay() !== 6) {
+                        daysAdded++;
+                    }
+                }
+
+                return result;
+            }
+
             function updateCountdown() {
                 $('.countdown-container').each(function() {
                     var targetDate = $(this).data('target');
-                    var target = new Date(targetDate);
+                    var submissionDate = new Date(targetDate);
+
+                    // If the submission date is Saturday or Sunday, start from the next Monday
+                    if (submissionDate.getDay() === 6) { // Saturday
+                        submissionDate.setDate(submissionDate.getDate() + 2);
+                    } else if (submissionDate.getDay() === 0) { // Sunday
+                        submissionDate.setDate(submissionDate.getDate() + 1);
+                    }
+
+                    submissionDate.setHours(0, 0, 0, 0);
+                    var target = addBusinessDays(submissionDate, 1);
                     var now = new Date();
                     var diff = target - now;
 
