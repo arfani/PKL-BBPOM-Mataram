@@ -142,3 +142,46 @@ body {
   font-size: 0.75rem; /* Adjust the font size */
   padding: 0.25rem 0.5rem; /* Adjust the padding */
 }
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2em;
+  padding: 0.5em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #f9f9f9;
+  color: #333;
+  margin: 5px;
+  position: relative;
+}
+
+.countdown-container::before {
+  top: -20px;
+  left: 0;
+  font-weight: bold;
+  color: #555;
+}
+
+.countdown-item {
+  margin: 0 3px;
+  text-align: center;
+}
+
+.countdown-item span {
+  display: block;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.countdown-item label {
+  font-size: 0.7em;
+  color: #666;
+}
+
+.expired {
+  background: #f8d7da;
+  color: #721c24;
+}

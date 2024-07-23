@@ -31,6 +31,49 @@ if (isset($_POST['kirim'])) {
     move_uploaded_file($sumber_proposal, $folder . $proposal);
     $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal) VALUES ('$nama', '$email', '$no_hp', '$university', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path')");
     if ($insert) {
+
+        $text = 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin';
+        $notif = mysqli_query($conn, "INSERT INTO notifikasi (userid, text, status) VALUES ('$id', '$text', 'pkl')");
+
+        $cekFonnte = mysqli_query($conn, "SELECT * FROM `api` WHERE id = 8");
+        $cf = mysqli_fetch_array($cekFonnte);
+        $no = '082145554182';
+        if ($cf['status'] == 1) {
+            $content = '*Pengajuan PKL BBPOM :*
+                           
+*Nama :* ' . $nama . '
+*Universitas :* ' . $university . '
+*Posisi :* ' . $posisi . '
+*Selama :* ' . $periode;
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.fonnte.com/send",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $no,
+                    'message' => $content,
+                    'countryCode' => '62'
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    "Authorization: " . $cf['api_key']
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            sleep(1);
+        }
+
         header("Location: pkl.php");
         exit();
     } else {
@@ -183,29 +226,6 @@ if (isset($_POST['kirim'])) {
                     }
                     ?>
 
-
-
-
-                    <!-- <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia Kosmetik"
-                            id="kimiaKosmetik">
-                        <label class="form-check-label" for="kimiaKosmetik">Kimia Kosmetik</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia OTSK"
-                            id="kimiaOTSK">
-                        <label class="form-check-label" for="kimiaOTSK">Kimia OTSK</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Kimia Pangan"
-                            id="kimiaPangan">
-                        <label class="form-check-label" for="kimiaPangan">Kimia Pangan</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="posisi[]" value="Mikrobiologi"
-                            id="mikrobiologi">
-                        <label class="form-check-label" for="mikrobiologi">Mikrobiologi</label>
-                    </div> -->
                 </div>
                 <div class="mb-3">
                     <label for="periode" class="form-label">Rencana Priode PKL :</label>

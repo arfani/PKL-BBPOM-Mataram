@@ -4,6 +4,20 @@ include 'koneksi.php';
 session_start();
 error_reporting(0);
 
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    if ($id <= 100) {
+        header('location: admin.php');
+    } else if ($id > 100 && $id <= 300) {
+        header('location: pkl.php');
+    } else if ($id > 300 && $id <= 600) {
+        header('location: tamu.php');
+    } else if ($id > 600 && $id <= 900) {
+        header('location: narasumber.php');
+    } else {
+        header('location: index.php');
+    }
+}
 
 if (isset($_POST['submit'])) {
     $input = $_POST['email_nohp'];

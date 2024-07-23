@@ -1,0 +1,15 @@
+  <script>
+    $(document).ready(function() {
+      // Menampilkan atau menyembunyikan password saat checkbox diperiksa atau tidak
+      $('#showPassword').change(function() {
+        var passwordField = $('#password');
+        var fieldType = passwordField.attr('type');
+
+        if ($(this).is(':checked')) {
+          passwordField.attr('type', 'text');
+        } else {
+          passwordField.attr('type', 'password');
+        }
+      });
+    });
+  </script>

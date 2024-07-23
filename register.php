@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conn, $sql);
     if (!$result->num_rows > 0) {
         $sql = "INSERT INTO $role (nama, email, no_hp, password)
-                    VALUES ('$username', '$email', '$no_hp', '$password')";
+                    VALUES ('$nama', '$email', '$no_hp', '$password')";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             echo "<script>alert('Wow! Pendaftaran Berhasil.')</script>";
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
             echo "<script>alert('Woops! Ada Kesalahan.')</script>";
         }
     } else {
-        echo "<script>alert('Woops! Email Sudah Terdaftar.')</script>";
+        echo "<script>alert('Woops! Email atau No hp Sudah Terdaftar.')</script>";
     }
 }
 ?>
