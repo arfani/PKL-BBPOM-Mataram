@@ -1,4 +1,3 @@
-<?php include 'koneksi.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +7,11 @@
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/custom2.css">
+
 </head>
 
 <body>
+
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand" href="#">
             <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px; margin-right: 10px">
@@ -34,7 +35,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_posisi.php">
+                    <a class="nav-link active" aria-current="page" href="admin_posisi.php">
                         Posisi Penempatan PKL
                     </a>
                 </li>
@@ -49,7 +50,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin_narasumber.php">
+                    <a class="nav-link" href="admin_narasumber.php">
                         Narasumber
                     </a>
                 </li>
@@ -59,7 +60,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 bg-light d-none d-md-block">
+            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-md-block bg-light">
                 <div class="position-sticky pt-2 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -68,7 +69,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_posisi.php">
+                            <a class="nav-link active" aria-current="page" href="admin_posisi.php">
                                 Posisi Penempatan PKL
                             </a>
                         </li>
@@ -83,53 +84,67 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin_narasumber.php">
+                            <a class="nav-link" href="admin_narasumber.php">
                                 Narasumber
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-                <div class="container mt-3">
-                    <div class="text-center">
-                        <h3 class="fw-bold">Data Narasumber Realtime</h3>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover text-center">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Bidang</th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Replace with PHP loop to populate data -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>johndoe@example.com</td>
-                                    <td>Kesehatan</td>
-                                    <td>Aktif</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jane Smith</td>
-                                    <td>janesmith@example.com</td>
-                                    <td>Pangan</td>
-                                    <td>Nonaktif</td>
-                                </tr>
-                                <!-- End of PHP loop -->
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+            <div class="container mt-2">
+                <div class="text-center">
+                    <h3 class="fw-bold">Data Penempatan PKL</h3>
                 </div>
-
-
+                <div class="d-flex justify-content-start mb-3">
+                    <a href="tambah.php" class="btn btn-success">Tambah Data</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Posisi & Penempatan</th>
+                                <th>Deskripsi</th>
+                                <th>Kualifikasi Jurusan</th>
+                                <th>Kuota</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- PHP loop to fetch data -->
+                            <?php
+                            include 'koneksi.php';
+                            $sql2 = "SELECT * FROM penempatan_pkl";
+                            $result2 = mysqli_query($conn, $sql2);
+                            $no = 1;
+                            while ($row2 = mysqli_fetch_assoc($result2)) {
+                                echo "<tr>";
+                                echo "<td>{$no}</td>";
+                                echo "<td>{$row2['posisi']}</td>";
+                                echo "<td>{$row2['deskripsi']}</td>";
+                                echo "<td>{$row2['jurusan']}</td>";
+                                echo "<td>{$row2['kuota']}</td>";
+                                echo "<td>
+                                        <form action='edit.php' method='post' style='display:inline-block;'>
+                                            <input type='hidden' name='id' value='{$row2['id']}'>
+                                            <button type='submit' name='action' value='edit' class='btn btn-warning btn-sm'>Edit</button>
+                                        </form>
+                                        <form action='actions.php' method='post' style='display:inline-block;'>
+                                            <input type='hidden' name='id' value='{$row2['id']}'>
+                                            <button type='submit' name='action' value='delete' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Hapus</button>
+                                        </form>
+                                    </td>";
+                                echo "</tr>";
+                                $no++;
+                            }
+                            $conn->close();
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

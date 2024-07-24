@@ -7,7 +7,23 @@
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/custom2.css">
+    <style>
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
+        .card h2 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .card .card-icon {
+            font-size: 3rem;
+            color: #777;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,22 +47,27 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="admin.php">
-                        <span data-feather="home"></span> Overview
+                        Overview
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin_posisi.php">
+                        Posisi Penempatan PKL
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_pkl.php">
-                        <span data-feather="file"></span> PKL
+                        PKL
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_tamu.php">
-                        <span data-feather="shopping-cart"></span> Pengunjung
+                        Kunjungan
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_narasumber.php">
-                        <span data-feather="users"></span> Narasumber
+                        Narasumber
                     </a>
                 </li>
             </ul>
@@ -55,97 +76,145 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-md-block bg-light">
+            <div id="sidebar" class="sidebar col-md-3 col-lg-2 bg-light d-none d-md-block">
                 <div class="position-sticky pt-2 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin.php">
-                                <span data-feather="home"></span>
+                            <a class="nav-link" href="admin.php">
                                 Overview
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="admin_posisi.php">
+                                Posisi Penempatan PKL
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="admin_pkl.php">
-                                <span data-feather="file"></span>
                                 PKL
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_tamu.php">
-                                <span data-feather="shopping-cart"></span>
-                                Pengunjung
+                            <a class="nav-link active" aria-current="page" href="admin_tamu.php">
+                                Kunjungan
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="admin_narasumber.php">
-                                <span data-feather="users"></span>
                                 Narasumber
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-            <div class="container mt-2">
-                <div class="text-center">
-                    <h3 class="fw-bold">Data Penempatan PKL</h3>
-                </div>
-                <div class="d-flex justify-content-start mb-3">
-                    <a href="tambah.php" class="btn btn-success">Tambah Data</a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover text-center">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>#</th>
-                                <th>Posisi & Penempatan</th>
-                                <th>Deskripsi</th>
-                                <th>Kualifikasi Jurusan</th>
-                                <th>Kuota</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- PHP loop to fetch data -->
-                            <?php
-                            include 'koneksi.php';
-                            $sql2 = "SELECT * FROM penempatan_pkl";
-                            $result2 = mysqli_query($conn, $sql2);
-                            $no = 1;
-                            while ($row2 = mysqli_fetch_assoc($result2)) {
-                                echo "<tr>";
-                                echo "<td>{$no}</td>";
-                                echo "<td>{$row2['posisi']}</td>";
-                                echo "<td>{$row2['deskripsi']}</td>";
-                                echo "<td>{$row2['jurusan']}</td>";
-                                echo "<td>{$row2['kuota']}</td>";
-                                echo "<td>
-                                        <form action='edit.php' method='post' style='display:inline-block;'>
-                                            <input type='hidden' name='id' value='{$row2['id']}'>
-                                            <button type='submit' name='action' value='edit' class='btn btn-warning btn-sm'>Edit</button>
-                                        </form>
-                                        <form action='actions.php' method='post' style='display:inline-block;'>
-                                            <input type='hidden' name='id' value='{$row2['id']}'>
-                                            <button type='submit' name='action' value='delete' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Hapus</button>
-                                        </form>
-                                    </td>";
-                                echo "</tr>";
-                                $no++;
-                            }
-                            $conn->close();
-                            ?>
-                        </tbody>
-                    </table>
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Overview</h1>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="col-md-9 ms-sm-auto col-lg-10 ">
+                <div class="container mt-2">
+                    <div class="text-center">
+                        <h3 class="fw-bold">Data PKL</h3>
+                    </div>
 
+                    <!-- Card Section -->
+                    <div class="row my-4">
+                        <div class="col-md-3">
+                            <div class="card p-3">
+                                <div class="card-icon">😊</div>
+                                <h2>21</h2>
+                                <p>PKL Selesai</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card p-3">
+                                <div class="card-icon">📋</div>
+                                <h2>5</h2>
+                                <p>Sedang PKL</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card p-3">
+                                <div class="card-icon">🎧</div>
+                                <h2>3</h2>
+                                <p>Batal</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card p-3">
+                                <div class="card-icon">👥</div>
+                                <h2>4</h2>
+                                <p>Lowongan</p>
+                            </div>
+                        </div>
+                    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+                    <!-- Chart Section -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-line me-1"></i>
+                                    Data PKL
+                                </div>
+                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-pie me-1"></i>
+                                    PKL
+                                </div>
+                                <div class="card-body"><canvas id="myPieChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+                    </script>
+                    <script>
+                        // Bar Chart
+                        var ctx = document.getElementById('myAreaChart').getContext('2d');
+                        var myAreaChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                                    'Nov', 'Dec'
+                                ],
+                                datasets: [{
+                                    label: 'Jumlah PKL',
+                                    data: [0, 10, 5, 2, 20, 30, 45, 60, 75, 90, 105, 120],
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+
+                        // Pie Chart
+                        var ctx = document.getElementById('myPieChart').getContext('2d');
+                        var myPieChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Selesai', 'Sedang PKL', 'Batal', 'Lowongan'],
+                                datasets: [{
+                                    data: [21, 5, 3, 4],
+                                    backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745']
+                                }]
+                            }
+                        });
+                    </script>
 </body>
 
 </html>

@@ -47,22 +47,27 @@ $no = 1;
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="admin.php">
-                        <span data-feather="home"></span> Overview
+                        Overview
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin_posisi.php">
+                        Posisi Penempatan PKL
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="admin_pkl.php">
-                        <span data-feather="file"></span> PKL
+                        PKL
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_tamu.php">
-                        <span data-feather="shopping-cart"></span> Pengunjung
+                        Kunjungan
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_narasumber.php">
-                        <span data-feather="users"></span> Narasumber
+                        Narasumber
                     </a>
                 </li>
             </ul>
@@ -80,13 +85,18 @@ $no = 1;
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="admin_posisi.php">
+                                Posisi Penempatan PKL
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="admin_pkl.php">
                                 PKL
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="admin_tamu.php">
-                                Pengunjung
+                                Kunjungan
                             </a>
                         </li>
                         <li class="nav-item">
