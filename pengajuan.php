@@ -25,10 +25,12 @@ if (isset($_POST['kirim'])) {
     $proposal = $_FILES['proposal']['name'];
     $sumber_proposal = $_FILES['proposal']['tmp_name'];
     $folder = './Asset/Document/';
-    $surat_path = $folder . $surat;
-    $proposal_path = $folder . $proposal;
-    move_uploaded_file($sumber_surat, $folder . $surat);
-    move_uploaded_file($sumber_proposal, $folder . $proposal);
+    $surat_nama = 'surat pengajuan_' . $nama . '.pdf';
+    $proposal_nama = 'proposal_' . $nama . '.pdf';
+    $surat_path = $folder . $surat_nama;
+    $proposal_path = $folder . $proposal_nama;
+    move_uploaded_file($sumber_surat, $folder . $surat_nama);
+    move_uploaded_file($sumber_proposal, $folder . $proposal_nama);
     $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal) VALUES ('$nama', '$email', '$no_hp', '$university', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path')");
     if ($insert) {
 
@@ -130,6 +132,16 @@ if (isset($_POST['kirim'])) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <?php
+                    if ($row['status'] == "active") {
+                    ?>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" style="color: white;" href="dashboardpkl.php">
+                                <i class="fas fa-home"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                    <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
                             <i class="fas fa-user"></i> Profile

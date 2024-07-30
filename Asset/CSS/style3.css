@@ -234,7 +234,7 @@ body {
 
 /* Document Section Styles */
 .document-section {
-  padding: 20px;
+  margin-top: 70px;
 }
 
 .document-section h2 {
@@ -247,7 +247,7 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
 }
 
 .download-box {
@@ -256,7 +256,7 @@ body {
   border-radius: 8px;
   padding: 20px;
   text-align: center;
-  width: 200px;
+  width: 220px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
 }

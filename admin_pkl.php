@@ -23,24 +23,29 @@ $no = 1;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/custom2.css">
 </head>
 
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand" href="#">
-            <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px; margin-right: 10px">
+            <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
+                style="margin-left: 15px; margin-right: 10px">
             BBPOM MATARAM
         </a>
 
-        <input class="form-control form-control-dark w-10 order-1" type="text" id="searchInput" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-dark w-10 order-1" type="text" id="searchInput" placeholder="Search"
+            aria-label="Search">
         <div class="navbar-nav order-3 text-nowrap">
             <div class="nav-item">
                 <a class="nav-link px-3" href="logout.php">Sign out</a>
             </div>
         </div>
-        <button class="navbar-toggler d-md-none collapsed me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler d-md-none collapsed me-1" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse ms-3" id="navbarMenu">
@@ -146,15 +151,12 @@ $no = 1;
                                 $interval = $now->diff($tanggal_kadaluarsa);
                                 $waktuTersisa = $interval->invert ? 'Kadaluarsa' : sprintf('%02dh %02dm %02ds', $interval->h, $interval->i, $interval->s);
 
-
                                 $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary btn-sm' download>Download Surat</a>" : "Belum upload";
                                 $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
                                 $status = $row['status'] ? $row['status'] : "
-                        <form action='update_status.php' method='post'>
-                            <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
-                            <button type='submit' name='status' value='Diterima' class='btn btn-success btn-sm'>Terima</button>
-                            <button type='button' name='status' value='Ditolak' class='btn btn-danger btn-sm reject-btn' data-id='{$row['id_pengajuan']}'>Tolak</button>
-                        </form>";
+<button type='button' class='btn btn-success btn-sm accept-btn' data-id='{$row['id_pengajuan']}'>Terima</button>
+<button type='button' class='btn btn-danger btn-sm reject-btn' data-id='{$row['id_pengajuan']}'>Tolak</button>
+";
 
                                 $suratBalasan = "";
                                 if ($row['status'] == 'Diterima') {
@@ -170,7 +172,7 @@ $no = 1;
 
                                 echo "<tr>";
                                 echo "<th scope='row'>{$no}</th>";
-                                echo "<td>{$row['nama']}</td>";
+                                echo "<td class='text-nowrap'>{$row['nama']}</td>";
                                 echo "<td>{$row['email']}</td>";
                                 echo "<td>{$row['phone']}</td>";
                                 echo "<td>{$row['university']}</td>";
@@ -212,6 +214,26 @@ $no = 1;
         </div>
     </div>
 
+    <!-- Modal Penerimaan -->
+    <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="acceptModalLabel">Pilih Posisi Penerimaan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="acceptForm" action="update_status.php" method="post">
+                        <input type="hidden" name="id" id="acceptId">
+                        <div id="posisi"></div>
+                        <button type="submit" class="btn btn-primary mt-3">Kirim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Modal Penolakan -->
     <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -233,108 +255,145 @@ $no = 1;
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            function addBusinessDays(date, daysToAdd) {
-                let result = new Date(date);
-                let daysAdded = 0;
+    $(document).ready(function() {
+        $('.accept-btn').on('click', function() {
+            var id = $(this).data('id');
+            $('#acceptId').val(id);
 
-                while (daysAdded < daysToAdd) {
-                    result.setDate(result.getDate() + 1);
-
-                    // 0 = Sunday, 6 = Saturday
-                    if (result.getDay() !== 0 && result.getDay() !== 6) {
-                        daysAdded++;
-                    }
+            // Fetch available positions and their quotas
+            $.ajax({
+                url: 'fetch_posisi.php',
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                    $('#posisi').html(response);
+                    $('#acceptModal').modal('show');
                 }
-
-                return result;
-            }
-
-            function updateCountdown() {
-                $('.countdown-container').each(function() {
-                    var targetDate = $(this).data('target');
-                    var submissionDate = new Date(targetDate);
-
-                    // If the submission date is Saturday or Sunday, start from the next Monday
-                    if (submissionDate.getDay() === 6) { // Saturday
-                        submissionDate.setDate(submissionDate.getDate() + 2);
-                    } else if (submissionDate.getDay() === 0) { // Sunday
-                        submissionDate.setDate(submissionDate.getDate() + 1);
-                    }
-
-                    submissionDate.setHours(0, 0, 0, 0);
-                    var target = addBusinessDays(submissionDate, 1);
-                    var now = new Date();
-                    var diff = target - now;
-
-                    if (diff <= 0) {
-                        $(this).addClass('expired');
-                        $(this).find('.countdown-item span').text('00');
-                        $(this).find('.countdown-item label').text('Kadaluarsa');
-                    } else {
-                        var hours = Math.floor(diff / (1000 * 60 * 60));
-                        var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                        var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                        hours = hours < 10 ? '0' + hours : hours;
-                        minutes = minutes < 10 ? '0' + minutes : minutes;
-                        seconds = seconds < 10 ? '0' + seconds : seconds;
-
-                        $(this).find('.hours').text(hours);
-                        $(this).find('.minutes').text(minutes);
-                        $(this).find('.seconds').text(seconds);
-                    }
-                });
-            }
-
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-
-
-            $('.reject-btn').on('click', function() {
-                var id = $(this).data('id');
-                var reason = prompt("Masukkan alasan penolakan:");
-
-                if (reason != null && reason != "") {
-                    $.ajax({
-                        url: 'update_balasan.php',
-                        type: 'POST',
-                        data: {
-                            id: id,
-                            reason: reason
-                        },
-                        success: function(response) {
-                            alert("Alasan penolakan sukses dikirim.");
-                            location.reload();
-                        },
-                        error: function() {
-                            alert("ada masalah.");
-                        }
-                    });
-                } else {
-                    alert("Alasan penolakan tidak boleh kosong.");
-                }
-            });
-
-            $('#searchInput').on('input', function() {
-                var search = $(this).val().toLowerCase().trim();
-
-                $.ajax({
-                    url: 'search_pkl.php',
-                    type: 'GET',
-                    data: {
-                        search: search
-                    },
-                    success: function(response) {
-                        $('#tableBody').html(response);
-                    }
-                });
             });
         });
+
+        $('#acceptForm').on('submit', function(event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: 'update_status.php',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    alert("Penerimaan berhasil.");
+                    location.reload();
+                },
+                error: function() {
+                    alert("Ada masalah.");
+                }
+            });
+        });
+
+        function addBusinessDays(date, daysToAdd) {
+            let result = new Date(date);
+            let daysAdded = 0;
+
+            while (daysAdded < daysToAdd) {
+                result.setDate(result.getDate() + 1);
+
+                // 0 = Sunday, 6 = Saturday
+                if (result.getDay() !== 0 && result.getDay() !== 6) {
+                    daysAdded++;
+                }
+            }
+
+            return result;
+        }
+
+        function updateCountdown() {
+            $('.countdown-container').each(function() {
+                var targetDate = $(this).data('target');
+                var submissionDate = new Date(targetDate);
+
+                // If the submission date is Saturday or Sunday, start from the next Monday
+                if (submissionDate.getDay() === 6) { // Saturday
+                    submissionDate.setDate(submissionDate.getDate() + 2);
+                } else if (submissionDate.getDay() === 0) { // Sunday
+                    submissionDate.setDate(submissionDate.getDate() + 1);
+                }
+
+                submissionDate.setHours(0, 0, 0, 0);
+                var target = addBusinessDays(submissionDate, 1);
+                var now = new Date();
+                var diff = target - now;
+
+                if (diff <= 0) {
+                    $(this).addClass('expired');
+                    $(this).find('.countdown-item span').text('00');
+
+                } else {
+                    var hours = Math.floor(diff / (1000 * 60 * 60));
+                    var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    hours = hours < 10 ? '0' + hours : hours;
+                    minutes = minutes < 10 ? '0' + minutes : minutes;
+                    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                    $(this).find('.hours').text(hours);
+                    $(this).find('.minutes').text(minutes);
+                    $(this).find('.seconds').text(seconds);
+                }
+            });
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+
+        $('.reject-btn').on('click', function() {
+            var id = $(this).data('id');
+            var reason = prompt("Masukkan alasan penolakan:");
+
+            if (reason != null && reason != "") {
+                $.ajax({
+                    url: 'update_balasan.php',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        reason: reason
+                    },
+                    success: function(response) {
+                        alert("Alasan penolakan sukses dikirim.");
+                        location.reload();
+                    },
+                    error: function() {
+                        alert("ada masalah.");
+                    }
+                });
+            } else {
+                alert("Alasan penolakan tidak boleh kosong.");
+            }
+        });
+
+        $('#searchInput').on('input', function() {
+            var search = $(this).val().toLowerCase().trim();
+
+            $.ajax({
+                url: 'search_pkl.php',
+                type: 'GET',
+                data: {
+                    search: search
+                },
+                success: function(response) {
+                    $('#tableBody').html(response);
+                }
+            });
+        });
+    });
     </script>
 
 </body>

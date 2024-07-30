@@ -68,7 +68,7 @@ if (isset($_SESSION['id'])) {
                     if ($row['status'] == "active") {
                     ?>
                         <li class="nav-item mx-3">
-                            <a class="nav-link" style="color: white;" href="dashboard_pkl.php">
+                            <a class="nav-link" style="color: white;" href="dashboardpkl.php">
                                 <i class="fas fa-home"></i>
                                 Dashboard
                             </a>

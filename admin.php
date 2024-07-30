@@ -80,7 +80,7 @@
                 <div class="position-sticky pt-2 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="admin.php">
+                            <a class="nav-link active" aria-current="page" href="admin.php">
                                 Overview
                             </a>
                         </li>
@@ -95,7 +95,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin_tamu.php">
+                            <a class="nav-link" href="admin_tamu.php">
                                 Kunjungan
                             </a>
                         </li>

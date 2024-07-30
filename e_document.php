@@ -9,75 +9,7 @@
     <!-- CSS -->
     <title>Dashboard PKL</title>
     <link rel="stylesheet" href="Asset/CSS/style3.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-    .profile-card {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
 
-    .profile-card img {
-        width: 200px;
-        height: 200px;
-        border-radius: 10px;
-        margin-right: 20px;
-    }
-
-    .profile-card .profile-info {
-        flex: 1;
-    }
-
-    .profile-card h3 {
-        margin: 10px 0;
-    }
-
-    .profile-card p {
-        margin: 5px 0;
-        font-size: 16px;
-    }
-
-    .profile-card .period {
-        margin-top: 10px;
-        font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-        .profile-card {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .profile-card img {
-            margin: 0 auto 20px;
-        }
-    }
-
-    .sidebar-menu {
-        list-style-type: none;
-        padding: 0;
-
-    }
-
-    .sidebar-menu li {
-        margin: 10px 0;
-    }
-
-    .sidebar-menu a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .sidebar-menu a:hover {
-        text-decoration: none;
-        color: inherit;
-    }
-    </style>
 </head>
 
 <body>
@@ -86,13 +18,13 @@
         <img src="Asset/Gambar/Reference 2.png" alt=""
             style=" cursor: pointer; width: 200px; margin-top: 20px; margin-left: 10px;">
         <ul class="sidebar-menu">
-            <li class="active">
+            <li>
                 <a href="dashboardpkl.php">
                     <i class='bx bxs-dashboard'></i>
                     <span class="title">Profile</span>
                 </a>
             </li>
-            <li>
+            <li class='active'>
                 <a href="e_document.php">
                     <i class='bx bx-book-bookmark'></i>
                     <span class="title">E-Document</span>
@@ -105,6 +37,7 @@
                 </a>
             </li>
         </ul>
+
     </section>
     <!-- Side Bar -->
     <!-- Content -->
@@ -120,7 +53,7 @@
                 sidebar.classList.toggle('hide');
             })
             </script>
-            <a href="#" class="tittle" style="text-decoration: none">
+            <a href="#" class="tittle">
                 <span class="text">Informasi PKL/Magang</span>
             </a>
             <img src="Asset/Gambar/profile.png" alt="" width="25px" style="cursor: pointer;" onclick="openpopup()">
@@ -144,28 +77,37 @@
             <!-- POPUP -->
         </nav>
         <!-- Nav -->
-        <section id="overview" class="document-section">
 
-            <h2>Data PKL</h2>
-            <div class="card-container px-3">
-                <div class="profile-card">
-                    <img src="Asset/Gambar/profile.png" alt="Profile Picture">
-                    <div class="profile-info">
-                        <h3>Nama: John Doe</h3>
-                        <p>Posisi: Intern</p>
-                        <p>Universitas: Universitas ABC</p>
-                        <p>Email: johndoe@example.com</p>
-                        <p class="period">Periode: 2024</p>
-                    </div>
+        <!-- E-Document Section -->
+        <section id="document" class="document-section">
+            <h2>Berkas Persyaratan</h2>
+            <div class="download-container">
+                <div class="download-box">
+                    <img src="Asset/Gambar/sertifikat.png" alt="Surat Permohonan PKL">
+                    <h3>Pakta Integritas Mahasiswa</h3>
+                    <a href="./Asset/Document/PAKTA INTEGRITAS MAHASISWA PKL.docx" download>Download</a>
                 </div>
-                <!-- Tambahkan card lainnya disini -->
+                <div class="download-box">
+                    <img src="Asset/Gambar/sertifikat.png" alt="Peraturan PKL">
+                    <h3>Peraturan PKL</h3>
+                    <a href="path/to/PeraturanPKL.docx" download>Download</a>
+                </div>
+                <div class="download-box">
+                    <img src="Asset/Gambar/sertifikat.png" alt="Sertifikat">
+                    <h3>Sertifikat</h3>
+                    <a href="path/to/Sertifikat.docx" download>Download</a>
+                </div>
+                <div class="download-box">
+                    <img src="Asset/Gambar/sertifikat.png" alt="Absensi">
+                    <h3>Absensi</h3>
+                    <a href="path/to/Absensi.docx" download>Download</a>
+                </div>
             </div>
         </section>
+        <!-- E-Document Section -->
+
     </section>
     <!-- Content -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
