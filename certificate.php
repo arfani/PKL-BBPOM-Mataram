@@ -11,7 +11,7 @@ include('koneksi.php');
 $pdf = new FPDI('l');
 
 // Reference the PDF you want to use (use relative path)
-$pagecount = $pdf->setSourceFile('certificate.pdf');
+$pagecount = $pdf->setSourceFile('sertifikat3.pdf');
 
 // Import the first page from the PDF and add to dynamic PDF
 $tpl = $pdf->importPage(1);
@@ -26,7 +26,7 @@ $pdf->SetFont('Helvetica');
 
 // First box - the user's Name
 $pdf->SetFontSize('30'); // set font size
-$pdf->SetXY(10, 89); // set the position of the box
+$pdf->SetXY(10, 82); // set the position of the box
 $pdf->Cell(0, 10, 'Mukhlis Wardin Juaini', 0, 0, 'C'); // add the text, align to Center of cell
 
 // add the reason for certificate

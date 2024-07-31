@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['profileEmail'];
     $no_hp = $_POST['profilePhone'];
     $user_id = $_SESSION['id'];
+    $redirect = isset($_POST['redirect']) ? $_POST['redirect'] : 'pkl.php';
 
     $sql = "UPDATE pkl SET nama='$nama', email='$email', no_hp='$no_hp' WHERE id='$user_id'";
 
@@ -25,5 +26,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     mysqli_close($conn);
-    header('Location: pkl.php');
+    header('Location: ' . $redirect);
 }

@@ -1,5 +1,0 @@
-</section>
-<!-- Content -->
-</body>
-
-</html>

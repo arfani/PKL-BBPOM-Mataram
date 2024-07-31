@@ -148,7 +148,7 @@ body {
   display: block;
   width: 30%;
   height: auto;
-  background: var(--light);
+  background: blue;
   border-radius: 10px;
   position: absolute;
   top: 0;
@@ -268,7 +268,7 @@ body {
 }
 
 .download-box h3 {
-  font-size: 18px;
+  font-size: 15px;
   margin-bottom: 10px;
 }
 
@@ -287,4 +287,82 @@ body {
 
 .download-box:hover {
   transform: translateY(-5px);
+}
+
+/* profile section */
+.profile-card {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.foto {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 50px;
+}
+
+.foto img {
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.profile-card .profile-info {
+  flex: 1;
+}
+
+.profile-card h3 {
+  margin: 10px 0;
+}
+
+.profile-card p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.profile-card .period {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .foto img {
+    align-items: center;
+  }
+}
+
+.edit-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-button i {
+  margin-right: 5px;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
 }

@@ -1,6 +1,18 @@
 <?php
 include 'koneksi.php';
 session_start();
+
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    if ($id <= 100) {
+        header('location: admin.php');
+    } else if ($id > 300 && $id <= 600) {
+        header('location: tamu.php');
+    } else if ($id > 600 && $id <= 900) {
+        header('location: narasumber.php');
+    }
+}
+
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
     $sql = "SELECT * FROM pkl where id ='$id'";
@@ -107,6 +119,7 @@ if (isset($_SESSION['id'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="profileForm" action="save_profile.php" method="POST">
+                    <input type="hidden" name="redirect" value="pkl.php">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="profileName" class="form-label">Nama Lengkap</label>
