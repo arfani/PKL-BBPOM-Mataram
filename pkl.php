@@ -21,6 +21,7 @@ if (isset($_SESSION['id'])) {
     $email = $row['email'];
     $nama = $row['nama'];
     $no_hp = $row['no_hp'];
+    $status = $row['status'];
 } else {
 
     $email = "";
@@ -252,7 +253,8 @@ if (isset($_SESSION['id'])) {
                         echo "<td>{$row2['deskripsi']}</td>";
                         echo "<td>{$row2['jurusan']}</td>";
                         echo "<td>{$row2['kuota']}</td>";
-                        echo "<td><a href='pengajuan.php' class='btn btn-primary'>Apply</a></td>";
+                        if ($status == "active")
+                            echo "<td><a href='pengajuan.php' class='btn btn-primary'>Apply</a></td>";
                         echo "</tr>";
                         $no++;
                     }

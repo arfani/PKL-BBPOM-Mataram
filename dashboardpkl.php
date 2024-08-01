@@ -1,3 +1,35 @@
+<?php
+include 'koneksi.php';
+session_start();
+
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    if ($id <= 100) {
+        header('location: admin.php');
+    } else if ($id > 300 && $id <= 600) {
+        header('location: tamu.php');
+    } else if ($id > 600 && $id <= 900) {
+        header('location: narasumber.php');
+    }
+}
+
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    $sql = "SELECT * FROM pkl where id ='$id'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $email = $row['email'];
+    $nama = $row['nama'];
+    $no_hp = $row['no_hp'];
+    $status = $row['status'];
+    $foto = $row['foto'];
+} else {
+    $email = "";
+    $nama = "";
+    $no_hp = "";
+    header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,103 +39,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <title>Dashboard PKL</title>
-    <link rel="stylesheet" href="Asset/CSS/custom3.css">
-    <style>
-        .popup {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            z-index: 1000;
-        }
+    <link rel="stylesheet" href="Asset/CSS/style3.css">
 
-        .popup.open-popup {
-            display: block;
-        }
-
-        .popup a {
-            margin-right: 10px;
-        }
-
-        .foto img {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-
-        }
-
-        .profile-info {
-            flex: 1;
-        }
-
-        .navbar-brand img {
-            max-width: 100px;
-        }
-
-        @media (max-width: 768px) {
-            .profile-info {
-                text-align: center;
-                margin-top: 20px;
-            }
-
-            .foto {
-                width: 100%;
-                text-align: center;
-            }
-
-            .foto img {
-                margin: 0 auto;
-            }
-
-            .card-body {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
 </head>
 
 <body>
-    <?php
-    include 'koneksi.php';
-    session_start();
-
-    if (isset($_SESSION['id'])) {
-        $id = $_SESSION['id'];
-        if ($id <= 100) {
-            header('location: admin.php');
-        } else if ($id > 300 && $id <= 600) {
-            header('location: tamu.php');
-        } else if ($id > 600 && $id <= 900) {
-            header('location: narasumber.php');
-        }
-    }
-
-    if (isset($_SESSION['id'])) {
-        $id = $_SESSION['id'];
-        $sql = "SELECT * FROM pkl where id ='$id'";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $email = $row['email'];
-        $nama = $row['nama'];
-        $no_hp = $row['no_hp'];
-        $status = $row['status'];
-        $foto = $row['foto'];
-    } else {
-        $email = "";
-        $nama = "";
-        $no_hp = "";
-        header("Location: index.php");
-    }
-    ?>
-
-    <!-- Side Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px" style="margin-left: 15px; margin-right: 10px">
@@ -127,7 +68,6 @@
             </div>
         </div>
     </nav>
-    <!-- Side Bar -->
 
     <!-- Profile Modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
