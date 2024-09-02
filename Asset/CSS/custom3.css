@@ -1,7 +1,11 @@
-/* Hero Section Styling */
+body {
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
 .hero-section {
-  padding: 60px 0;
-  background-color: #f9f9f9; /* Light background color */
+  padding: 20px 0;
+  /* background-color: #f9f9f9; Light background color */
 }
 
 .hero-title {
@@ -23,6 +27,8 @@
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
+  width: 70%;
+  height: auto;
 }
 
 .hero-section .btn-cta:hover {
@@ -35,9 +41,20 @@
 }
 
 /* Carousel Styling */
+
+.carousel-item {
+  width: 100%;
+  height: 550px;
+  max-height: 550px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
 .carousel-item img {
-  height: auto;
-  width: 600px;
+  object-fit: cover;
+  height: 90%;
+  width: 80%;
+  border-radius: 20px;
 }
 
 .carousel-control-prev,
@@ -52,6 +69,15 @@
   align-items: center;
   justify-content: center;
   opacity: 0.8;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.carousel-control-prev {
+  left: 2%;
+}
+.carousel-control-next {
+  right: 2%;
 }
 
 .carousel-control-prev:hover,
@@ -60,6 +86,9 @@
   background-color: #0056b3;
 }
 
+#btn-carousel {
+  background-color: #000000;
+}
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   width: 20px;
@@ -68,39 +97,27 @@
 
 .carousel-inner {
   display: flex;
-  align-items: center; /* Center align items vertically */
+  align-items: center;
 }
-
-.carousel-control-prev,
-.carousel-control-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+.carousel-indicators button {
+  background-color: #000000;
 }
 
 /* Vision and Mission Section Styling */
 .vision-mission-section {
   padding: 60px 0;
-  background-color: #ffffff; /* Background color for the section */
-  border-top: 1px solid #ddd; /* Top border for separation */
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
 }
 
-.section-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 40px;
-}
-
-.vision-title,
-.mission-title {
+.title {
   font-size: 24px;
   font-weight: 600;
-  color: #007bff; /* Primary color for titles */
+  color: #007bff;
   margin-bottom: 20px;
 }
 
-.vision-description {
+.description {
   font-size: 18px;
   color: #555;
   line-height: 1.6;
@@ -115,4 +132,59 @@
 
 .mission-list li {
   margin-bottom: 10px;
+}
+
+i {
+  color: white;
+}
+
+.notification-icon {
+  position: relative;
+}
+
+.notification-icon .badge {
+  padding: 5px 8px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+.modal-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.modal-content {
+  border-radius: 5%;
+}
+.modal-content .btn {
+  border-radius: 10%;
+}
+
+.small-text {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 767.98px) {
+  .title {
+    font-size: 24px;
+  }
+  .collapse .dashboard {
+    margin-left: 0;
+  }
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card h2 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.card .card-icon {
+  font-size: 3rem;
+  color: #777;
 }

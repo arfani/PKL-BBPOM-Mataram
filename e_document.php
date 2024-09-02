@@ -1,5 +1,5 @@
 <?php
-include 'koneksi.php';
+include('koneksi.php');
 session_start();
 
 if (isset($_SESSION['id'])) {
@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
 
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM pkl where id ='$id'";
+    $sql = "SELECT * FROM users where id ='$id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $email = $row['email'];
@@ -28,6 +28,44 @@ if (isset($_SESSION['id'])) {
     header("Location: index.php");
 }
 ?>
+<?php
+
+$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
+$s0 = mysqli_fetch_array($sql_0);
+$urlweb = $s0['urlweb'];
+?>
+<?php
+if (isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']); // Menghindari XSS
+    if ($_GET['status'] == 'success') {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    } else {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    }
+
+    echo $alert;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,6 +76,10 @@ if (isset($_SESSION['id'])) {
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="Asset/CSS/style3.css">
     <title>Dashboard PKL</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -49,7 +91,8 @@ if (isset($_SESSION['id'])) {
                 <img src="Asset/Gambar/logo.png" alt="BBPOM MATARAM" width="30" height="30">
                 <b>BBPOM MATARAM</b>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -58,13 +101,23 @@ if (isset($_SESSION['id'])) {
                         <a class="nav-link" href="dashboardpkl.php"><i class='bx bxs-dashboard'></i> Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="e_document.php"><i class='bx bx-book-bookmark'></i> E-Document</a>
+                        <a class="nav-link active" aria-current="page" href="e_document.php"><i
+                                class='bx bx-book-bookmark'></i> E-Document</a>
                     </li>
                 </ul>
-                <img src="Asset/Gambar/icon.png" alt="Profile" width="40" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#profileModal">
+                <img src="Asset/Gambar/icon.png" alt="Profile" width="40" style="cursor: pointer;"
+                    data-bs-toggle="modal" data-bs-target="#profileModal">
             </div>
         </div>
     </nav>
+
+    <?php if (isset($_GET['status']) && isset($_GET['message'])) { ?>
+    <div class="alert alert-<?php echo $_GET['status'] == 'success' ? 'success' : 'danger'; ?> alert-dismissible fade show"
+        role="alert">
+        <?php echo urldecode($_GET['message']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php } ?>
 
     <!-- Profile Modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
@@ -74,24 +127,28 @@ if (isset($_SESSION['id'])) {
                     <h5 class="modal-title" id="profileModalLabel">Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="profileForm" action="save_profile.php" method="POST">
+                <form id="profileForm" action="<?php echo $urlweb ?>/function/save_profile.php" method="POST">
                     <input type="hidden" name="redirect" value="e_document.php">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="profileName" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="profileName" name="profileName" value="<?php echo $nama; ?>">
+                            <input type="text" class="form-control" id="profileName" name="profileName"
+                                value="<?php echo $nama; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="profileEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="profileEmail" name="profileEmail" value="<?php echo $email; ?>">
+                            <input type="email" class="form-control" id="profileEmail" name="profileEmail"
+                                value="<?php echo $email; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="profilePhone" class="form-label">Nomor Telepon</label>
-                            <input type="tel" class="form-control" id="profilePhone" name="profilePhone" value="<?php echo $no_hp; ?>">
+                            <input type="tel" class="form-control" id="profilePhone" name="profilePhone"
+                                value="<?php echo $no_hp; ?>">
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger"><a href="logout.php" style="text-decoration: none; color: white;">Logout</a></button>
+                        <button type="button" class="btn btn-danger"><a href="logout.php"
+                                style="text-decoration: none; color: white;">Logout</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
@@ -128,6 +185,7 @@ if (isset($_SESSION['id'])) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </body>
 

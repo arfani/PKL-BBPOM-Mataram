@@ -1,18 +1,68 @@
 <?php
-include 'koneksi.php';
+include('koneksi.php');
 session_start();
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['id'];
-    $sql = "SELECT * FROM pkl where id ='$id'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $email = $row['email'];
-    $nama = $row['nama'];
-    $no_hp = $row['no_hp'];
-} else {
-    $email = "";
-    $nama = "";
-    $no_hp = "";
+
+$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
+$s0 = mysqli_fetch_array($sql_0);
+$urlweb = $s0['urlweb'];
+
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    header('location:' . $urlweb . '/' . $role . '.php');
+}
+
+// Menghitung jumlah lowongan (total kuota di tabel penempatan_pkl)
+$sql = "SELECT SUM(kuota) as jumlah FROM penempatan_pkl";
+$result = mysqli_query($conn, $sql);
+$lowongan = mysqli_fetch_assoc($result)['jumlah'];
+
+// Menghitung jumlah PKL batal
+$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'failed'";
+$result = mysqli_query($conn, $sql);
+$pkl_batal = mysqli_fetch_assoc($result)['jumlah'];
+
+// Menghitung jumlah PKL sedang
+$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'active'";
+$result = mysqli_query($conn, $sql);
+$sedang_pkl = mysqli_fetch_assoc($result)['jumlah'];
+
+// Menghitung jumlah PKL selesai
+$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'done'";
+$result = mysqli_query($conn, $sql);
+$selesai_pkl = mysqli_fetch_assoc($result)['jumlah'];
+
+?>
+
+<?php
+if (isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']); // Menghindari XSS
+    if ($_GET['status'] == 'success') {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    } else {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    }
+
+    echo $alert;
 }
 ?>
 <!DOCTYPE html>
@@ -21,20 +71,25 @@ if (isset($_SESSION['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="Asset/CSS/custom3.css">
     <title>pkl</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
-
 
     <div class="hero-section">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h1 class="hero-title">Selamat datang di Portal Sistem Informasi Pengajuan PKL</h1>
+                    <h1 class="hero-title">Selamat datang di Portal Sapu Jagad BPOM</h1>
                     <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
                     <a href="login.php" class="btn btn-warning btn-cta">Mulai ➔</a>
                 </div>
@@ -46,34 +101,46 @@ if (isset($_SESSION['id'])) {
     </div>
 
     <div class="text-center">
-        <h1 class="section-title">Dokumentasi</h1>
+        <h1 class="section-title">Dokumentasi PKL BPOM</h1>
     </div>
+
     <div class="carousel-section mt-5">
-        <div class="container">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="container-fluid">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-wrap="true">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <?php
+                    $sql_2 = mysqli_query($conn, "SELECT * FROM `tb_slide` ORDER BY sort ASC LIMIT 7");
+                    $no = 0;
+                    while ($s2 = mysqli_fetch_array($sql_2)) {
+                        $active = $no === 0 ? 'active' : '';
+                        echo '<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="' . $no . '" class="' . $active . '" aria-current="true" aria-label="Slide ' . ($no + 1) . '" id="btn-carousel"></button>';
+                        $no++;
+                    }
+                    ?>
                 </div>
                 <center>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="Asset/Gambar/beritaBalai-Besar-POM-di-Mataram-1719968430296.jpg" class="d-block w-100 img-fluid" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="Asset/Gambar/beritaBalai-Besar-POM-di-Mataram-1720056460677.jpg" class="d-block w-100 img-fluid" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="Asset/Gambar/beritaBalai-Besar-POM-di-Mataram-1720316256893.jpg" class="d-block w-100 img-fluid" alt="...">
-                        </div>
+                        <?php
+                        $no = 0;
+                        mysqli_data_seek($sql_2, 0); // Reset result pointer to start
+                        while ($s2 = mysqli_fetch_array($sql_2)) {
+                            $active = $no === 0 ? 'active' : '';
+                            echo '
+                        <div class="carousel-item ' . $active . '">
+                            <img src="' . $urlweb . '/Asset/Gambar/' . $s2['image'] . '" alt="' . $s2['deskripsi'] . '" style="border-radius: 10px;">
+                        </div>';
+                            $no++;
+                        }
+                        ?>
                     </div>
                 </center>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
@@ -81,38 +148,111 @@ if (isset($_SESSION['id'])) {
         </div>
     </div>
 
+
     <div class="vision-mission-section mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h2 class="section-title">Visi dan Misi</h2>
+                    <h2 class="section-title">Portal Sapu Jagad BPOM</h2>
+                    <p>Merupakan website yang mengelola data PKL online, Kunjungan online, serta Pengajuan Narasumber
+                        online yang di kelola oleh BBPOM di Mataram dengan penjelasan sbb :</p>
                 </div>
                 <div class="col-md-6">
-                    <h3 class="vision-title">Visi</h3>
-                    <p class="vision-description">Obat dan Makanan aman, bermutu, dan berdaya saing untuk mewujudkan
-                        Indonesia maju yang berdaulat, mandiri, dan berkepribadian berlandaskan gotong-royong.</p>
+                    <h3 class="title">Fitur 1: Pusat PKL Online</h3>
+                    <p class="description">
+                        Fitur ini dirancang untuk memudahkan mahasiswa dan institusi pendidikan dalam mengelola
+                        pengajuan, monitoring, dan penyelesaian PKL secara online. Semua proses dilakukan secara
+                        transparan dan terintegrasi, mulai dari pendaftaran hingga pengajuan laporan akhir.
+                    </p>
                 </div>
                 <div class="col-md-6">
-                    <h3 class="mission-title">Misi</h3>
-                    <ul class="mission-list">
-                        <li>Membangun SDM unggul terkait Obat dan Makanan dengan mengembangkan kemitraan bersama seluruh
-                            komponen bangsa, dalam rangka peningkatan kualitas manusia Indonesia.</li>
-                        <li>Memfasilitasi percepatan pengembangan dunia usaha Obat dan Makanan dengan keberpihakan
-                            terhadap UMKM, dalam rangka membangun struktur ekonomi yang produktif, dan berdaya saing
-                            untuk kemandirian bangsa.</li>
-                        <li>Meningkatkan efektivitas pengawasan Obat dan Makanan, serta penindakan kejahatan Obat dan
-                            Makanan melalui sinergi pemerintah pusat dan daerah dalam rangka Negara Kesatuan guna
-                            perlindungan bagi segenap bangsa dan memberikan rasa aman pada seluruh warga.</li>
-                        <li>Pengelolaan pemerintahan yang bersih, efektif, dan terpercaya untuk memberikan pelayanan
-                            publik yang prima di bidang Obat dan Makanan.</li>
-                    </ul>
+                    <h3 class="title">Fitur 2: Kunjungan Online</h3>
+                    <p class="description">
+                        Melalui fitur ini, berbagai pihak dapat mengajukan kunjungan ke Balai Besar POM secara online.
+                        Sistem ini memastikan bahwa proses kunjungan dapat diatur dengan efisien, sehingga memberikan
+                        pengalaman yang optimal bagi para pengunjung.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="title">Fitur 3: Pengajuan Narasumber Online</h3>
+                    <p class="description">
+                        Fitur ini menyediakan platform untuk mengajukan permohonan narasumber dari BPOM dalam berbagai
+                        kegiatan seperti seminar, workshop, atau pelatihan. Dengan layanan ini, proses pengajuan dan
+                        persetujuan dapat dilakukan dengan cepat dan mudah.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+
+    <div class="container mt-2">
+        <div class="text-center">
+            <h3 class="fw-bold">Data PKL</h3>
+        </div>
+
+        <!-- Card Section -->
+        <div class="row my-4">
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-icon">😊</div>
+                    <h2><?php echo $selesai_pkl; ?></h2>
+                    <p>PKL Selesai</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-icon">📋</div>
+                    <h2><?php echo $sedang_pkl; ?></h2>
+                    <p>Sedang PKL</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-icon">🎧</div>
+                    <h2><?php echo $pkl_batal; ?></h2>
+                    <p>Batal</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-icon">👥</div>
+                    <h2><?php echo $lowongan; ?></h2>
+                    <p>Lowongan</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var carousel = document.querySelector('#carouselExampleIndicators');
+        var nextButton = carousel.querySelector('.carousel-control-next');
+        var prevButton = carousel.querySelector('.carousel-control-prev');
+
+        carousel.addEventListener('slid.bs.carousel', function(event) {
+            // Check if it's the last slide
+            if (event.to === event.relatedTarget.length - 1) {
+                nextButton.classList.add('disabled'); // Disable Next button
+            } else {
+                nextButton.classList.remove('disabled'); // Enable Next button
+            }
+
+            // Check if it's the first slide
+            if (event.to === 0) {
+                prevButton.classList.add('disabled'); // Disable Prev button
+            } else {
+                prevButton.classList.remove('disabled'); // Enable Prev button
+            }
+        });
+    });
+    </script>
+    <?php require_once('cs.php'); ?>
 </body>
 
 </html>

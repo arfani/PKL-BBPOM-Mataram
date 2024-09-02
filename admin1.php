@@ -1,6 +1,40 @@
 <?php
-include 'koneksi.php';
+include('koneksi.php');
+$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
+$s0 = mysqli_fetch_array($sql_0);
+$urlweb = $s0['urlweb'];
+?>
+<?php
+if (isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']); // Menghindari XSS
+    if ($_GET['status'] == 'success') {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    } else {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    }
 
+    echo $alert;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +46,10 @@ include 'koneksi.php';
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/admin.css">
     <title>Dashboard Admin</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -228,6 +266,7 @@ include 'koneksi.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+
 </body>
 
 </html>

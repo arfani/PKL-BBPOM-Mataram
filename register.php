@@ -1,10 +1,15 @@
 <?php
-include 'koneksi.php';
+include('koneksi.php');
 error_reporting(0);
 session_start();
 
-if (isset($_SESSION['username'])) {
-    header("Location: login.php");
+$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
+$s0 = mysqli_fetch_array($sql_0);
+$urlweb = $s0['urlweb'];
+
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    header('location:' . $urlweb . '/' . $role . '.php');
 }
 
 if (isset($_POST['submit'])) {
@@ -12,17 +17,18 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $no_hp = $_POST['no_hp'];
     $password = $_POST['password'];
-    $role = $_POST['role'];
 
-    $sql = "SELECT * FROM $role WHERE email='$email' OR no_hp='$no_hp'";
+    $sql = "SELECT * FROM users WHERE email='$email' OR no_hp='$no_hp'";
     $result = mysqli_query($conn, $sql);
+
     if (!$result->num_rows > 0) {
-        $sql = "INSERT INTO $role (nama, email, no_hp, password)
-                    VALUES ('$nama', '$email', '$no_hp', '$password')";
+        $sql = "INSERT INTO users (nama, email, no_hp, password, foto)
+                    VALUES ('$nama', '$email', '$no_hp', '$password', 'Asset/Gambar/profile.png')";
         $result = mysqli_query($conn, $sql);
+
         if ($result) {
             echo "<script>alert('Wow! Pendaftaran Berhasil.')</script>";
-            echo "<script>window.location.href = 'login.php';</script>";
+            echo "<script>window.location.href = '$urlweb/login.php';</script>";
         } else {
             echo "<script>alert('Woops! Ada Kesalahan.')</script>";
         }
@@ -32,6 +38,39 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
+
+<?php
+if (isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']); // Menghindari XSS
+    if ($_GET['status'] == 'success') {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    } else {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    }
+
+    echo $alert;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +80,10 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="Asset/CSS/style.css">
     <title>Register Form</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -57,15 +100,8 @@ if (isset($_POST['submit'])) {
                 <input type="text" placeholder="No Handphone" name="no_hp" value="<?php echo $no_hp; ?>" required>
             </div>
             <div class="input-group">
-                <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required>
-            </div>
-            <div class="input-group select-container">
-                <select name="role" required>
-                    <option value="" disabled selected>Pilih Jenis Pendaftaran</option>
-                    <option value="pkl">Pendaftar PKL</option>
-                    <option value="tamu">Pengunjung</option>
-                    <option value="narasumber">Narasumber</option>
-                </select>
+                <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>"
+                    required>
             </div>
             <div class="input-group">
                 <button name="submit" class="btn">Register</button>
@@ -73,6 +109,8 @@ if (isset($_POST['submit'])) {
             <p class="login-register-text">Sudah Memiliki Akun? <a href="login.php">Login Disini</a>.</p>
         </form>
     </div>
+
+    <?php require_once('cs.php'); ?>
 </body>
 
 </html>

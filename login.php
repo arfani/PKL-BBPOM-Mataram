@@ -1,22 +1,16 @@
 <?php
 
-include 'koneksi.php';
+include('koneksi.php');
 session_start();
 error_reporting(0);
 
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['id'];
-    if ($id <= 100) {
-        header('location: admin.php');
-    } else if ($id > 100 && $id <= 300) {
-        header('location: pkl.php');
-    } else if ($id > 300 && $id <= 600) {
-        header('location: tamu.php');
-    } else if ($id > 600 && $id <= 900) {
-        header('location: narasumber.php');
-    } else {
-        header('location: index.php');
-    }
+$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
+$s0 = mysqli_fetch_array($sql_0);
+$urlweb = $s0['urlweb'];
+
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    header('location:' . $urlweb . '/' . $role . '.php');
 }
 
 if (isset($_POST['submit'])) {
@@ -25,22 +19,34 @@ if (isset($_POST['submit'])) {
     $role = $_POST['role'];
     if (strpos($input, '@') !== false) {
         $email = $input;
-        $sql = "SELECT * FROM $role WHERE email='$email' AND password='$password'";
-        $result = mysqli_query($conn, $sql);
+        if ($role == "admin") {
+            $sql = "SELECT * FROM admin WHERE email='$email' AND password='$password'";
+            $result = mysqli_query($conn, $sql);
+        } else {
+            $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+            $result = mysqli_query($conn, $sql);
+        }
         if ($result->num_rows > 0) {
             $row = mysqli_fetch_assoc($result);
             $_SESSION['id'] = $row['id'];
+            $_SESSION['role'] = $role;
             header("Location: $role.php");
         } else {
             echo "<script>alert('Woops! Email Atau Password anda Salah.')</script>";
         }
     } else {
         $nohp = $input;
-        $sql = "SELECT * FROM $role WHERE no_hp='$nohp' AND password='$password'";
-        $result = mysqli_query($conn, $sql);
+        if ($role == "admin") {
+            $sql = "SELECT * FROM admin WHERE no_hp='$nohp' AND password='$password'";
+            $result = mysqli_query($conn, $sql);
+        } else {
+            $sql = "SELECT * FROM users WHERE no_hp='$nohp' AND password='$password'";
+            $result = mysqli_query($conn, $sql);
+        }
         if ($result->num_rows > 0) {
             $row = mysqli_fetch_assoc($result);
             $_SESSION['id'] = $row['id'];
+            $_SESSION['role'] = $role;
             header("Location: $role.php");
         } else {
             echo "<script>alert('Woops! No Hp Atau Password anda Salah.')</script>";
@@ -50,18 +56,55 @@ if (isset($_POST['submit'])) {
 
 ?>
 
+<?php
+if (isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']); // Menghindari XSS
+    if ($_GET['status'] == 'success') {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    } else {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    }
+
+    echo $alert;
+}
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="Asset/CSS/style.css">
     <!-- logo web -->
     <link rel="icon" href="Aset/Gambar/logo.png" type="image/x-icon">
     <title>PKL-BBPOM-MATARAM</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -72,16 +115,17 @@ if (isset($_POST['submit'])) {
                 <input type="text" placeholder="Email / No HP" name="email_nohp" value="<?php echo $email; ?>" required>
             </div>
             <div class="input-group">
-                <input type="password" placeholder="Password" name="password" id="password" value="<?php echo $_POST['password']; ?>" required>
+                <input type="password" placeholder="Password" name="password" id="password"
+                    value="<?php echo $_POST['password']; ?>" required>
             </div>
             <div class="mb-2 ms-2">
                 <input type="checkbox" id="showPassword"> <label for="showPassword">Lihat Password</label>
             </div>
             <div class="input-group select-container">
                 <select name="role" required>
-                    <option value="" disabled selected>Pilih Tipe Login</option>
-                    <option value="pkl">Pendaftar PKL</option>
-                    <option value="tamu">Pengunjung</option>
+                    <option value="" disabled selected>Login Sebagai :</option>
+                    <option value="pkl">PKL</option>
+                    <option value="tamu">Kunjungan</option>
                     <option value="narasumber">Narasumber</option>
                     <option value="admin">Admin</option>
                 </select>
@@ -94,18 +138,19 @@ if (isset($_POST['submit'])) {
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#showPassword').change(function() {
-                var passwordField = $('#password');
-                var fieldType = passwordField.attr('type');
-                if ($(this).is(':checked')) {
-                    passwordField.attr('type', 'text');
-                } else {
-                    passwordField.attr('type', 'password');
-                }
-            });
+    $(document).ready(function() {
+        $('#showPassword').change(function() {
+            var passwordField = $('#password');
+            var fieldType = passwordField.attr('type');
+            if ($(this).is(':checked')) {
+                passwordField.attr('type', 'text');
+            } else {
+                passwordField.attr('type', 'password');
+            }
         });
+    });
     </script>
+    <?php require_once('cs.php'); ?>
 </body>
 
 </html>

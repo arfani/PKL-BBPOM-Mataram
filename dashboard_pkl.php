@@ -1,9 +1,9 @@
 <?php
-include 'koneksi.php';
+include('koneksi.php');
 session_start();
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM pkl WHERE id ='$id'";
+    $sql = "SELECT * FROM users WHERE id ='$id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $email = $row['email'];
@@ -14,7 +14,7 @@ if (isset($_SESSION['id'])) {
 }
 
 // Query untuk mengambil data PKL
-$sql_pkl = "SELECT * FROM pkl";
+$sql_pkl = "SELECT * FROM users";
 $result_pkl = mysqli_query($conn, $sql_pkl);
 $data_pkl = array();
 while ($row_pkl = mysqli_fetch_assoc($result_pkl)) {
@@ -38,6 +38,44 @@ while ($row_kunjungan = mysqli_fetch_assoc($result_kunjungan)) {
 }
 ?>
 
+<?php
+
+$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
+$s0 = mysqli_fetch_array($sql_0);
+$urlweb = $s0['urlweb'];
+?>
+<?php
+if (isset($_GET['message'])) {
+    $message = htmlspecialchars($_GET['message']); // Menghindari XSS
+    if ($_GET['status'] == 'success') {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    } else {
+        $alert = "<script type='text/javascript'>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                title: 'Pesan',
+                text: '$message',
+                showConfirmButton: false,
+                timer: 3000 // Durasi notifikasi dalam milidetik
+            });
+        });
+    </script>";
+    }
+
+    echo $alert;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,6 +87,10 @@ while ($row_kunjungan = mysqli_fetch_assoc($result_kunjungan)) {
     <link rel="stylesheet" href="Asset/CSS/custom3.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Admin Dashboard</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -104,7 +146,7 @@ while ($row_kunjungan = mysqli_fetch_assoc($result_kunjungan)) {
                     <h5 class="modal-title" id="profileModalLabel">Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="profileForm" action="save_profile.php" method="POST">
+                <form id="profileForm" action="<?php echo $urlweb ?>/function/save_profile.php" method="POST">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="profileName" class="form-label">Nama Lengkap</label>
@@ -171,7 +213,7 @@ while ($row_kunjungan = mysqli_fetch_assoc($result_kunjungan)) {
                         <h5 class="card-title">Daftar PKL</h5>
                         <ul class="list-group list-group-flush">
                             <?php foreach ($data_pkl as $pkl) { ?>
-                            <li class="list-group-item"><?php echo $pkl['nama']; ?></li>
+                                <li class="list-group-item"><?php echo $pkl['nama']; ?></li>
                             <?php } ?>
                         </ul>
                     </div>
@@ -183,7 +225,7 @@ while ($row_kunjungan = mysqli_fetch_assoc($result_kunjungan)) {
                         <h5 class="card-title">Daftar Narasumber</h5>
                         <ul class="list-group list-group-flush">
                             <?php foreach ($data_narasumber as $narasumber) { ?>
-                            <li class="list-group-item"><?php echo $narasumber['nama']; ?></li>
+                                <li class="list-group-item"><?php echo $narasumber['nama']; ?></li>
                             <?php } ?>
                         </ul>
                     </div>
@@ -195,7 +237,7 @@ while ($row_kunjungan = mysqli_fetch_assoc($result_kunjungan)) {
                         <h5 class="card-title">Data Kunjungan</h5>
                         <ul class="list-group list-group-flush">
                             <?php foreach ($data_kunjungan as $kunjungan) { ?>
-                            <li class="list-group-item"><?php echo $kunjungan['tanggal']; ?></li>
+                                <li class="list-group-item"><?php echo $kunjungan['tanggal']; ?></li>
                             <?php } ?>
                         </ul>
                     </div>
@@ -211,37 +253,38 @@ while ($row_kunjungan = mysqli_fetch_assoc($result_kunjungan)) {
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('kunjunganChart').getContext('2d');
-        var kunjunganChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [<?php foreach ($data_kunjungan as $kunjungan) {
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('kunjunganChart').getContext('2d');
+            var kunjunganChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [<?php foreach ($data_kunjungan as $kunjungan) {
                                     echo "'" . $kunjungan['tanggal'] . "',";
                                 } ?>],
-                datasets: [{
-                    label: 'Jumlah Kunjungan',
-                    data: [<?php foreach ($data_kunjungan as $kunjungan) {
+                    datasets: [{
+                        label: 'Jumlah Kunjungan',
+                        data: [<?php foreach ($data_kunjungan as $kunjungan) {
                                     echo $kunjungan['jumlah'] . ",";
                                 } ?>],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
+            });
         });
-    });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

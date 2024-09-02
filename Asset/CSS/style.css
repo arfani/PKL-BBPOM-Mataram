@@ -82,7 +82,7 @@ body::before {
 .container .login-email .input-group input:valid,
 .container .login-email .input-group select:focus,
 .container .login-email .input-group select:valid {
-  border-color: #a29bfe;
+  border-color: #1100ff;
 }
 
 .container .login-email .input-group .btn {
@@ -91,7 +91,7 @@ body::before {
   padding: 15px 20px;
   text-align: center;
   border: none;
-  background: #a29bfe;
+  background: #1100ff;
   outline: none;
   border-radius: 30px;
   font-size: 1.2rem;
@@ -102,7 +102,7 @@ body::before {
 
 .container .login-email .input-group .btn:hover {
   transform: translateY(-5px);
-  background: #6c5ce7;
+  background: #1e00ff;
 }
 
 .login-register-text {
