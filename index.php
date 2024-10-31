@@ -91,7 +91,7 @@ if (isset($_GET['message'])) {
                 <div class="col-md-6">
                     <h1 class="hero-title">Selamat datang di Portal Sapu Jagad BPOM</h1>
                     <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
-                    <a href="login.php" class="btn btn-warning btn-cta">Mulai ➔</a>
+                    <a href="login.php" class="btn btn-warning btn-cta " style="width:35%;">Mulai ➔</a>
                 </div>
                 <div class="col-md-6 text-center">
                     <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">

@@ -1,0 +1,161 @@
+
+.profile {
+    justify-content: space-between;
+}
+
+.foto {
+    padding-right: 20px;
+}
+
+/* Custom CSS for the footer */
+footer {
+    background-color: #0d6efd;
+    color: white;
+
+    border-radius: 50px 50px 0 0;
+}
+
+footer .social-icons a {
+    color: white;
+
+    font-size: 2rem;
+    margin: 0 15px;
+    transition: transform 0.3s;
+}
+
+
+footer .social-icons a:hover {
+    transform: scale(1.2);
+}
+
+.header-profile::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: greenyellow;
+    margin-top: 8px;
+}
+
+
+
+@media (max-width: 576px) {
+    .foto {
+        padding-right: 0;
+    }
+
+    .social-icons a i {
+        font-size: 10px;
+    }
+
+    footer {
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+/* Mengatur modal agar memiliki padding dan jarak antar elemen yang lebih baik */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+/* Mengatur judul modal dengan gaya yang lebih menonjol */
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-body {
+    text-align: left;
+}
+
+.modal-body .btn {
+    display: block;
+    margin: 0 auto;
+}
+
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.btn-close:hover {
+    color: #333;
+}
+
+/* Styling untuk teks di dalam modal */
+.modal-body p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Styling untuk tombol di dalam modal */
+.modal-body .btn-primary {
+
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.modal-body .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.modal-body .btn-success {
+
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.modal-body .btn-success:hover {
+    background-color: #218838;
+}
+
+/* Styling untuk input file */
+.modal-body .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.modal-body .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+/* Memberikan jarak antar elemen */
+.modal-body .mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+/* Center alignment for buttons */
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    border-top: none;
+    padding-top: 0;
+}
+
+.modal-footer .btn {
+    margin-top: 10px;
+
+}

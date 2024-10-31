@@ -185,7 +185,7 @@ if (isset($_GET['message'])) {
                         <h3 class="fw-bold">Data Penempatan PKL</h3>
                     </div>
                     <div class="d-flex justify-content-start mb-3">
-                        <a href="tambah.php" class="btn btn-success">Tambah Data</a>
+                        <a href="function/tambah.php" class="btn btn-success">Tambah Data</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover text-center">

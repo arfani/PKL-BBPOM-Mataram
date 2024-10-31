@@ -87,6 +87,7 @@ if (isset($_GET['message'])) {
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
+                    <a href="logout.php">logout</a>
                     <h1 class="title">Selamat datang di Portal Sapu Jagad Kunjungan</h1>
                     <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
                     <a href="pengajuan.php" class="btn btn-warning btn-cta">Ajukan ➔</a>

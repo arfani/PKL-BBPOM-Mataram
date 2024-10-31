@@ -2,31 +2,32 @@
 session_start();
 include('koneksi.php');
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    // Mengambil data dari form dan menghindari SQL injection
     $posisi = $conn->real_escape_string($_POST['posisi']);
     $deskripsi = $conn->real_escape_string($_POST['deskripsi']);
     $jurusan = $conn->real_escape_string($_POST['jurusan']);
     $kuota = intval($_POST['kuota']);
 
+    // Menjalankan query untuk menambahkan data
     $sql = "INSERT INTO penempatan_pkl (posisi, deskripsi, jurusan, kuota) VALUES ('$posisi', '$deskripsi', '$jurusan', $kuota)";
     if ($conn->query($sql) === TRUE) {
         header('Location: admin_posisi.php');
+        exit;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
-$conn->close();
-?>
-
-<?php
+// Query untuk mengambil data setelah koneksi masih aktif
 $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
 
+// Tutup koneksi setelah semua proses selesai
+$conn->close();
 ?>
+
 <?php
 if (isset($_GET['message'])) {
     $message = htmlspecialchars($_GET['message']); // Menghindari XSS
@@ -34,11 +35,11 @@ if (isset($_GET['message'])) {
         $alert = "<script type='text/javascript'>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
-                icon: 'success', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                icon: 'success',
                 title: 'Pesan',
                 text: '$message',
                 showConfirmButton: false,
-                timer: 3000 // Durasi notifikasi dalam milidetik
+                timer: 3000
             });
         });
     </script>";
@@ -46,11 +47,11 @@ if (isset($_GET['message'])) {
         $alert = "<script type='text/javascript'>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
-                icon: 'error', // Anda dapat mengubah menjadi 'error', 'warning', 'info', atau 'question'
+                icon: 'error',
                 title: 'Pesan',
                 text: '$message',
                 showConfirmButton: false,
-                timer: 3000 // Durasi notifikasi dalam milidetik
+                timer: 3000
             });
         });
     </script>";
@@ -59,27 +60,23 @@ if (isset($_GET['message'])) {
     echo $alert;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Data</title>
-    <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
 
     <div class="container mt-3 mb-5">
         <h2>Tambah Data</h2>
 
         <form action="<?php echo $urlweb ?>/function/tambah.php" method="post">
-
             <div class="form-group">
                 <label for="posisi">Posisi & Penempatan:</label>
                 <input type="text" class="form-control" id="posisi" name="posisi" required>
@@ -105,5 +102,4 @@ if (isset($_GET['message'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>

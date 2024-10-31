@@ -38,8 +38,6 @@ if (isset($_SESSION['id'])) {
     header("Location: index.php");
 }
 ?>
-
-
 <?php
 if (isset($_GET['message'])) {
     $message = htmlspecialchars($_GET['message']); // Menghindari XSS
@@ -87,7 +85,6 @@ if (isset($_GET['message'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <style>
         .section-title {
             font-size: 2.5rem;
@@ -141,7 +138,7 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="Asset/Gambar/logo.png" alt="#" width="60px" height="60px"
@@ -158,7 +155,7 @@ if (isset($_GET['message'])) {
                     if ($status == "active" || $status == "done") {
                     ?>
                         <li class="nav-item me-3 dashboard">
-                            <a class="nav-link" style="color: white;" href="tambah_absensi.php">
+                            <a class="nav-link" style="color: white;" href="function/tambah_absensi.php">
                                 <i class="fas fa-calendar"></i>
                                 Absen</a>
                         </li>
@@ -267,114 +264,68 @@ if (isset($_GET['message'])) {
             </div>
         </div>
     </div>
-
-    <div class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="hero-title">Selamat datang di Portal Sapu Jagad PKL</h1>
-                    <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
-                    <a href="pengajuan.php" class="btn btn-warning btn-cta">Ajukan ➔</a>
-                </div>
-                <div class="col-md-6 text-center">
-                    <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
+    <br><br><br><br>
     <div class="text-center mt-3">
-        <h2 class="title">Posisi PKL Yang Tersedia</h2>
+        <h2 class="title">Rekap Absensi <?php echo htmlspecialchars($nama) ?></h2>
     </div>
+    
+
     <div class="container mt-3 mb-5">
+        <a href='tambah_absensi.php' class='btn btn-primary' style="margin-bottom:10px;">Buat Absensi</a><br>
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover text-center">
                 <thead class="bg-primary" style="vertical-align: middle; color: white;">
                     <tr>
                         <th>#</th>
-                        <th>Posisi & Penempatan</th>
-                        <th>Deskripsi</th>
-                        <th>Kualifikasi Jurusan</th>
-                        <th>Kuota</th>
-                        <th>Aksi</th>
+                        <th>Tanggal</th>
+                        <th>Status</th>
+                        <th>Jam Masuk</th>
+                        <th>Jam Keluar</th>
+                        <th>Total Jam Kerja</th>
+                        <th>Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $sql2 = "SELECT * FROM penempatan_pkl";
+                    // Ambil ID user dari session
+                    $id_user = $_SESSION['id'];
+
+                    // Query untuk mengambil data absensi hanya untuk pengguna yang sedang login
+                    $sql2 = "SELECT * FROM absensi WHERE user_id = '$id_user'";
                     $result2 = mysqli_query($conn, $sql2);
                     $no = 1;
+
+                    // Menampilkan data absensi
                     while ($row2 = mysqli_fetch_assoc($result2)) {
                         echo "<tr>";
                         echo "<td scope='row'>{$no}</td>";
-                        echo "<td>{$row2['posisi']}</td>";
-                        echo "<td>{$row2['deskripsi']}</td>";
-                        echo "<td>{$row2['jurusan']}</td>";
-                        echo "<td>{$row2['kuota']}</td>";
-                        if ($status == "active") {
-                            echo "<td><a href='dashboard.php' class='btn btn-primary'>Apply</a></td>";
-                        } else if ($status == "pending") {
-                            echo "<td><a href='#' onclick='openNotif()' class='btn btn-primary'>Apply</a></td>";
-                        } else {
-                            echo "<td><a href='pengajuan.php' class='btn btn-primary'>Apply</a></td>";
-                        }
-
+                        echo "<td>{$row2['tanggal']}</td>";
+                        echo "<td>{$row2['keterangan']}</td>";
+                        echo "<td>{$row2['status']}</td>";
+                        echo "<td>{$row2['jam_masuk']}</td>";
                         echo "</tr>";
                         $no++;
                     }
                     ?>
-
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="text-center">
-        <h1 class="title">Dokumentasi</h1>
-    </div>
-    <div class="container my-5">
-        <div class="text-center">
-            <h2 class="section-title">Bidang PKL</h2>
-            <p class="section-description">Berikut adalah beberapa bidang yang tersedia untuk PKL di BBPOM Mataram</p>
-        </div>
+        <script>
+            $(document).ready(function() {
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('searchInput');
+                    const searchForm = document.getElementById('searchForm');
 
-        <div class="row mt-4">
-            <?php
-            $sql3 = "SELECT * FROM penempatan_pkl";
-            $result3 = mysqli_query($conn, $sql3);
-
-            while ($row3 = mysqli_fetch_assoc($result3)) {
-                $posisi = $row3['posisi'];
-                $deskripsi = $row3['deskripsi'];
-                $gambar = $row3['gambar'];
-            ?>
-
-                <div class="col-md-4 pt-3">
-                    <div class="card bidang-card">
-                        <img src="<?php echo $urlweb; ?>/Asset/Gambar/<?php echo $gambar; ?>" class="card-img-top"
-                            alt="Laboratorium">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $posisi ?></h5>
-                            <p class="card-text"><?php echo $deskripsi ?></p>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-
-        </div>
-
-
-        <?php require_once('cs.php'); ?>
+                    searchInput.addEventListener('input', function() {
+                        searchForm.submit(); // Kirim form secara otomatis saat input berubah
+                    });
+                });
+            });
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-        </script>
-
-        <script>
-            //Function to show notification
-            function openNotif() {
-                alert("Anda sudah melakukan pengajuan, mohon menunggu balasan atau hubungi admin.");
-            }
         </script>
 
 </body>
