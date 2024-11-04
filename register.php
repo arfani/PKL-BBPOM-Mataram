@@ -17,13 +17,15 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $no_hp = $_POST['no_hp'];
     $password = $_POST['password'];
+    $universitas = $_POST['universitas'];
+    $status = $_POST['status'];
 
     $sql = "SELECT * FROM users WHERE email='$email' OR no_hp='$no_hp'";
     $result = mysqli_query($conn, $sql);
 
     if (!$result->num_rows > 0) {
-        $sql = "INSERT INTO users (nama, email, no_hp, password, foto)
-                    VALUES ('$nama', '$email', '$no_hp', '$password', 'Asset/Gambar/profile.png')";
+        $sql = "INSERT INTO users (nama, email, no_hp, password, foto, universitas, status)
+                    VALUES ('$nama', '$email', '$no_hp', '$password', 'Asset/Gambar/profile.png', '$universitas', '$status')";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {
@@ -100,9 +102,13 @@ if (isset($_GET['message'])) {
                 <input type="text" placeholder="No Handphone" name="no_hp" value="<?php echo $no_hp; ?>" required>
             </div>
             <div class="input-group">
+                <input type="text" placeholder="Universitas ..." name="universitas" value="<?php echo $universitas; ?>" required>
+            </div>
+            <div class="input-group">
                 <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>"
                     required>
             </div>
+            <input type="hidden" name="status" value="active">
             <div class="input-group">
                 <button name="submit" class="btn">Register</button>
             </div>

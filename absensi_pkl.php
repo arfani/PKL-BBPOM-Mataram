@@ -155,7 +155,7 @@ if (isset($_GET['message'])) {
                     if ($status == "active" || $status == "done") {
                     ?>
                         <li class="nav-item me-3 dashboard">
-                            <a class="nav-link" style="color: white;" href="function/tambah_absensi.php">
+                            <a class="nav-link" style="color: white;" href="tambah_absensi.php">
                                 <i class="fas fa-calendar"></i>
                                 Absen</a>
                         </li>
@@ -164,7 +164,7 @@ if (isset($_GET['message'])) {
                     if ($status == "active" || $status == "done") {
                     ?>
                         <li class="nav-item me-3 dashboard">
-                            <a class="nav-link" style="color: white;" href="dashboardpkl.php">
+                            <a class="nav-link" style="color: white;" href="pkl.php">
                                 <i class="fas fa-home"></i>
                                 Dashboard
                             </a>
@@ -189,6 +189,12 @@ if (isset($_GET['message'])) {
                         <a class="nav-link text-nowrap" style="color: white" href="#" data-bs-toggle="modal"
                             data-bs-target="#profileModal">
                             <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link text-nowrap" style="color: white" href="#" data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
+                            <i class="fas fa-power-off"></i> logout
                         </a>
                     </li>
                 </ul>
@@ -226,12 +232,28 @@ if (isset($_GET['message'])) {
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger"><a href="logout.php"
-                                style="text-decoration: none; color: white;">Logout</a></button>
+                        <button type="button" class="btn btn-primary"><a href="dashboardpkl.php"
+                                style="text-decoration: none; color: white;">Profile</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Apakah Anda Yakin Ingin Keluar?</h5>
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="btn btn-danger"><a href="logout.php"
+                        style="text-decoration: none; color: white;">Iya</a></button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                </div>
             </div>
         </div>
     </div>
@@ -271,7 +293,7 @@ if (isset($_GET['message'])) {
     
 
     <div class="container mt-3 mb-5">
-        <a href='tambah_absensi.php' class='btn btn-primary' style="margin-bottom:10px;">Buat Absensi</a><br>
+        <a href="tambah_absensi.php" class='btn btn-primary' style="margin-bottom:10px;">Buat Absensi</a><br>
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover text-center">
                 <thead class="bg-primary" style="vertical-align: middle; color: white;">
@@ -289,20 +311,44 @@ if (isset($_GET['message'])) {
                     <?php
                     // Ambil ID user dari session
                     $id_user = $_SESSION['id'];
-
+                    
+                    $batas_waktu = '08:31:00';
                     // Query untuk mengambil data absensi hanya untuk pengguna yang sedang login
-                    $sql2 = "SELECT * FROM absensi WHERE user_id = '$id_user'";
+                    // Tambahkan klausa ORDER BY tanggal DESC untuk mengurutkan berdasarkan tanggal terbaru
+                    $sql2 = "SELECT * FROM absensi WHERE user_id = '$id_user' ORDER BY tanggal DESC";
                     $result2 = mysqli_query($conn, $sql2);
+                    
                     $no = 1;
-
+                    
                     // Menampilkan data absensi
                     while ($row2 = mysqli_fetch_assoc($result2)) {
                         echo "<tr>";
                         echo "<td scope='row'>{$no}</td>";
                         echo "<td>{$row2['tanggal']}</td>";
-                        echo "<td>{$row2['keterangan']}</td>";
                         echo "<td>{$row2['status']}</td>";
-                        echo "<td>{$row2['jam_masuk']}</td>";
+                        echo "<td>{$row2['waktu_masuk']}</td>";
+                        if ($row2['waktu_keluar'] != NULL) {
+                            echo "<td>{$row2['waktu_keluar']}</td>";
+                            echo "<td>{$row2['durasi']}</td>";
+                            
+                            // Cek apakah durasi memenuhi batas waktu atau tidak
+                            if ($row2['durasi'] < $batas_waktu) {
+                                $durasi = new DateTime($row2['durasi']);
+                                $batas = new DateTime($batas_waktu);
+                                $selisih = $durasi->diff($batas);
+                                if ($selisih->h > 0){
+                                echo "<td>Waktu Kerja Kurang {$selisih->h} jam {$selisih->i} Menit</td>";
+                                } else {
+                                    echo "<td>Waktu Kerja Kurang {$selisih->i} Menit</td>";
+                                }
+                            } else {
+                                echo "<td>Waktu Kerja Sudah cukup</td>";
+                            }
+                        } else {
+                            echo "<td>-</td>";
+                            echo "<td>-</td>";
+                            echo "<td>-</td>";
+                        }
                         echo "</tr>";
                         $no++;
                     }

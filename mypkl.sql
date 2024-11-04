@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2024 at 04:53 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Nov 01, 2024 at 08:45 AM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,6 +24,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `absensi`
+--
+
+CREATE TABLE `absensi` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `status` enum('hadir','izin','sakit') NOT NULL,
+  `keterangan` varchar(50) DEFAULT NULL,
+  `tanggal` date NOT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `latitude` decimal(10,8) DEFAULT NULL,
+  `longitude` decimal(11,8) DEFAULT NULL,
+  `waktu_masuk` time DEFAULT NULL,
+  `waktu_keluar` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `absensi`
+--
+
+INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `latitude`, `longitude`, `waktu_masuk`, `waktu_keluar`) VALUES
+(8, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-01', 'images.jfif', '-8.58792210', '116.11586280', '13:33:08', '13:36:18'),
+(10, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-01', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58791350', '116.11587080', '14:36:28', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `admin`
 --
 
@@ -33,7 +61,7 @@ CREATE TABLE `admin` (
   `email` varchar(50) NOT NULL,
   `no_hp` varchar(20) NOT NULL,
   `password` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
@@ -58,7 +86,7 @@ CREATE TABLE `api` (
   `no_cs` varchar(20) NOT NULL,
   `jenis` int(2) NOT NULL,
   `status` int(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `api`
@@ -78,7 +106,7 @@ CREATE TABLE `notifikasi` (
   `userid` int(10) NOT NULL,
   `text` text NOT NULL,
   `status` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `notifikasi`
@@ -143,14 +171,14 @@ CREATE TABLE `penempatan_pkl` (
   `jurusan` text NOT NULL,
   `kuota` int(5) NOT NULL,
   `gambar` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `penempatan_pkl`
 --
 
 INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`, `gambar`) VALUES
-(2, 'Tata Usaha', 'Membantu Pekerjaan di Ruangan Tata Usaha', 'Teknologi Informasi, Desain Komunikasi Visual, Multimedia', 3, ''),
+(2, 'Tata Usaha', 'Membantu Pekerjaan di Ruangan Tata Usaha', 'Teknologi Informasi, Desain Komunikasi Visual, Multimedia', 4, ''),
 (3, 'Kimia Obat', 'Membantu Pekerjaan di Lab Kimia Obat', 'Farmasi,Analis Farmasi,Kimia,Analis Kimia,Teknologi Kosmetik,SMK Analis Kimia,SMK Analis Farmas, Teknologi Informasi', 2, 'image_Kimia Obat.jpg'),
 (4, 'Kimia Kosmetik', 'Membantu Pekerjaan di Lab Kimia Kosmetik', 'Farmasi,Analis Farmasi,Kimia,Analis Kimia,Teknologi Kosmetik,SMK Analis Kimia,SMK Analis Farmas, Teknologi Informasi', 4, 'image_Kimia Kosmetik.jpg'),
 (5, 'Kimia OTSK', 'Membantu Pekerjaan di Lab Kimia OTSK', 'Farmasi,Analis Farmasi,Kimia,Analis Kimia,Teknologi Kosmetik,SMK Analis Kimia,SMK Analis Farmas, Teknologi Informasi', 2, 'image_Kimia OTSK.jpg'),
@@ -181,7 +209,7 @@ CREATE TABLE `pengajuan_pkl` (
   `penempatan` varchar(50) NOT NULL,
   `laporan_akhir` text NOT NULL,
   `sertifikat` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengajuan_pkl`
@@ -212,7 +240,7 @@ CREATE TABLE `tb_seo` (
   `urlweb` text NOT NULL,
   `user` text NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_seo`
@@ -234,7 +262,7 @@ CREATE TABLE `tb_slide` (
   `sort` int(11) NOT NULL,
   `user` text NOT NULL,
   `status` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_slide`
@@ -255,28 +283,37 @@ CREATE TABLE `users` (
   `id` int(6) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `universitas` varchar(255) DEFAULT NULL,
   `no_hp` varchar(20) NOT NULL,
   `password` varchar(50) NOT NULL,
   `status` varchar(20) NOT NULL,
   `foto` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nama`, `email`, `no_hp`, `password`, `status`, `foto`) VALUES
-(1, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', '082145554182', '231221', 'done', 'Asset/Gambar/profile_Mukhlis Wardin Juaini.png'),
-(2, 'Ayu Ningsih', 'wardin@gmail.com', '085338108858', '231221', 'active', 'Asset/Gambar/profile.png'),
-(3, 'Ardha', 'ardha@gmail.com', '08555555554', '231221', 'active', 'Asset/Gambar/profile.png'),
-(4, 'mukhlis wj', 'mukhliswardinjuaini@gmail.com', '082145554185', '231221', '', 'Asset/Gambar/profile.png'),
-(5, 'Ayu Ningsih', 'ayu@gmail.com', '08214554182', '231221', 'active', 'Asset/Gambar/20240316_103510.png'),
-(6, 'arda', 'arda@gmail.com', '0888888', '231221', '', 'Asset/Gambar/profile.png'),
-(8, 'nama', 'email@gmail.com', '12345678', '231221', '', '');
+INSERT INTO `users` (`id`, `nama`, `email`, `universitas`, `no_hp`, `password`, `status`, `foto`) VALUES
+(1, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', NULL, '082145554182', '231221', 'done', 'Asset/Gambar/profile_Mukhlis Wardin Juaini.png'),
+(2, 'Ayu Ningsih', 'wardin@gmail.com', NULL, '085338108858', '231221', 'done', 'Asset/Gambar/profile.png'),
+(3, 'Ardha', 'ardha@gmail.com', NULL, '08555555554', '231221', 'done', 'Asset/Gambar/profile.png'),
+(4, 'mukhlis wj', 'mukhliswardinjuaini@gmail.com', NULL, '082145554185', '231221', '', 'Asset/Gambar/profile.png'),
+(5, 'Ayu Ningsih', 'ayu@gmail.com', NULL, '08214554182', '231221', 'active', 'Asset/Gambar/20240316_103510.png'),
+(6, 'arda', 'arda@gmail.com', NULL, '0888888', '231221', 'active', 'Asset/Gambar/profile.png'),
+(8, 'nama', 'email@gmail.com', NULL, '12345678', '231221', '', ''),
+(9, 'Bagas Adinata', 'bagas@gmail.com', 'Universitas Mataram', '087750292514', '1234', 'active', 'Asset/Gambar/profile.png');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `absensi`
+--
+ALTER TABLE `absensi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `admin`
@@ -336,6 +373,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `absensi`
+--
+ALTER TABLE `absensi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
@@ -381,11 +424,17 @@ ALTER TABLE `tb_slide`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `absensi`
+--
+ALTER TABLE `absensi`
+  ADD CONSTRAINT `absensi_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `pengajuan_pkl`

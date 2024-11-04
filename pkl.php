@@ -17,19 +17,33 @@ if (isset($_SESSION['role'])) {
 
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
+    $tanggal_hari_ini = date('Y-m-d');
+    
     if ($role == "admin") {
         $email = "";
         $nama = "";
         $no_hp = "";
         $status = "";
     } else {
-        $sql = "SELECT * FROM users where id ='$id'";
+        $sql = "SELECT * FROM users WHERE id = '$id'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $email = $row['email'];
         $nama = $row['nama'];
         $no_hp = $row['no_hp'];
         $status = $row['status'];
+        
+        // Query untuk mendapatkan waktu_masuk dan waktu_keluar pada tanggal hari ini
+        $sql_absensi = "SELECT waktu_masuk, waktu_keluar FROM absensi WHERE user_id = ? AND tanggal = ?";
+        $stmt = $conn->prepare($sql_absensi);
+        $stmt->bind_param("is", $id, $tanggal_hari_ini);
+        $stmt->execute();
+        $result_absensi = $stmt->get_result();
+        $data_absensi = $result_absensi->fetch_assoc();
+
+        // Ambil waktu_masuk dan waktu_keluar jika tersedia
+        $waktu_masuk = $data_absensi['waktu_masuk'] ?? "";
+        $waktu_keluar = $data_absensi['waktu_keluar'] ?? "";
     }
 } else {
     $email = "";
@@ -106,11 +120,6 @@ if (isset($_GET['message'])) {
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .bidang-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
         .card-img-top {
             border-radius: 10px;
             height: 200px;
@@ -137,6 +146,44 @@ if (isset($_GET['message'])) {
                 font-size: 0.875rem;
             }
         }
+        .clock {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+        }
+        @media (max-width: 576px) {
+        /* Mengatur ukuran judul pada perangkat mobile */
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        /* Mengatur ukuran teks pada perangkat mobile */
+        .section-description, .card-title, .card-text {
+            font-size: 0.875rem;
+        }
+
+        /* Mengatur ukuran card pada perangkat mobile */
+        .bidang-card {
+            margin-bottom: 1rem;
+        }
+
+        /* Memastikan tabel dapat digulir secara horizontal di perangkat kecil */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* Menyederhanakan hero section pada perangkat kecil */
+        .hero-section .hero-title {
+            font-size: 1.25rem;
+        }
+
+        /* Mengubah ukuran gambar pada perangkat mobile */
+        .hero-section img {
+            width: 180px;
+            height: 180px;
+        }
+    }
+
     </style>
 </head>
 
@@ -167,7 +214,7 @@ if (isset($_GET['message'])) {
                     if ($status == "active" || $status == "done") {
                     ?>
                         <li class="nav-item me-3 dashboard">
-                            <a class="nav-link" style="color: white;" href="dashboardpkl.php">
+                            <a class="nav-link" style="color: white;" href="pkl.php">
                                 <i class="fas fa-home"></i>
                                 Dashboard
                             </a>
@@ -192,6 +239,12 @@ if (isset($_GET['message'])) {
                         <a class="nav-link text-nowrap" style="color: white" href="#" data-bs-toggle="modal"
                             data-bs-target="#profileModal">
                             <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link text-nowrap" style="color: white" href="#" data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
+                            <i class="fas fa-power-off"></i> logout
                         </a>
                     </li>
                 </ul>
@@ -229,8 +282,8 @@ if (isset($_GET['message'])) {
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger"><a href="logout.php"
-                                style="text-decoration: none; color: white;">Logout</a></button>
+                        <button type="button" class="btn btn-primary"><a href="dashboardpkl.php"
+                                style="text-decoration: none; color: white;">Profile</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
@@ -239,6 +292,22 @@ if (isset($_GET['message'])) {
         </div>
     </div>
 
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Apakah Anda Yakin Ingin Keluar?</h5>
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="btn btn-danger"><a href="logout.php"
+                        style="text-decoration: none; color: white;">Iya</a></button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Notification Modal -->
     <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
         aria-hidden="true">
@@ -274,7 +343,7 @@ if (isset($_GET['message'])) {
                 <div class="col-md-6">
                     <h1 class="hero-title">Selamat datang di Portal Sapu Jagad PKL</h1>
                     <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
-                    <a href="pengajuan.php" class="btn btn-warning btn-cta">Ajukan ➔</a>
+                    <a href="pengajuan.php" class="btn btn-warning btn-cta">Lengkapi Data Diri Anda ➔</a>
                 </div>
                 <div class="col-md-6 text-center">
                     <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">
@@ -282,7 +351,57 @@ if (isset($_GET['message'])) {
             </div>
         </div>
     </div>
+    <div class="container my-5" style="cursor:default;">
+    <div class="row align-items-center">
+    <div class="col-md-4 ">
+        <div class="row mt-4">
+                <div class="card bidang-card">
+                        <div class="card-body">
+                                <div class="text-center">
+                                <label for="jam_masuk">Waktu Masuk</label>
+                                <input type="text" id="jam_masuk" readonly 
+                                   style="font-size: 1.5rem; border: none; background: transparent; text-align: center;" 
+                                   value="<?php echo $waktu_masuk ? $waktu_masuk : ''; ?>">
+                                   <?php if($waktu_masuk == NULL){?>
+                                    <a href="tambah_absensi.php?keterangan=Masuk" class="btn btn-primary" style="margin:auto">
+                                    Absen Masuk
+                                    </a>
+                                   <?php } else { ?>
+                                    <a  class="btn btn-primary" style="margin:auto; background-color:#6c757d; cursor:no-drop" disabled>
+                                    Absen Berhasil
+                                    </a>
+                                   <?php } ?>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 ">
+            <div class="row mt-4">
+                    <div class="card bidang-card">
+                        <di class="card-body">
+                            <div class="text-center">
+                            <label for="jam_masuk">Waktu Masuk</label>
+                                <input type="text" id="jam_keluar" readonly 
+                                   style="font-size: 1.5rem; border: none; background: transparent; text-align: center;" 
+                                   value="<?php echo $waktu_keluar ? $waktu_keluar: ''; ?>">
+                                   <?php if($waktu_keluar == NULL){?>
+                                    <a href="tambah_absensi.php?keterangan=Keluar" class="btn btn-primary" style="margin:auto">
+                                    Absen Keluar
+                                    </a>
+                                   <?php } else { ?>
+                                    <a  class="btn btn-primary" style="margin:auto; background-color:#6c757d; cursor:no-drop" disabled>
+                                    Absen Berhasil
+                                    </a>
+                                   <?php } ?>
+                                </div>
+                        </div>
+            </div>
+        </div>
 
+        </div>
+    </div>
     
     <div class="text-center mt-3">
         <h2 class="title">Posisi PKL Yang Tersedia</h2>
@@ -375,6 +494,29 @@ if (isset($_GET['message'])) {
             function openNotif() {
                 alert("Anda sudah melakukan pengajuan, mohon menunggu balasan atau hubungi admin.");
             }
+        </script>
+        <script>
+        function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const currentTime = `${hours}:${minutes}:${seconds}`;
+
+        // Update waktu_masuk hanya jika belum ada di database
+        <?php if (!$waktu_masuk): ?>
+            document.getElementById('jam_masuk').value = currentTime;
+        <?php endif; ?>
+            
+        // Update waktu_keluar hanya jika belum ada di database
+        <?php if (!$waktu_keluar): ?>
+            document.getElementById('jam_keluar').value = currentTime;
+        <?php endif; ?>
+}
+    // Jalankan updateClock setiap detik
+    setInterval(updateClock, 1000);
+    updateClock(); // Panggil sekali saat halaman pertama kali dimuat
+
         </script>
 
 </body>

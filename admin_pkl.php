@@ -222,8 +222,11 @@ if (isset($_GET['message'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin_pkl.php">
+                            <a class="nav-link active" aria-current="page" href="admin_pkl.php" >
                                 PKL
+                                <a class="nav-link " href="admin_absensi.php" style="margin-left:5%">
+                                Absensi
+                                </a>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -27,13 +27,13 @@ $message = '';
 
 if (isset($_POST['submit'])) {
     // Ambil semua data dari form
-    $nama = $_POST['nama'];
+    $nama = $user['nama']; // Get user's name from session
     $status = $_POST['status'];
     $keterangan = $_POST['keterangan'];
-    $tanggal = $_POST['tanggal'];
+    $tanggal = date('Y-m-d'); // Automatically set the current date
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
-    $jam = $_POST['jam'];
+    $jam = $_POST['jam']; // Automatically set the current time for storage
 
     // Proses upload foto
     $foto = $_FILES['foto'];
@@ -43,24 +43,56 @@ if (isset($_POST['submit'])) {
     if (move_uploaded_file($foto["tmp_name"], $target_file)) {
         // Foto berhasil diupload
         // Cek duplikasi absensi
-        $sql = "SELECT * FROM absensi WHERE keterangan=? AND nama=?";
+        $sql = "SELECT * FROM absensi WHERE keterangan=? AND nama=? AND tanggal=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $keterangan, $nama);
+        $stmt->bind_param("sss", $keterangan, $nama, $tanggal);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows == 0) {
-            // Simpan absensi ke database
-            $sql = "INSERT INTO absensi (user_id, nama, status, keterangan, tanggal, foto, latitude, longitude, jam)
+            if ($keterangan === "Masuk") {
+                // Jika Masuk, simpan waktu_masuk
+                $sql = "INSERT INTO absensi (user_id, nama, status, keterangan, tanggal, foto, latitude, longitude, waktu_masuk)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("issssssss", $user['id'], $nama, $status, $keterangan, $tanggal, $foto["name"], $latitude, $longitude, $jam);
-            $result = $stmt->execute();
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("issssssss", $user['id'], $nama, $status, $keterangan, $tanggal, $foto["name"], 
+                $latitude, $longitude, $jam);
+            } else if ($keterangan === 'Keluar') {
+                // Cek apakah ada record check-in untuk user tersebut pada tanggal yang sama
+                $sql = "SELECT * FROM absensi WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND waktu_keluar IS NULL";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("is", $id, $tanggal);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
-            if ($result) {
-                $message = "Absensi Telah Disimpan.";
-            } else {
-                $message = "Woops! Ada Kesalahan saat menyimpan.";
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $waktu_masuk = $row['waktu_masuk'];
+
+                    // Hitung durasi antara waktu_masuk dan waktu_keluar
+                    $datetime1 = new DateTime($waktu_masuk);
+                    $datetime2 = new DateTime($jam);
+                    $interval = $datetime1->diff($datetime2);
+                    $durasi = $interval->format('%H:%I:%S');
+
+                    // Update waktu_keluar dan durasi jika ada record check-in
+                    $sql = "UPDATE absensi SET waktu_keluar = ?, durasi = ? WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND waktu_keluar IS NULL";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("ssis", $jam, $durasi, $id, $tanggal);
+                } else {
+                    $message = "Anda harus check-in terlebih dahulu sebelum check-out.";
+                }
+            }
+
+            // Execute the statement and check the result
+            if (isset($stmt)) {
+                $result = $stmt->execute();
+
+                if ($result) {
+                    $message = "Absensi Telah Disimpan.";
+                } else {
+                    $message = "Woops! Ada Kesalahan saat menyimpan: " . $conn->error;
+                }
             }
         } else {
             $message = "Absensi Gagal, Silahkan Cek Kembali!";
@@ -87,7 +119,8 @@ $conn->close();
 </head>
 <body>
 <div class="container mt-3 mb-5">
-<br><br><a href="pkl.php" class="btn btn-success">Kembali</a>
+<a href="pkl.php" style="margin-bottom:10px;" class="btn btn-primary">Kembali</a>
+<br>
     <h2>Form Absensi</h2>
 
     <?php if ($message): ?>
@@ -108,6 +141,12 @@ $conn->close();
             <input type="text" class="form-control" id="nama" name="nama" value="<?php echo htmlspecialchars($user['nama']); ?>" readonly>
         </div>
 
+        <!-- Tanggal Otomatis (Tidak Bisa Diubah) -->
+        <div class="form-group">
+            <label for="tanggal">Tanggal :</label>
+            <input type="text" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>" readonly>
+        </div>
+
         <!-- Keterangan Hadir/Izin/Sakit -->
         <div class="form-group">
             <label for="status">Keterangan:</label>
@@ -120,10 +159,10 @@ $conn->close();
 
         <!-- Absensi Masuk/Keluar-->
         <div class="form-group">
-            <label for="keterangan">Masuk Atau Keluar</label>
+            <label for="keterangan">Absensi Masuk Atau Keluar</label>
             <select class="form-control" id="keterangan" name="keterangan" required>
                 <option value="Masuk">Masuk</option>
-                <option value="izin">Keluar</option>
+                <option value="Keluar">Keluar</option>
             </select>
         </div>
 
@@ -133,28 +172,19 @@ $conn->close();
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
         </div>
 
-        <!-- Tanggal Otomatis (Tidak Bisa Diubah) -->
-        <div class="form-group">
-            <label for="tanggal">Tanggal :</label>
-            <input type="text" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>" readonly>
-        </div>
-
         <!-- Menampilkan Waktu saat user membuat absensi -->
         <div class="form-group">
-            <label for="jam">Jam:</label>
-            <input type="text" class="form-control" id="jam_tampil" name="jam_tampil" readonly>
             <input type="hidden" id="jam" name="jam">
         </div>
 
         <!-- Geotagging (Latitude & Longitude) -->
         <input type="hidden" id="latitude" name="latitude">
         <input type="hidden" id="longitude" name="longitude">
-
-        <button type="submit" name="submit" class="btn btn-success">Simpan Absensi</button>
+        <button type="submit" name="submit" class="btn btn-primary">Simpan Absensi</button>
     </form>
     
-    <br><a href="absensi_pkl.php" class="btn btn-success">Rekap Absensi</a>
-    <br><br><a href="pkl.php" class="btn btn-success">Kembali</a>
+    <br><a href="absensi_pkl.php" class="btn btn-secondary">Rekap Absensi</a>
+    <br><br><a href="pkl.php" class="btn btn-primary">Kembali</a>
 </div>
 
 <script>
@@ -175,8 +205,6 @@ $conn->close();
         const seconds = String(now.getSeconds()).padStart(2, '0');
         const currentTime = `${hours}:${minutes}:${seconds}`;
 
-        // Tampilkan waktu di kolom "Jam" untuk tampilan
-        document.getElementById('jam_tampil').value = currentTime;
 
         // Simpan waktu di kolom tersembunyi untuk dikirim ke server
         document.getElementById('jam').value = currentTime;

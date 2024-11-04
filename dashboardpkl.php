@@ -36,7 +36,7 @@ if (isset($_SESSION['id'])) {
     $surat_balasan = $row2['surat_balasan'];
     $laporanAkhir = $row2['laporan_akhir'];
     $sertifikat = $row2['sertifikat'];
-
+    
     list($start_date, $end_date) = explode(' - ', $periode);
     $current_date = new DateTime();
     $start_date = new DateTime($start_date);

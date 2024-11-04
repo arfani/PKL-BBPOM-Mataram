@@ -176,7 +176,7 @@ if (isset($_GET['message'])) {
                     if ($row['status'] == "active") {
                     ?>
                     <li class="nav-item mx-3">
-                        <a class="nav-link" style="color: white;" href="dashboardpkl.php">
+                        <a class="nav-link" style="color: white;" href="pkl.php">
                             <i class="fas fa-home"></i>
                             Dashboard
                         </a>
@@ -186,6 +186,12 @@ if (isset($_GET['message'])) {
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#profileModal"
                             style="color : white">
                             <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link text-nowrap" style="color: white" href="#" data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
+                            <i class="fas fa-power-off"></i> logout
                         </a>
                     </li>
                 </ul>
@@ -223,12 +229,28 @@ if (isset($_GET['message'])) {
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger"><a href="logout.php"
-                                style="text-decoration: none; color: white;">Logout</a></button>
+                        <button type="button" class="btn btn-primary"><a href="dashboardpkl.php"
+                                style="text-decoration: none; color: white;">Profile</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Apakah Anda Yakin Ingin Keluar?</h5>
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="btn btn-danger"><a href="logout.php"
+                        style="text-decoration: none; color: white;">Iya</a></button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                </div>
             </div>
         </div>
     </div>
@@ -295,7 +317,6 @@ if (isset($_GET['message'])) {
                     }
                     ?>
 
-                </div>
                 <div class="mb-3">
                     <label for="periode" class="form-label">Rencana Priode PKL :</label>
                     <div class="input-group">
