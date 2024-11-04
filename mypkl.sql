@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2024 at 08:45 AM
+-- Generation Time: Nov 04, 2024 at 08:09 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -38,16 +38,21 @@ CREATE TABLE `absensi` (
   `latitude` decimal(10,8) DEFAULT NULL,
   `longitude` decimal(11,8) DEFAULT NULL,
   `waktu_masuk` time DEFAULT NULL,
-  `waktu_keluar` time DEFAULT NULL
+  `waktu_keluar` time DEFAULT NULL,
+  `durasi` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `absensi`
 --
 
-INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `latitude`, `longitude`, `waktu_masuk`, `waktu_keluar`) VALUES
-(8, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-01', 'images.jfif', '-8.58792210', '116.11586280', '13:33:08', '13:36:18'),
-(10, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-01', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58791350', '116.11587080', '14:36:28', NULL);
+INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `latitude`, `longitude`, `waktu_masuk`, `waktu_keluar`, `durasi`) VALUES
+(8, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-01', 'images.jfif', '-8.58792210', '116.11586280', '13:33:08', '13:36:18', '00:03:10'),
+(11, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-01', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58792070', '116.11585830', '15:07:54', '15:08:25', '00:00:31'),
+(12, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-02', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58756450', '116.09346270', '09:51:02', '09:52:22', '00:01:20'),
+(13, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-02', 'pexels-ken123films-1796794.jpg', '-8.57745680', '116.10047790', '17:20:18', NULL, NULL),
+(15, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-03', 'images.jfif', '-8.57700570', '116.10047790', '13:11:23', '13:12:30', '00:01:07'),
+(16, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-03', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.57700570', '116.10047790', '13:13:30', '13:13:51', '00:00:21');
 
 -- --------------------------------------------------------
 
@@ -376,7 +381,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `admin`
