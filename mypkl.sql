@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2024 at 08:09 AM
+-- Generation Time: Nov 05, 2024 at 07:52 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -39,20 +39,9 @@ CREATE TABLE `absensi` (
   `longitude` decimal(11,8) DEFAULT NULL,
   `waktu_masuk` time DEFAULT NULL,
   `waktu_keluar` time DEFAULT NULL,
-  `durasi` time DEFAULT NULL
+  `durasi` time DEFAULT NULL,
+  `kesimpulan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `absensi`
---
-
-INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `latitude`, `longitude`, `waktu_masuk`, `waktu_keluar`, `durasi`) VALUES
-(8, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-01', 'images.jfif', '-8.58792210', '116.11586280', '13:33:08', '13:36:18', '00:03:10'),
-(11, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-01', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58792070', '116.11585830', '15:07:54', '15:08:25', '00:00:31'),
-(12, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-02', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58756450', '116.09346270', '09:51:02', '09:52:22', '00:01:20'),
-(13, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-02', 'pexels-ken123films-1796794.jpg', '-8.57745680', '116.10047790', '17:20:18', NULL, NULL),
-(15, 9, 'Bagas Adinata', 'hadir', 'Masuk', '2024-11-03', 'images.jfif', '-8.57700570', '116.10047790', '13:11:23', '13:12:30', '00:01:07'),
-(16, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-03', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.57700570', '116.10047790', '13:13:30', '13:13:51', '00:00:21');
 
 -- --------------------------------------------------------
 
@@ -213,19 +202,20 @@ CREATE TABLE `pengajuan_pkl` (
   `tanggal_pengajuan` timestamp NOT NULL DEFAULT current_timestamp(),
   `penempatan` varchar(50) NOT NULL,
   `laporan_akhir` text NOT NULL,
-  `sertifikat` text NOT NULL
+  `sertifikat` text NOT NULL,
+  `nim` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengajuan_pkl`
 --
 
-INSERT INTO `pengajuan_pkl` (`id_pengajuan`, `nama`, `email`, `phone`, `university`, `department`, `posisi`, `periode`, `surat`, `proposal`, `status`, `surat_balasan`, `tanggal_pengajuan`, `penempatan`, `laporan_akhir`, `sertifikat`) VALUES
-(11, 'wardin', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'Desain Komunikasi Visual', 'Kimia Kosmetik', '2024-08-08 - 2024-09-08', './Asset/Document/surat pengajuan_wardin.pdf', './Asset/Document/proposal_wardin.pdf', 'Ditolak', 'km jelek', '2024-08-02 01:47:09', '', '', ''),
-(13, 'Ardha', 'ardha@gmail.com', '08555555554', 'Universitas Bumigora', 'Teknologi Informasi', 'Tata Usaha', '2024-08-01 - 2024-08-31', './Asset/Document/surat pengajuan_Ardha.pdf', './Asset/Document/proposal_Ardha.pdf', 'Diterima', './Asset/Document/surat_balasan_Ardha.pdf', '2024-08-06 00:21:09', 'Tata Usaha', '', ''),
-(14, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', '082145554182', 'Universitas Bumigora', 'Teknologi Informasi', 'Tata Usaha, Kimia Obat, Kimia Kosmetik, Kimia OTSK, Kimia Pangan, inforkom', '2024-08-07 - 2024-08-13', './Asset/Document/surat_pengajuan_Mukhlis Wardin Juaini.pdf', './Asset/Document/proposal_Mukhlis Wardin Juaini.pdf', 'Diterima', './Asset/Document/surat_balasan_Mukhlis Wardin Juaini.pdf', '2024-08-06 03:47:22', 'Kimia OTSK', 'Asset/Document/laporan_Mukhlis Wardin Juainipdf', './Asset/certificates/sertifikat_MUKHLIS WARDIN JUAINI.pdf'),
-(15, 'Ayu Ningsih', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'TI', 'Kimia Kosmetik, Kimia OTSK', '2024-08-01 - 2024-08-31', './Asset/Document/surat_pengajuan_Ayu Ningsih.pdf', './Asset/Document/proposal_Ayu Ningsih.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-12 04:39:28', 'Kimia Kosmetik', '', ''),
-(16, 'Ayu Ningsih', 'ayu@gmail.com', '08214554182', 'Universitas Bumigora', 'Desain Komunikasi Visual', 'Inforkom', '2024-09-01 - 2024-09-30', './Asset/Document/surat_pengajuan_ayuni.pdf', './Asset/Document/proposal_ayuni.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-23 14:04:22', 'Inforkom', '', '');
+INSERT INTO `pengajuan_pkl` (`id_pengajuan`, `nama`, `email`, `phone`, `university`, `department`, `posisi`, `periode`, `surat`, `proposal`, `status`, `surat_balasan`, `tanggal_pengajuan`, `penempatan`, `laporan_akhir`, `sertifikat`, `nim`) VALUES
+(11, 'wardin', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'Desain Komunikasi Visual', 'Kimia Kosmetik', '2024-08-08 - 2024-09-08', './Asset/Document/surat pengajuan_wardin.pdf', './Asset/Document/proposal_wardin.pdf', 'Ditolak', 'km jelek', '2024-08-02 01:47:09', '', '', '', NULL),
+(13, 'Ardha', 'ardha@gmail.com', '08555555554', 'Universitas Bumigora', 'Teknologi Informasi', 'Tata Usaha', '2024-08-01 - 2024-08-31', './Asset/Document/surat pengajuan_Ardha.pdf', './Asset/Document/proposal_Ardha.pdf', 'Diterima', './Asset/Document/surat_balasan_Ardha.pdf', '2024-08-06 00:21:09', 'Tata Usaha', '', '', NULL),
+(14, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', '082145554182', 'Universitas Bumigora', 'Teknologi Informasi', 'Tata Usaha, Kimia Obat, Kimia Kosmetik, Kimia OTSK, Kimia Pangan, inforkom', '2024-08-07 - 2024-08-13', './Asset/Document/surat_pengajuan_Mukhlis Wardin Juaini.pdf', './Asset/Document/proposal_Mukhlis Wardin Juaini.pdf', 'Diterima', './Asset/Document/surat_balasan_Mukhlis Wardin Juaini.pdf', '2024-08-06 03:47:22', 'Kimia OTSK', 'Asset/Document/laporan_Mukhlis Wardin Juainipdf', './Asset/certificates/sertifikat_MUKHLIS WARDIN JUAINI.pdf', NULL),
+(15, 'Ayu Ningsih', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'TI', 'Kimia Kosmetik, Kimia OTSK', '2024-08-01 - 2024-08-31', './Asset/Document/surat_pengajuan_Ayu Ningsih.pdf', './Asset/Document/proposal_Ayu Ningsih.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-12 04:39:28', 'Kimia Kosmetik', '', '', NULL),
+(16, 'Ayu Ningsih', 'ayu@gmail.com', '08214554182', 'Universitas Bumigora', 'Desain Komunikasi Visual', 'Inforkom', '2024-09-01 - 2024-09-30', './Asset/Document/surat_pengajuan_ayuni.pdf', './Asset/Document/proposal_ayuni.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-23 14:04:22', 'Inforkom', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -381,7 +371,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `admin`

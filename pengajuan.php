@@ -296,6 +296,11 @@ if (isset($_GET['message'])) {
                         placeholder="Masukkan jurusan Anda" required>
                 </div>
                 <div class="mb-3">
+                    <label for="nim" class="form-label">NIM :</label>
+                    <input type="text" class="form-control" id="department" name="department"
+                        placeholder="Nomor Induk Mahasiswa" required>
+                </div>
+                <div class="mb-3">  
                     <label class="form-label">Posisi Penempatan : </label>
                     <?php
                     $sql2 = "SELECT * FROM penempatan_pkl";
@@ -318,7 +323,7 @@ if (isset($_GET['message'])) {
                     ?>
 
                 <div class="mb-3">
-                    <label for="periode" class="form-label">Rencana Priode PKL :</label>
+                    <label for="periode" class="form-label">Rencana Periode PKL :</label>
                     <div class="input-group">
                         <input type="date" class="form-control me-2" id="periode1" name="periode1" required>
                         <label for="periode" class="form-label"> - </label>

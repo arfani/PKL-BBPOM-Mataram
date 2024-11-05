@@ -111,7 +111,7 @@ if (isset($_GET['message'])) {
     <div class="container">
         <form action="" method="POST" class="login-email">
             <p class="login-text" style="font-size: 2rem; font-weight: 800;">Login</p>
-            <div class="input-group">
+            <div class="input-group" style="border-radius:20px">
                 <input type="text" placeholder="Email / No HP" name="email_nohp" value="<?php echo $email; ?>" required>
             </div>
             <div class="input-group">
@@ -123,10 +123,10 @@ if (isset($_GET['message'])) {
             </div>
             <div class="input-group select-container">
                 <select name="role" required>
-                    <option value="" disabled selected>Login Sebagai :</option>
+                    <option value="" disabled selected>Tujuan :</option>
                     <option value="pkl">PKL</option>
                     <option value="tamu">Kunjungan</option>
-                    <option value="narasumber">Narasumber</option>
+                    <option value="narasumber">Permohonan Narasumber</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>

@@ -172,7 +172,7 @@ if (isset($_GET['message'])) {
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-3">
                     <div class="text-center">
-                        <h3 class="fw-bold">Data Pengunjung Realtime</h3>
+                        <h3 class="fw-bold">Data Rencana Kunjungan Realtime</h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover text-center">
@@ -180,19 +180,29 @@ if (isset($_GET['message'])) {
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
+                                    <th scope="col">Nomor HP</th>
                                     <th scope="col">Instansi</th>
                                     <th scope="col">Keperluan</th>
-                                    <th scope="col">Waktu</th>
+                                    <th scope="col">Jumlah Peserta</th>
+                                    <th scope="col">Segmen Peserta</th>
+                                    <th scope="col">Tanggal Dan Jam</th>                            
+                                    <th scope="col">Surat Masuk</th>
+                                    <th scope="col">Surat Balasan</th>
+                                    <th scope="col">Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
                                 <!-- Replace with PHP loop to populate data -->
                                 <tr>
                                     <td>1</td>
                                     <td>John Doe</td>
-                                    <td>BBPOM</td>
-                                    <td>Konsultasi</td>
-                                    <td>2024-07-12 10:00</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -339,7 +339,10 @@ if (isset($_GET['message'])) {
 
     <div class="hero-section">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center" style="margin-top:5%">
+                <div class="col-md-6 text-center">
+                    <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">
+                </div>
                 <div class="col-md-6">
                     <h1 class="hero-title">Selamat datang di Portal Sapu Jagad PKL</h1>
                     <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
@@ -353,15 +356,13 @@ if (isset($_GET['message'])) {
                             REKAP ABSENSI</a>
                     <?php }  ?>
                 </div>
-                <div class="col-md-6 text-center">
-                    <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">
-                </div>
+                
             </div>
         </div>
     </div>
-    <div class="container my-5" style="cursor:default;">
+    <div class="container" style="cursor:default;">
     <div class="row align-items-center">
-    <div class="col-md-4 ">
+    <div class="col-md-4">
         <div class="row mt-4">
                 <div class="card bidang-card">
                         <div class="card-body">
@@ -385,12 +386,12 @@ if (isset($_GET['message'])) {
             </div>
         </div>
         
-        <div class="col-md-4 ">
+        <div class="col-md-4">
             <div class="row mt-4">
                     <div class="card bidang-card">
                         <di class="card-body">
                             <div class="text-center">
-                            <label for="jam_masuk">Waktu Masuk</label>
+                            <label for="jam_masuk">Waktu Keluar</label>
                                 <input type="text" id="jam_keluar" readonly 
                                    style="font-size: 1.5rem; border: none; background: transparent; text-align: center;" 
                                    value="<?php echo $waktu_keluar ? $waktu_keluar: ''; ?>">
@@ -444,7 +445,7 @@ if (isset($_GET['message'])) {
                         echo "<td>{$row2['jurusan']}</td>";
                         echo "<td>{$row2['kuota']}</td>";
                         if ($status == "active") {
-                            echo "<td><a href='dashboard.php' class='btn btn-primary'>Apply</a></td>";
+                            echo "<td><a href='pengajuan.php' class='btn btn-primary'>Apply</a></td>";
                         } else if ($status == "pending") {
                             echo "<td><a href='#' onclick='openNotif()' class='btn btn-primary'>Apply</a></td>";
                         } else {
