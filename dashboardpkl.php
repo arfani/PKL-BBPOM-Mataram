@@ -1,63 +1,92 @@
 <?php
-include('koneksi.php');
-session_start();
+// Pastikan sesi sudah dimulai
 
-$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
-$s0 = mysqli_fetch_array($sql_0);
-$urlweb = $s0['urlweb'];
-
-if (isset($_SESSION['role'])) {
-    $role = $_SESSION['role'];
-    if ($role != "pkl") {
-        header('location:' . $urlweb . '/' . $role . '.php');
-    }
-} else {
-    header("Location: " . $urlweb);
-}
+include ('koneksi.php');
+session_start(); // Pastikan config.php berisi koneksi database
 
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM users where id ='$id'";
+    $sql = "SELECT * FROM users WHERE id ='$id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
-    $email = $row['email'];
-    $nama = $row['nama'];
-    $no_hp = $row['no_hp'];
-    $status = $row['status'];
-    $foto = $row['foto'];
 
-    $sql2 = "SELECT * FROM pengajuan_pkl where phone ='$no_hp'";
+    // Menginisialisasi variabel dari tabel users dengan nilai default jika tidak ada data
+    $email = $row['email'] ?? '';
+    $nama = $row['nama'] ?? '';
+    $no_hp = $row['no_hp'] ?? '';
+    $status = $row['status'] ?? '';
+    $foto = $row['foto'] ?? '';
+
+    // Query ke tabel pengajuan_pkl untuk data tambahan
+    $sql2 = "SELECT * FROM pengajuan_pkl WHERE phone = '$no_hp'";
     $result2 = mysqli_query($conn, $sql2);
-    $row2 = mysqli_fetch_assoc($result2);
-    $periode = $row2['periode'];
-    $penempatan = $row2['penempatan'];
-    $universitas = $row2['university'];
-    $jurusan = $row2['department'];
-    $surat_balasan = $row2['surat_balasan'];
-    $laporanAkhir = $row2['laporan_akhir'];
-    $sertifikat = $row2['sertifikat'];
-    
-    list($start_date, $end_date) = explode(' - ', $periode);
-    $current_date = new DateTime();
-    $start_date = new DateTime($start_date);
-    $end_date = new DateTime($end_date);
 
-    if ($current_date < $start_date) {
-        $days_elapsed = 0;
-        $total_days = $start_date->diff($end_date)->days;
-        $days_left = $total_days;
-        $status_pkl = "Belum Mulai";
-    } else if ($current_date > $end_date) {
-        $days_elapsed = $start_date->diff($end_date)->days;
-        $total_days = $start_date->diff($end_date)->days;
-        $days_left = 0;
-        $status_pkl = "PKL Sudah Selesai";
+    if ($result2 && mysqli_num_rows($result2) > 0) {
+        $row2 = mysqli_fetch_assoc($result2);
+
+        // Menginisialisasi variabel dari tabel pengajuan_pkl dengan nilai default jika tidak ada data
+        $periode = $row2['periode'] ?? '';
+        $penempatan = $row2['penempatan'] ?? '';
+        $universitas = $row2['university'] ?? '';
+        $jurusan = $row2['department'] ?? '';
+        $surat_balasan = $row2['surat_balasan'] ?? '';
+        $laporanAkhir = $row2['laporan_akhir'] ?? '';
+        $sertifikat = $row2['sertifikat'] ?? '';
+        
+        // Memproses data periode jika ada
+        if ($periode) {
+            // Pisahkan start_date dan end_date
+            list($start_date, $end_date) = explode(' - ', $periode);
+            $current_date = new DateTime();
+            $start_date = new DateTime($start_date);
+            $end_date = new DateTime($end_date);
+
+            // Hitung hari yang telah berlalu, total hari, dan hari tersisa
+            if ($current_date < $start_date) {
+                $days_elapsed = 0;
+                $total_days = $start_date->diff($end_date)->days;
+                $days_left = $total_days;
+                $status_pkl = "Belum Mulai";
+            } elseif ($current_date > $end_date) {
+                $days_elapsed = $start_date->diff($end_date)->days;
+                $total_days = $start_date->diff($end_date)->days;
+                $days_left = 0;
+                $status_pkl = "PKL Sudah Selesai";
+            } else {
+                $days_elapsed = $start_date->diff($current_date)->days;
+                $total_days = $start_date->diff($end_date)->days;
+                $days_left = $total_days - $days_elapsed;
+                $status_pkl = "$days_elapsed hari berjalan";
+            }
+        } else {
+            // Jika periode kosong
+            $status_pkl = "Periode PKL tidak tersedia";
+            $days_elapsed = 0;
+            $total_days = 0;
+            $days_left = 0;
+        }
     } else {
-        $days_elapsed = $start_date->diff($current_date)->days;
-        $total_days = $start_date->diff($end_date)->days;
-        $days_left = $total_days - $days_elapsed;
-        $status_pkl = "$days_elapsed hari berjalan";
+        // Jika data tidak ditemukan di tabel pengajuan_pkl
+        $status_pkl = "Data pengajuan PKL tidak ditemukan";
+        $periode = '';
+        $penempatan = '';
+        $universitas = '';
+        $jurusan = '';
+        $surat_balasan = '';
+        $laporanAkhir = '';
+        $sertifikat = '';
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Data Belum Lengkap',
+                    text: 'Data belum lengkap, silahkan lengkapi data diri.',
+                    showConfirmButton: true
+                });
+            });
+        </script>";
     }
+     
 } else {
     $email = "";
     $nama = "";
@@ -123,6 +152,7 @@ if (isset($_GET['message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <title>Dashboard PKL</title>
     <!-- SweetAlert2 CSS -->
@@ -138,50 +168,69 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
-                    style="margin-left: 15px; margin-right: 10px">
-                <b>Dashboard PKL BBPOM</b>
+                <img src="Asset/Gambar/logo.png" alt="#" width="60px" height="60px"
+                    style="margin-left: 15px; margin-right: 10px;">
+                <b>BBPOM MATARAM</b>
             </a>
-
-            <img src="Asset/Gambar/icon.png" alt="" width="40px" style="cursor: pointer;" data-bs-toggle="modal"
-                data-bs-target="#profileModal">
-
-
-        </div>
-    </nav>
-
-    <!-- Modal untuk Google Form dan Upload Bukti -->
-
-    <div class="modal fade" id="certificateModal" tabindex="-1" aria-labelledby="certificateModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="certificateModalLabel">Verifikasi dan Download Sertifikat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Silakan isi Google Form berikut sebelum mendownload sertifikat:</p>
-                    <a href="https://forms.gle/gTcopvSDZmL4rLn38" target="_blank" class="btn btn-primary mb-3">Isi
-                        Google Form</a>
-
-                    <p>Setelah mengisi Google Form, unggah bukti screenshot di bawah ini:</p>
-                    <form action="<?php echo $urlweb ?>/function/upload_bukti.php" method="POST"
-                        enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label for="buktiUpload" class="form-label">Unggah Bukti</label>
-                            <input type="file" class="form-control" id="buktiUpload" name="bukti" required>
-                        </div>
-                        <input type="hidden" name="user_id" value="<?php echo $id ?>">
-                        <button type="submit" class="btn btn-success">Unggah Bukti dan Download Sertifikat</button>
-                    </form>
-                </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                <?php
+                    if ($status == "active" || $status == "done") {
+                    ?>
+                        <li class="nav-item me-3 dashboard">
+                            <a class="nav-link" style="color: white;" href="tambah_absensi.php">
+                                <i class="fa fa-calendar"></i>
+                                Absen</a>
+                        </li>
+                    <?php } ?>
+                    <?php
+                    if ($status == "active" || $status == "done") {
+                    ?>
+                        <li class="nav-item me-3 dashboard">
+                            <a class="nav-link" style="color: white;" href="pkl.php">
+                                <i class="fa fa-home"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" href="#" data-bs-toggle="modal"
+                            data-bs-target="#notificationModal">
+                            <div class="notification-icon">
+                                <i class="fa fa-bell"></i>
+                                <?php
+                                $sql_count = "SELECT COUNT(*) AS count FROM notifikasi WHERE userid='$id' AND status='pkl'";
+                                $result_count = mysqli_query($conn, $sql_count);
+                                $row_count = mysqli_fetch_assoc($result_count);
+                                $notification_count = $row_count['count'];
+                                ?>
+                                <span class="badge"><?php echo $notification_count; ?></span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" style="color: white" href="#" data-bs-toggle="modal"
+                            data-bs-target="#profileModal">
+                            <i class="fa fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link text-nowrap" style="color: white" href="#" data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
+                            <i class="fa fa-power-off"></i> logout
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
+    </nav>
 
 
 
@@ -194,7 +243,7 @@ if (isset($_GET['message'])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="profileForm" action="<?php echo $urlweb ?>/function/save_profile.php" method="POST">
-                    <input type="hidden" name="redirect" value="dashboardpkl.php">
+                    <input type="hidden" name="redirect" value="pkl.php">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="profileName" class="form-label">Nama Lengkap</label>
@@ -213,16 +262,60 @@ if (isset($_GET['message'])) {
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
-                        <button type="button" class="btn btn-danger"><a href="logout.php"
-                                style="text-decoration: none; color: white;">Logout</a></button>
+                        <button type="button" class="btn btn-primary"><a href="dashboardpkl.php"
+                                style="text-decoration: none; color: white;">Profile</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
-
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Apakah Anda Yakin Ingin Keluar?</h5>
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="btn btn-danger"><a href="logout.php"
+                        style="text-decoration: none; color: white;">Iya</a></button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <?php
+                        $sql3 = "SELECT * FROM notifikasi WHERE userid='$id' AND status='pkl'";
+                        $result3 = mysqli_query($conn, $sql3);
+
+                        while ($row3 = mysqli_fetch_assoc($result3)) {
+                            $saved_text = $row3['text'];
+                            echo "<span class='list-group-item list-group-item-action mt-3 small-text'>" . nl2br($saved_text) . "</span>";
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><br>
 
     <button type="button" class="btn btn-primary mt-3 ms-4" style="box-shadow: 0 3px 3px black;"><a href="pkl.php"
             style="color:white; text-decoration: none;">Kembali</a></button>
@@ -257,10 +350,15 @@ if (isset($_GET['message'])) {
                         </button>
                         <?php } ?>
 
-                        <a class="btn" style="background-color:#00ff22; color:black"
+                        <a class="btn btn-success" 
                             href="https://chat.whatsapp.com/DbJLFRzH6ayLSREEGwDrZU">
                             <i class='bx bxl-whatsapp'></i> Gabung Grup WA
                         </a>
+                        <?php if($status_pkl == "Data pengajuan PKL tidak ditemukan"){ ?>
+                        <a class="btn btn-primary" href="pengajuan.php" style="margin-top:10px">
+                            <i class="bx bxs-pencil"></i> lengkapi Data Diri
+                        </a>
+                            <?php } ?>
                     </div>
                 </div>
 
@@ -344,7 +442,7 @@ if (isset($_GET['message'])) {
             <div class="download-box" style="border-color: #17a2b8;">
                 <i class='bx bxs-calendar bx-lg' style="color: #17a2b8;"></i>
                 <h3>Absensi</h3>
-                <a href="absen.php" style="background-color: #17a2b8;">Absen</a>
+                <a href="absensi_pkl.php" style="background-color: #17a2b8;">Absen</a>
             </div>
         </div>
     </div>

@@ -304,7 +304,7 @@ if (isset($_GET['message'])) {
                         <th>Jam Masuk</th>
                         <th>Jam Keluar</th>
                         <th>Total Jam Kerja</th>
-                        <th>Keterangan</th>
+                        <th>Kesimpulan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -330,20 +330,8 @@ if (isset($_GET['message'])) {
                         if ($row2['waktu_keluar'] != NULL) {
                             echo "<td>{$row2['waktu_keluar']}</td>";
                             echo "<td>{$row2['durasi']}</td>";
+                            echo "<td>{$row2['kesimpulan']}</td>";
                             
-                            // Cek apakah durasi memenuhi batas waktu atau tidak
-                            if ($row2['durasi'] < $batas_waktu) {
-                                $durasi = new DateTime($row2['durasi']);
-                                $batas = new DateTime($batas_waktu);
-                                $selisih = $durasi->diff($batas);
-                                if ($selisih->h > 0){
-                                echo "<td>Waktu Kerja Kurang {$selisih->h} jam {$selisih->i} Menit</td>";
-                                } else {
-                                    echo "<td>Waktu Kerja Kurang {$selisih->i} Menit</td>";
-                                }
-                            } else {
-                                echo "<td>Waktu Kerja Sudah cukup</td>";
-                            }
                         } else {
                             echo "<td>-</td>";
                             echo "<td>-</td>";

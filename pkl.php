@@ -343,7 +343,15 @@ if (isset($_GET['message'])) {
                 <div class="col-md-6">
                     <h1 class="hero-title">Selamat datang di Portal Sapu Jagad PKL</h1>
                     <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
+                    <?php $sql2 = "SELECT * FROM pengajuan_pkl WHERE phone = '$no_hp'";
+                    $result2 = mysqli_query($conn, $sql2);
+                    if ($result2 && mysqli_num_rows($result2) == 0) {?>
                     <a href="pengajuan.php" class="btn btn-warning btn-cta">Lengkapi Data Diri Anda ➔</a>
+                    <?php } else { ?>
+                        <a href="absensi_pkl.php" class="btn btn-warning btn-cta text-nowrap">
+                            <i class="fas fa-calendar"></i>
+                            REKAP ABSENSI</a>
+                    <?php }  ?>
                 </div>
                 <div class="col-md-6 text-center">
                     <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">
@@ -402,7 +410,11 @@ if (isset($_GET['message'])) {
 
         </div>
     </div>
-    
+    <?php $sql2 = "SELECT * FROM pengajuan_pkl WHERE phone = '$no_hp'";
+    $result2 = mysqli_query($conn, $sql2);
+
+    if ($result2 && mysqli_num_rows($result2) == 0) {
+        ?>
     <div class="text-center mt-3">
         <h2 class="title">Posisi PKL Yang Tersedia</h2>
     </div>
@@ -448,7 +460,7 @@ if (isset($_GET['message'])) {
             </table>
         </div>
     </div>
-
+    
     <div class="text-center">
         <h1 class="title">Dokumentasi</h1>
     </div>
@@ -480,7 +492,7 @@ if (isset($_GET['message'])) {
                     </div>
                 </div>
             <?php } ?>
-
+    <?php } ?>
         </div>
 
 

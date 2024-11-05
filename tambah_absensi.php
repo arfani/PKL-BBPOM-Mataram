@@ -25,6 +25,7 @@ if (!$user) {
 // Variabel untuk error dan success message
 $message = '';
 
+
 if (isset($_POST['submit'])) {
     // Ambil semua data dari form
     $nama = $user['nama']; // Get user's name from session
@@ -64,26 +65,39 @@ if (isset($_POST['submit'])) {
                 $stmt->bind_param("is", $id, $tanggal);
                 $stmt->execute();
                 $result = $stmt->get_result();
-
+            
                 if ($result->num_rows > 0) {
                     $row = $result->fetch_assoc();
                     $waktu_masuk = $row['waktu_masuk'];
 
-                    // Hitung durasi antara waktu_masuk dan waktu_keluar
                     $datetime1 = new DateTime($waktu_masuk);
                     $datetime2 = new DateTime($jam);
                     $interval = $datetime1->diff($datetime2);
                     $durasi = $interval->format('%H:%I:%S');
+                    
+                    $batas_waktu = '08:30:00'; // Batas waktu kerja minimum
 
-                    // Update waktu_keluar dan durasi jika ada record check-in
-                    $sql = "UPDATE absensi SET waktu_keluar = ?, durasi = ? WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND waktu_keluar IS NULL";
+                    if ($durasi < $batas_waktu) {
+                        $durasi_kerja = new DateTime($durasi);
+                        $batas = new DateTime($batas_waktu);
+                        $selisih = $durasi_kerja->diff($batas);
+                        if ($selisih->h > 0){
+                        $kesimpulan = "Waktu Kerja Kurang {$selisih->h} jam {$selisih->i} Menit";
+                        } else {
+                        $kesimpulan = "Waktu Kerja Kurang {$selisih->i} Menit";
+                        }
+                    } else {
+                        $kesimpulan = "Waktu Kerja Sudah cukup";
+                    }
+                    
+                    // Update waktu_keluar, durasi, dan kesimpulan jika ada record check-in
+                    $sql = "UPDATE absensi SET waktu_keluar = ?, durasi = ?, kesimpulan = ? WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND waktu_keluar IS NULL";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ssis", $jam, $durasi, $id, $tanggal);
+                    $stmt->bind_param("sssis", $jam, $durasi, $kesimpulan, $id, $tanggal);
                 } else {
                     $message = "Anda harus check-in terlebih dahulu sebelum check-out.";
                 }
             }
-
             // Execute the statement and check the result
             if (isset($stmt)) {
                 $result = $stmt->execute();

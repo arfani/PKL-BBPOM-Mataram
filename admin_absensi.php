@@ -176,7 +176,7 @@ if (isset($_GET['message'])) {
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-3">
                     <div class="text-center">
-                        <h3 class="fw-bold">Data Pengunjung Realtime</h3>
+                        <h3 class="fw-bold">Data Absensi PKL</h3>
                     </div>
                     
                     <div class="container mt-4" style="width: 20%; margin-left: 0;">
@@ -216,20 +216,7 @@ if (isset($_GET['message'])) {
                                     if ($row2['waktu_keluar'] != NULL) {
                                         echo "<td>{$row2['waktu_keluar']}</td>";
                                         echo "<td>{$row2['durasi']}</td>";
-                    
-                                        // Cek apakah durasi memenuhi batas waktu atau tidak
-                                        if ($row2['durasi'] < $batas_waktu) {
-                                            $durasi = new DateTime($row2['durasi']);
-                                            $batas = new DateTime($batas_waktu);
-                                            $selisih = $durasi->diff($batas);
-                                            if ($selisih->h > 0){
-                                                echo "<td>Waktu Kerja Kurang {$selisih->h} jam {$selisih->i} Menit</td>";
-                                            } else {
-                                                echo "<td>Waktu Kerja Kurang {$selisih->i} Menit</td>";
-                                            }
-                                        } else {
-                                            echo "<td>Waktu Kerja Sudah cukup</td>";
-                                        }
+                                        echo "<td>{$row2['kesimpulan']}</td>";
                                     } else {
                                         echo "<td>-</td>";
                                         echo "<td>-</td>";
