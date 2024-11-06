@@ -2,9 +2,19 @@
 session_start();
 include('koneksi.php');
 
+
+$sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
+$s0 = mysqli_fetch_array($sql_0);
+$urlweb = $s0['urlweb'];
 // Pastikan user sudah login
-if (!isset($_SESSION['id'])) {
-    die("Anda harus login terlebih dahulu.");
+
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    if ($role != "pkl" && $role != "admin") {
+        header('location:' . $urlweb . '/' . $role . '.php');
+    }
+} else {
+    header("Location: " . $urlweb);
 }
 
 // Ambil id dari session
@@ -91,9 +101,9 @@ if (isset($_POST['submit'])) {
                     }
                     
                     // Update waktu_keluar, durasi, dan kesimpulan jika ada record check-in
-                    $sql = "UPDATE absensi SET waktu_keluar = ?, durasi = ?, kesimpulan = ? WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND waktu_keluar IS NULL";
+                    $sql = "UPDATE absensi SET  foto_keluar = ?, waktu_keluar = ?, durasi = ?, kesimpulan = ? WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND foto IS NOT NULL AND waktu_keluar IS NULL ";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("sssis", $jam, $durasi, $kesimpulan, $id, $tanggal);
+                    $stmt->bind_param("ssssis",  $foto["name"], $jam, $durasi, $kesimpulan, $id, $tanggal);
                 } else {
                     $message = "Anda harus check-in terlebih dahulu sebelum check-out.";
                 }

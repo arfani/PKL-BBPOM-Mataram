@@ -424,12 +424,12 @@ if (isset($_GET['message'])) {
             <table class="table table-bordered table-striped table-hover text-center">
                 <thead class="bg-primary" style="vertical-align: middle; color: white;">
                     <tr>
-                        <th>#</th>
-                        <th>Posisi & Penempatan</th>
-                        <th>Deskripsi</th>
-                        <th>Kualifikasi Jurusan</th>
-                        <th>Kuota</th>
-                        <th>Aksi</th>
+                        <th scope="col">No</th>
+                        <th scope="col">Posisi</th>
+                        <th scope="col">Deskripsi</th>
+                        <th scope="col">Jurusan</th>
+                        <th scope="col">Kuota</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -444,14 +444,6 @@ if (isset($_GET['message'])) {
                         echo "<td>{$row2['deskripsi']}</td>";
                         echo "<td>{$row2['jurusan']}</td>";
                         echo "<td>{$row2['kuota']}</td>";
-                        if ($status == "active") {
-                            echo "<td><a href='pengajuan.php' class='btn btn-primary'>Apply</a></td>";
-                        } else if ($status == "pending") {
-                            echo "<td><a href='#' onclick='openNotif()' class='btn btn-primary'>Apply</a></td>";
-                        } else {
-                            echo "<td><a href='pengajuan.php' class='btn btn-primary'>Apply</a></td>";
-                        }
-
                         echo "</tr>";
                         $no++;
                     }

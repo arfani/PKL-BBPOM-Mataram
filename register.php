@@ -1,3 +1,6 @@
+<?php 
+phpinfo();
+?>
 <?php
 include('koneksi.php');
 error_reporting(0);

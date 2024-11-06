@@ -2,10 +2,31 @@
 session_start();
 include('koneksi.php');
 
-// Ambil tanggal dari form jika ada, atau gunakan tanggal hari ini
-$tanggal = isset($_POST['tanggal']) ? $_POST['tanggal'] : date('Y-m-d');
+// Mengecek apakah permintaan foto dilakukan
+if (isset($_GET['fetch_photo']) && isset($_GET['id']) && isset($_GET['type'])) {
+    $attendanceId = intval($_GET['id']);
+    $type = $_GET['type']; // 'foto' atau 'foto_keluar'
 
-// Query untuk mengambil data absensi seluruh user pada tanggal tertentu
+    // Query untuk mengambil foto atau foto_keluar dari absensi
+    $sql = "SELECT $type FROM absensi WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $attendanceId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row && !empty($row[$type])) {
+        $photoPath = 'Asset/Gambar/' . $row[$type];
+        echo json_encode(['status' => 'success', 'photoPath' => $photoPath]);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Foto tidak ditemukan untuk absensi ini']);
+    }
+
+    exit;
+}
+
+// Logika utama absensi
+$tanggal = isset($_POST['tanggal']) ? $_POST['tanggal'] : date('Y-m-d');
 $sql2 = "SELECT * FROM absensi WHERE tanggal = ? ORDER BY tanggal DESC";
 $stmt = $conn->prepare($sql2);
 $stmt->bind_param("s", $tanggal);
@@ -197,15 +218,15 @@ if (isset($_GET['message'])) {
                                 <th>Nama</th>
                                 <th>Status</th>
                                 <th>Jam Masuk</th>
+                                <th>Foto Masuk</th>
                                 <th>Jam Keluar</th>
+                                <th>Foto Keluar</th>
                                 <th>Total Jam Kerja</th>
                                 <th>Kesimpulan</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <!-- Replace with PHP loop to populate data -->
-                                <?php
-                                // Menampilkan data absensi
+                            <?php
                                 while ($row2 = mysqli_fetch_assoc($result2)) {
                                     echo "<tr>";
                                     echo "<td scope='row'>{$no}</td>";
@@ -213,21 +234,42 @@ if (isset($_GET['message'])) {
                                     echo "<td>{$row2['nama']}</td>";
                                     echo "<td>{$row2['status']}</td>";
                                     echo "<td>{$row2['waktu_masuk']}</td>";
+                                    // Tombol untuk foto masuk
+                                    echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto'>Lihat Foto</button></td>";
+                                    // Kolom untuk jam keluar dan foto keluar
                                     if ($row2['waktu_keluar'] != NULL) {
                                         echo "<td>{$row2['waktu_keluar']}</td>";
+                                        // Tombol untuk foto keluar
+                                        echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto_keluar'>Lihat Foto</button></td>";
                                         echo "<td>{$row2['durasi']}</td>";
                                         echo "<td>{$row2['kesimpulan']}</td>";
                                     } else {
                                         echo "<td>-</td>";
                                         echo "<td>-</td>";
                                         echo "<td>-</td>";
+                                        echo "<td>-</td>";
                                     }
+
                                     echo "</tr>";
                                     $no++;
-                                    }
-                                    ?>
+                                }
+                                ?>
                             </tbody>
                         </table>
+                        <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="photoModalLabel">Foto Absensi</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <img id="absensiPhoto" src="" alt="Foto Absensi" class="img-fluid">
+                                        <p id="photoUserName" class="mt-2"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -238,7 +280,44 @@ if (isset($_GET['message'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".btn-view-photo").forEach(button => {
+            button.addEventListener("click", function () {
+                const attendanceId = this.getAttribute("data-id");
+                const userName = this.getAttribute("data-name");
+                const photoType = this.getAttribute("data-type");
 
+                document.getElementById("photoUserName").innerText = `Nama: ${userName}`;
+
+                // Mengambil foto menggunakan ID absensi dan jenis foto (foto masuk atau keluar)
+                fetch(`<?php echo $_SERVER['PHP_SELF']; ?>?fetch_photo=true&id=${attendanceId}&type=${photoType}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Memperbarui sumber gambar pada modal
+                            document.getElementById("absensiPhoto").src = data.photoPath;
+                            new bootstrap.Modal(document.getElementById("photoModal")).show();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: data.message,
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Kesalahan',
+                            text: 'Gagal memuat foto. Silakan coba lagi.',
+                        });
+                        console.error('Error fetching photo:', error);
+                    });
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>

@@ -191,19 +191,54 @@ if (isset($_GET['message'])) {
                                     <th scope="col">Status</th>
                                 </tr>
                             </thead>
-                                <!-- Replace with PHP loop to populate data -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                            <tbody>
+                            <?php
+                            $sql2 = "SELECT * FROM kunjungan";
+                            $result2 = mysqli_query($conn, $sql2);
+                            $no = 1;
+
+                            while ($row2 = mysqli_fetch_assoc($result2)) {
+                                echo "<tr>";
+                                echo "<td scope='row'>{$no}</td>";
+                                echo "<td>{$row2['no_hp']}</td>";
+                                echo "<td>{$row2['instansi']}</td>";
+                                echo "<td>{$row2['keperluan']}</td>";
+                                echo "<td>{$row2['jumlah_peserta']}</td>";
+                                echo "<td>{$row2['segmen_peserta']}</td>";
+                                echo "<td>{$row2['tanggal']} / {$row2['jam']}</td>";
+
+                                // Tombol untuk membuka PDF dan mengunduh file surat_masuk
+                                echo "<td>
+                                        <button class='btn btn-primary btn-open-pdf' data-pdf-path='path/to/surat/{$row2['surat_masuk']}'>
+                                            Lihat Surat Masuk
+                                        </button>
+                                        <a href='path/to/surat/{$row2['surat_masuk']}' download='{$row2['surat_masuk']}' class='btn btn-secondary'>
+                                            <i class='fas fa-download'></i>
+                                        </a>
+                                    </td>";
+
+                                // Tombol untuk membuka PDF dan mengunduh file surat_balasan
+                                echo "<td>
+                                        <button class='btn btn-primary btn-open-pdf' data-pdf-path='path/to/surat/{$row2['surat_balasan']}'>
+                                            Lihat Surat Balasan
+                                        </button>
+                                        <a href='path/to/surat/{$row2['surat_balasan']}' download='{$row2['surat_balasan']}' class='btn btn-secondary'>
+                                            <i class='fas fa-download'></i>
+                                        </a>
+                                    </td>";
+
+                                echo "<td>{$row2['status_kunjungan']}</td>";
+
+                                // Tambahkan kolom tambahan lainnya sesuai dengan kolom yang ada di tabel kunjungan Anda
+                                // Contoh tambahan (sesuaikan nama kolom dengan struktur tabel Anda):
+                                echo "<td>{$row2['kolom_tambahan1']}</td>";
+                                echo "<td>{$row2['kolom_tambahan2']}</td>";
+                                // Tambahkan lebih banyak kolom jika ada dalam tabel kunjungan
+
+                                echo "</tr>";
+                                $no++;
+                            }
+                            ?>
                             </tbody>
                         </table>
                     </div>
@@ -212,11 +247,41 @@ if (isset($_GET['message'])) {
         </div>
     </div>
 
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">Isi Surat</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfViewer" src="" width="100%" height="500px" style="border: none;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script>
+    // JavaScript untuk membuka PDF di tab baru
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".btn-open-pdf").forEach(button => {
+            button.addEventListener("click", function () {
+                const pdfPath = this.getAttribute("data-pdf-path");
 
+                // Membuka PDF di tab baru
+                window.open(pdfPath, '_blank');
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>
