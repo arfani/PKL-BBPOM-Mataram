@@ -362,15 +362,15 @@ if (isset($_GET['message'])) {
     </div>
     <div class="container" style="cursor:default;">
     <div class="row align-items-center">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="row mt-4">
                 <div class="card bidang-card">
                         <div class="card-body">
                                 <div class="text-center">
-                                <label for="jam_masuk">Waktu Masuk</label>
+                                <label for="jam_masuk" style="font-size: 1.5rem;">Waktu Masuk</label><br>
                                 <input type="text" id="jam_masuk" readonly 
                                    style="font-size: 1.5rem; border: none; background: transparent; text-align: center;" 
-                                   value="<?php echo $waktu_masuk ? $waktu_masuk : ''; ?>">
+                                   value="<?php echo $waktu_masuk ? $waktu_masuk : ''; ?>"><br>
                                    <?php if($waktu_masuk == NULL){?>
                                     <a href="tambah_absensi.php?keterangan=Masuk" class="btn btn-primary" style="margin:auto">
                                     Absen Masuk
@@ -386,15 +386,15 @@ if (isset($_GET['message'])) {
             </div>
         </div>
         
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="row mt-4">
                     <div class="card bidang-card">
                         <di class="card-body">
                             <div class="text-center">
-                            <label for="jam_masuk">Waktu Keluar</label>
+                            <label for="jam_masuk" style="font-size: 1.5rem;">Waktu Keluar</label><br>
                                 <input type="text" id="jam_keluar" readonly 
                                    style="font-size: 1.5rem; border: none; background: transparent; text-align: center;" 
-                                   value="<?php echo $waktu_keluar ? $waktu_keluar: ''; ?>">
+                                   value="<?php echo $waktu_keluar ? $waktu_keluar: ''; ?>"><br>
                                    <?php if($waktu_keluar == NULL){?>
                                     <a href="tambah_absensi.php?keterangan=Keluar" class="btn btn-primary" style="margin:auto">
                                     Absen Keluar

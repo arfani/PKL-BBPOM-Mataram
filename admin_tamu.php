@@ -13,7 +13,12 @@ if (isset($_SESSION['role'])) {
 } else {
     header("Location: " . $urlweb);
 }
+
+
+
+
 ?>
+
 
 <?php
 if (isset($_GET['message'])) {
@@ -252,19 +257,20 @@ if (isset($_GET['message'])) {
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="uploadModalLabel">Tambah Surat Balasan</h5>
+                                <h5 class="modal-title" id="uploadModalLabel">Unggah Surat Balasan</h5>
                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="upload_surat.php" method="POST" enctype="multipart/form-data">
+                            <form action="function/update_balasan_tamu.php" method="POST" enctype="multipart/form-data">
                                 <div class="modal-body">
-                                    <input type="file" name="surat_balasan" accept="application/pdf" required>
-                                    <input type="hidden" name="id" value="<?php echo $row2['id']; ?>">
+                                    <input type="file" name="surat_balasan" id="surat_balasan" required>
+                                    <input type="hidden" name="user_id" id="user_id">
+                                    <input type="hidden" name="nama" id="nama">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary">Unggah</button>
+                                    <button type="submit" name="submit" class="btn btn-primary">Unggah</button>
                                 </div>
                             </form>
                         </div>
@@ -300,17 +306,16 @@ if (isset($_GET['message'])) {
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script>
-    // JavaScript untuk membuka PDF di tab baru
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".btn-open-pdf").forEach(button => {
-            button.addEventListener("click", function () {
-                const pdfPath = this.getAttribute("data-pdf-path");
-
-                // Membuka PDF di tab baru
-                window.open(pdfPath, '_blank');
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".btn-upload-pdf").forEach(button => {
+                button.addEventListener("click", function () {
+                    const id = this.getAttribute("data-id");
+                    const nama = this.getAttribute("data-nama");
+                    document.getElementById("modal_id").value = id;
+                    document.getElementById("modal_nama").value = nama;
+                });
             });
         });
-    });
     </script>
 </body>
 

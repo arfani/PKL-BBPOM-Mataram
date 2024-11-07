@@ -218,10 +218,11 @@ if (isset($_GET['message'])) {
                                 <th>Nama</th>
                                 <th>Status</th>
                                 <th>Jam Masuk</th>
-                                <th>Lat & Long</th>
                                 <th>Foto Masuk</th>
+                                <th>Lat & Long<br>Masuk</th>
                                 <th>Jam Keluar</th>
                                 <th>Foto Keluar</th>
+                                <th>Lat & Long<br>keluar</th>
                                 <th>Total Jam Kerja</th>
                                 <th>Kesimpulan</th>
                             </tr>
@@ -235,19 +236,24 @@ if (isset($_GET['message'])) {
                                     echo "<td>{$row2['nama']}</td>";
                                     echo "<td>{$row2['status']}</td>";
                                     echo "<td>{$row2['waktu_masuk']}</td>";
+                                    // Tombol untuk foto masuk
+                                    echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto'>Lihat Foto</button></td>";
                                     $formatted_latitude = number_format($row2['latitude'], 3);
                                     $formatted_longitude = number_format($row2['longitude'], 3);
                                     echo "<td> Lat : $formatted_latitude<br>Long : $formatted_longitude</td>";
-                                    // Tombol untuk foto masuk
-                                    echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto'>Lihat Foto</button></td>";
                                     // Kolom untuk jam keluar dan foto keluar
                                     if ($row2['waktu_keluar'] != NULL) {
                                         echo "<td>{$row2['waktu_keluar']}</td>";
                                         // Tombol untuk foto keluar
                                         echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto_keluar'>Lihat Foto</button></td>";
+                                        $formatted_latitude2 = number_format($row2['latitude_keluar'], 3);
+                                        $formatted_longitude2 = number_format($row2['longitude_keluar'], 3);
+                                        echo "<td> Lat : $formatted_latitude2<br>Long : $formatted_longitude2</td>";
                                         echo "<td>{$row2['durasi']}</td>";
                                         echo "<td>{$row2['kesimpulan']}</td>";
                                     } else {
+                                        echo "<td>-</td>";
+                                        echo "<td>-</td>";
                                         echo "<td>-</td>";
                                         echo "<td>-</td>";
                                         echo "<td>-</td>";

@@ -296,7 +296,7 @@ if (isset($_GET['message'])) {
                                         } else {
                                             $suratBalasan = "
                             <form action='function/upload_surat_balasan.php' method='post' enctype='multipart/form-data'>
-                                u<input type='hidden' name='id' value='{$row['id_pengajuan']}'>
+                                <input type='hidden' name='id' value='{$row['id_pengajuan']}'>
                                 <input type='file' name='surat_balasan' class='form-control' required>
                                 <button type='submit' class='btn btn-primary btn-sm mt-2'>Upload Surat Balasan</button>
                             </form>";

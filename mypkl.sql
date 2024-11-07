@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2024 at 02:22 AM
+-- Generation Time: Nov 07, 2024 at 09:41 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -35,11 +35,11 @@ CREATE TABLE `absensi` (
   `keterangan` varchar(50) DEFAULT NULL,
   `tanggal` date NOT NULL,
   `foto` text NOT NULL,
-  `foto_keluar` text NOT NULL,
+  `foto_keluar` text DEFAULT NULL,
   `latitude` decimal(10,8) DEFAULT NULL,
-  `latitude_keluar` decimal(10,8) NOT NULL,
+  `latitude_keluar` decimal(10,8) DEFAULT NULL,
   `longitude` decimal(11,8) DEFAULT NULL,
-  `longitude_keluar` decimal(11,8) NOT NULL,
+  `longitude_keluar` decimal(11,8) DEFAULT NULL,
   `waktu_masuk` time DEFAULT NULL,
   `waktu_keluar` time DEFAULT NULL,
   `durasi` time DEFAULT NULL,
