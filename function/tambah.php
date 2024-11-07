@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Menjalankan query untuk menambahkan data
     $sql = "INSERT INTO penempatan_pkl (posisi, deskripsi, jurusan, kuota) VALUES ('$posisi', '$deskripsi', '$jurusan', $kuota)";
     if ($conn->query($sql) === TRUE) {
-        header('Location: admin_posisi.php');
+        header('Location: ../admin_posisi.php');
         exit;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

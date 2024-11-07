@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 07:52 AM
+-- Generation Time: Nov 06, 2024 at 04:35 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -35,6 +35,7 @@ CREATE TABLE `absensi` (
   `keterangan` varchar(50) DEFAULT NULL,
   `tanggal` date NOT NULL,
   `foto` varchar(255) DEFAULT NULL,
+  `foto_keluar` varchar(255) DEFAULT NULL,
   `latitude` decimal(10,8) DEFAULT NULL,
   `longitude` decimal(11,8) DEFAULT NULL,
   `waktu_masuk` time DEFAULT NULL,
@@ -88,6 +89,36 @@ CREATE TABLE `api` (
 
 INSERT INTO `api` (`id`, `provider`, `api_key`, `private_key`, `merchant_code`, `no_admin`, `no_cs`, `jenis`, `status`) VALUES
 (8, 'Fonnte', 'k+tx8CKuASyEbdz!cue+', '', '', '087871500533', '087871500533', 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kunjungan`
+--
+
+CREATE TABLE `kunjungan` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `no_hp` varchar(20) DEFAULT NULL,
+  `instansi` varchar(100) DEFAULT NULL,
+  `keperluan` text NOT NULL,
+  `jumlah_peserta` int(11) NOT NULL,
+  `segmen_peserta` varchar(50) NOT NULL,
+  `tanggal` date NOT NULL,
+  `jam` time NOT NULL,
+  `surat_masuk` varchar(255) DEFAULT NULL,
+  `surat_balasan` varchar(255) DEFAULT NULL,
+  `status_kunjungan` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kunjungan`
+--
+
+INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`) VALUES
+(5, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', NULL, ''),
+(6, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
+(7, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -150,7 +181,9 @@ INSERT INTO `notifikasi` (`id`, `userid`, `text`, `status`) VALUES
 (49, 607, '<div style=\"text-align: justify;\">Selamat Pengajuan PKL Anda di BPOM Mataram sudah diterima.<br>Silakan mengunjungi dashboard PKL berikut untuk informasi lengkapnya.</div><div class=\"text-center mt-1\"><a href=\"dashboardpkl.php\" style=\"font-size: 12px; padding: 4px 7px; margin: 0px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;\">Dashboard PKL</a></div>', 'pkl'),
 (50, 607, '<div style=\"text-align: justify;\">Posisi PKL Anda di BPOM Mataram sudah diubah.<br>Silakan mengunjungi dashboard PKL berikut untuk informasi lengkapnya.</div><div class=\"text-center mt-1\"><a href=\"dashboard_pkl_.php\" style=\"font-size: 12px; padding: 4px 7px; margin: 0px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;\">Dashboard PKL</a></div>', 'pkl'),
 (51, 607, '<div style=\"text-align: justify;\">Posisi PKL Anda di BPOM Mataram sudah diubah.<br>Silakan mengunjungi dashboard PKL berikut untuk informasi lengkapnya.</div><div class=\"text-center mt-1\"><a href=\"dashboard_pkl_.php\" style=\"font-size: 12px; padding: 4px 7px; margin: 0px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;\">Dashboard PKL</a></div>', 'pkl'),
-(52, 601, '<div style=\"text-align: justify;\">Posisi PKL Anda di BPOM Mataram sudah diubah.<br>Silakan mengunjungi dashboard PKL berikut untuk informasi lengkapnya.</div><div class=\"text-center mt-1\"><a href=\"dashboard_pkl_.php\" style=\"font-size: 12px; padding: 4px 7px; margin: 0px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;\">Dashboard PKL</a></div>', 'pkl');
+(52, 601, '<div style=\"text-align: justify;\">Posisi PKL Anda di BPOM Mataram sudah diubah.<br>Silakan mengunjungi dashboard PKL berikut untuk informasi lengkapnya.</div><div class=\"text-center mt-1\"><a href=\"dashboard_pkl_.php\" style=\"font-size: 12px; padding: 4px 7px; margin: 0px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;\">Dashboard PKL</a></div>', 'pkl'),
+(53, 9, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(54, 9, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl');
 
 -- --------------------------------------------------------
 
@@ -297,7 +330,7 @@ INSERT INTO `users` (`id`, `nama`, `email`, `universitas`, `no_hp`, `password`, 
 (5, 'Ayu Ningsih', 'ayu@gmail.com', NULL, '08214554182', '231221', 'active', 'Asset/Gambar/20240316_103510.png'),
 (6, 'arda', 'arda@gmail.com', NULL, '0888888', '231221', 'active', 'Asset/Gambar/profile.png'),
 (8, 'nama', 'email@gmail.com', NULL, '12345678', '231221', '', ''),
-(9, 'Bagas Adinata', 'bagas@gmail.com', 'Universitas Mataram', '087750292514', '1234', 'active', 'Asset/Gambar/profile.png');
+(12, 'bagas adinata', 'bagasadinata321@gmail.com', 'Universitas Mataram', '087750292514', '1234', 'active', 'Asset/Gambar/profile.png');
 
 --
 -- Indexes for dumped tables
@@ -321,6 +354,13 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `api`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `no_hp` (`no_hp`);
 
 --
 -- Indexes for table `notifikasi`
@@ -371,7 +411,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -386,10 +426,16 @@ ALTER TABLE `api`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `penempatan_pkl`
@@ -419,7 +465,7 @@ ALTER TABLE `tb_slide`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -430,6 +476,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `absensi`
   ADD CONSTRAINT `absensi_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  ADD CONSTRAINT `kunjungan_ibfk_1` FOREIGN KEY (`no_hp`) REFERENCES `users` (`no_hp`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `pengajuan_pkl`

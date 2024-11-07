@@ -101,9 +101,9 @@ if (isset($_POST['submit'])) {
                     }
                     
                     // Update waktu_keluar, durasi, dan kesimpulan jika ada record check-in
-                    $sql = "UPDATE absensi SET  foto_keluar = ?, waktu_keluar = ?, durasi = ?, kesimpulan = ? WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND foto IS NOT NULL AND waktu_keluar IS NULL ";
+                    $sql = "UPDATE absensi SET  foto_keluar = ?, latitude_keluar = ?, longitude_keluar = ?, waktu_keluar = ?, durasi = ?, kesimpulan = ? WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND foto IS NOT NULL AND waktu_keluar IS NULL ";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ssssis",  $foto["name"], $jam, $durasi, $kesimpulan, $id, $tanggal);
+                    $stmt->bind_param("ssssssis",  $foto["name"], $latitude, $longitude, $jam, $durasi, $kesimpulan, $id, $tanggal);
                 } else {
                     $message = "Anda harus check-in terlebih dahulu sebelum check-out.";
                 }
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
                 }
             }
         } else {
-            $message = "Absensi Gagal, Silahkan Cek Kembali!";
+            $message = "Anda Sudah Membuat Absensi Masuk, Silahkan Cek Absensi Anda";
         }
     } else {
         $message = "Upload foto gagal.";
@@ -192,7 +192,7 @@ $conn->close();
 
         <!-- Unggah Foto Selfie -->
         <div class="form-group">
-            <label for="foto">Foto Selfie:</label>
+            <label for="foto">Foto Selfie Saat Membuat Absen:</label>
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
         </div>
 
@@ -214,9 +214,14 @@ $conn->close();
 <script>
     // Geolocation API untuk mendapatkan lokasi user
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            document.getElementById('latitude').value = position.coords.latitude;
-            document.getElementById('longitude').value = position.coords.longitude;
+    navigator.geolocation.getCurrentPosition(function(position) {
+        // Mengambil latitude dan longitude hingga 3 angka setelah koma
+        const latitude = position.coords.latitude.toFixed(3);
+        const longitude = position.coords.longitude.toFixed(3);
+
+        // Mengisi nilai ke form input tersembunyi
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
         });
     } else {
         alert("Geolocation tidak didukung di browser ini.");

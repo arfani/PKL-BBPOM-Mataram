@@ -218,6 +218,7 @@ if (isset($_GET['message'])) {
                                 <th>Nama</th>
                                 <th>Status</th>
                                 <th>Jam Masuk</th>
+                                <th>Lat & Long</th>
                                 <th>Foto Masuk</th>
                                 <th>Jam Keluar</th>
                                 <th>Foto Keluar</th>
@@ -234,6 +235,9 @@ if (isset($_GET['message'])) {
                                     echo "<td>{$row2['nama']}</td>";
                                     echo "<td>{$row2['status']}</td>";
                                     echo "<td>{$row2['waktu_masuk']}</td>";
+                                    $formatted_latitude = number_format($row2['latitude'], 3);
+                                    $formatted_longitude = number_format($row2['longitude'], 3);
+                                    echo "<td> Lat : $formatted_latitude<br>Long : $formatted_longitude</td>";
                                     // Tombol untuk foto masuk
                                     echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto'>Lihat Foto</button></td>";
                                     // Kolom untuk jam keluar dan foto keluar

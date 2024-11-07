@@ -215,7 +215,7 @@ if (isset($_GET['message'])) {
                                             <input type='hidden' name='id' value='{$row2['id']}'>
                                             <button type='submit' name='action' value='edit' class='btn btn-warning btn-sm'>Edit</button>
                                         </form>
-                                        <form action='$urlweb/function.actions.php' method='post' style='display:inline-block;'>
+                                        <form action='$urlweb/function/actions.php' method='post' style='display:inline-block;'>
                                             <input type='hidden' name='id' value='{$row2['id']}'>
                                             <button type='submit' name='action' value='delete' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Hapus</button>
                                         </form>
@@ -230,6 +230,7 @@ if (isset($_GET['message'])) {
                     </div>
                 </div>
             </div>
+            
         </div>
         <script>
             $(document).ready(function() {

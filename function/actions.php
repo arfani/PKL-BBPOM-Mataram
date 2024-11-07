@@ -8,7 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['action'] === 'delete') {
         $sql = "DELETE FROM penempatan_pkl WHERE id = $id";
         if ($conn->query($sql) === TRUE) {
-            header('Location: admin_posisi.php');
+
+            header('Location: ../admin_posisi.php');
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }

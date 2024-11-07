@@ -23,6 +23,7 @@ if (isset($_SESSION['id'])) {
     $email = $row['email'];
     $nama = $row['nama'];
     $no_hp = $row['no_hp'];
+    $universitas = $row['universitas'];
 } else {
     $email = "";
     $nama = "";
@@ -30,7 +31,7 @@ if (isset($_SESSION['id'])) {
 }
 
 if (isset($_POST['kirim'])) {
-    $university = $_POST['university'];
+    $universitas = $_POST['universitas'];
     $department = $_POST['department'];
     $posisi = implode(', ', $_POST['posisi']);
     $periode = $_POST['periode1'] . ' - ' . $_POST['periode2'];
@@ -43,8 +44,10 @@ if (isset($_POST['kirim'])) {
     $proposal_nama = 'proposal_' . $nama . '.pdf';
     $surat_nama = 'surat_pengajuan_' . $nama . '.pdf';
     $proposal_nama = 'proposal_' . $nama . '.pdf';
-    $surat_path = $folder . $surat_nama;
-    $proposal_path = $folder . $proposal_nama;
+    $processedFileName = str_replace(' ', '+', $surat_nama);
+    $processedFileName2 = str_replace(' ', '+', $proposal_nama);
+    $surat_path = $folder . $processedFileName;
+    $proposal_path = $folder . $processedFileName2;
 
     if (!file_exists($surat_path)) {
         move_uploaded_file($sumber_surat, $surat_path);
@@ -53,12 +56,12 @@ if (isset($_POST['kirim'])) {
         move_uploaded_file($sumber_proposal, $proposal_path);
     }
 
-    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal) VALUES ('$nama', '$email', '$no_hp', '$university', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path')");
+    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal) VALUES ('$nama', '$email', '$no_hp', '$universitas', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path')");
     if ($insert) {
 
         $text = 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin';
         $notif = mysqli_query($conn, "INSERT INTO notifikasi (userid, text, status) VALUES ('$id', '$text', 'pkl')");
-        $update = mysqli_query($conn, "UPDATE pkl SET status = 'pending' WHERE id='$id'");
+        $update = mysqli_query($conn, "UPDATE users SET status = 'active' WHERE id='$id'");
 
         $cekFonnte = mysqli_query($conn, "SELECT * FROM `api` WHERE id = 8");
         $cf = mysqli_fetch_array($cekFonnte);
@@ -286,9 +289,9 @@ if (isset($_GET['message'])) {
                     </span>
                 </div>
                 <div class="mb-3">
-                    <label for="university" class="form-label">Universitas :</label>
-                    <input type="text" class="form-control" id="university" name="university"
-                        placeholder="Masukkan nama universitas Anda" required>
+                    <label for="universitas" class="form-label">Universitas :</label>
+                    <input type="text" class="form-control" id="universitas" name="universitas"
+                        placeholder="<?php echo $universitas; ?>" value="<?php echo $universitas; ?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="department" class="form-label">Jurusan :</label>

@@ -14,6 +14,7 @@ if (isset($_SESSION['role'])) {
     header("Location: " . $urlweb);
 }
 ?>
+
 <?php
 if (isset($_GET['message'])) {
     $message = htmlspecialchars($_GET['message']); // Menghindari XSS
@@ -209,32 +210,35 @@ if (isset($_GET['message'])) {
 
                                 // Tombol untuk membuka PDF dan mengunduh file surat_masuk
                                 echo "<td>
-                                        <button class='btn btn-primary btn-open-pdf' data-pdf-path='path/to/surat/{$row2['surat_masuk']}'>
+                                        <button class='btn btn-primary btn-open-pdf' data-pdf-path='{$row2['surat_masuk']}'>
                                             Lihat Surat Masuk
                                         </button>
-                                        <a href='path/to/surat/{$row2['surat_masuk']}' download='{$row2['surat_masuk']}' class='btn btn-secondary'>
+                                        <a href='{$row2['surat_masuk']}' download='{$row2['surat_masuk']}' class='btn btn-secondary'>
                                             <i class='fas fa-download'></i>
                                         </a>
                                     </td>";
 
                                 // Tombol untuk membuka PDF dan mengunduh file surat_balasan
-                                echo "<td>
-                                        <button class='btn btn-primary btn-open-pdf' data-pdf-path='path/to/surat/{$row2['surat_balasan']}'>
-                                            Lihat Surat Balasan
-                                        </button>
-                                        <a href='path/to/surat/{$row2['surat_balasan']}' download='{$row2['surat_balasan']}' class='btn btn-secondary'>
-                                            <i class='fas fa-download'></i>
-                                        </a>
-                                    </td>";
+                                echo "<td>";
+                                    if (empty($row2['surat_balasan'])) {
+                                        // Tombol untuk mengunggah file jika belum ada file
+                                        echo "
+                                            <button class='btn btn-primary btn-upload-pdf' data-bs-toggle='modal' data-bs-target='#uploadModal'>
+                                                Tambah Surat Balasan
+                                            </button>";
+                                    } else {
+                                        // Tombol untuk menampilkan file jika sudah ada file
+                                        echo "
+                                            <button class='btn btn-primary btn-open-pdf' data-bs-toggle='modal' data-bs-target='#viewModal' data-pdf-path='{$row2['surat_balasan']}'>
+                                                Lihat Surat Balasan
+                                            </button>
+                                            <a href='{$row2['surat_balasan']}' download='{$row2['surat_balasan']}' class='btn btn-secondary'>
+                                                <i class='fas fa-download'></i>
+                                            </a>";
+                                    }
+                                    echo "</td>";
 
                                 echo "<td>{$row2['status_kunjungan']}</td>";
-
-                                // Tambahkan kolom tambahan lainnya sesuai dengan kolom yang ada di tabel kunjungan Anda
-                                // Contoh tambahan (sesuaikan nama kolom dengan struktur tabel Anda):
-                                echo "<td>{$row2['kolom_tambahan1']}</td>";
-                                echo "<td>{$row2['kolom_tambahan2']}</td>";
-                                // Tambahkan lebih banyak kolom jika ada dalam tabel kunjungan
-
                                 echo "</tr>";
                                 $no++;
                             }
@@ -243,24 +247,50 @@ if (isset($_GET['message'])) {
                         </table>
                     </div>
                 </div>
+                <!-- Modal untuk upload file -->
+                <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="uploadModalLabel">Tambah Surat Balasan</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="upload_surat.php" method="POST" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <input type="file" name="surat_balasan" accept="application/pdf" required>
+                                    <input type="hidden" name="id" value="<?php echo $row2['id']; ?>">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary">Unggah</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Untuk Menampilkan PDF-->
+                <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="viewModalLabel">Lihat Surat Balasan</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe src="" id="pdfViewer" width="100%" height="500px"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="pdfModalLabel">Isi Surat</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <iframe id="pdfViewer" src="" width="100%" height="500px" style="border: none;"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
+    
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
