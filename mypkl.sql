@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2024 at 04:35 AM
+-- Generation Time: Nov 07, 2024 at 02:22 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -34,15 +34,25 @@ CREATE TABLE `absensi` (
   `status` enum('hadir','izin','sakit') NOT NULL,
   `keterangan` varchar(50) DEFAULT NULL,
   `tanggal` date NOT NULL,
-  `foto` varchar(255) DEFAULT NULL,
-  `foto_keluar` varchar(255) DEFAULT NULL,
+  `foto` text NOT NULL,
+  `foto_keluar` text NOT NULL,
   `latitude` decimal(10,8) DEFAULT NULL,
+  `latitude_keluar` decimal(10,8) NOT NULL,
   `longitude` decimal(11,8) DEFAULT NULL,
+  `longitude_keluar` decimal(11,8) NOT NULL,
   `waktu_masuk` time DEFAULT NULL,
   `waktu_keluar` time DEFAULT NULL,
   `durasi` time DEFAULT NULL,
   `kesimpulan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `absensi`
+--
+
+INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `foto_keluar`, `latitude`, `latitude_keluar`, `longitude`, `longitude_keluar`, `waktu_masuk`, `waktu_keluar`, `durasi`, `kesimpulan`) VALUES
+(24, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-06', 'pexels-ken123films-1796794.jpg', '', '-8.58800000', '0.00000000', '116.11600000', '0.00000000', '14:38:24', NULL, NULL, NULL),
+(27, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-07', 'pexels-ken123films-1796794.jpg', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58800000', '-8.58800000', '116.11600000', '116.11600000', '08:14:08', '08:14:15', '00:00:07', 'Waktu Kerja Kurang 8 jam 29 Menit');
 
 -- --------------------------------------------------------
 
@@ -183,7 +193,17 @@ INSERT INTO `notifikasi` (`id`, `userid`, `text`, `status`) VALUES
 (51, 607, '<div style=\"text-align: justify;\">Posisi PKL Anda di BPOM Mataram sudah diubah.<br>Silakan mengunjungi dashboard PKL berikut untuk informasi lengkapnya.</div><div class=\"text-center mt-1\"><a href=\"dashboard_pkl_.php\" style=\"font-size: 12px; padding: 4px 7px; margin: 0px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;\">Dashboard PKL</a></div>', 'pkl'),
 (52, 601, '<div style=\"text-align: justify;\">Posisi PKL Anda di BPOM Mataram sudah diubah.<br>Silakan mengunjungi dashboard PKL berikut untuk informasi lengkapnya.</div><div class=\"text-center mt-1\"><a href=\"dashboard_pkl_.php\" style=\"font-size: 12px; padding: 4px 7px; margin: 0px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;\">Dashboard PKL</a></div>', 'pkl'),
 (53, 9, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
-(54, 9, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl');
+(54, 9, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(55, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(56, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(57, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(58, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(59, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(60, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(61, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(62, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(63, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(64, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl');
 
 -- --------------------------------------------------------
 
@@ -205,13 +225,9 @@ CREATE TABLE `penempatan_pkl` (
 --
 
 INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`, `gambar`) VALUES
-(2, 'Tata Usaha', 'Membantu Pekerjaan di Ruangan Tata Usaha', 'Teknologi Informasi, Desain Komunikasi Visual, Multimedia', 4, ''),
-(3, 'Kimia Obat', 'Membantu Pekerjaan di Lab Kimia Obat', 'Farmasi,Analis Farmasi,Kimia,Analis Kimia,Teknologi Kosmetik,SMK Analis Kimia,SMK Analis Farmas, Teknologi Informasi', 2, 'image_Kimia Obat.jpg'),
-(4, 'Kimia Kosmetik', 'Membantu Pekerjaan di Lab Kimia Kosmetik', 'Farmasi,Analis Farmasi,Kimia,Analis Kimia,Teknologi Kosmetik,SMK Analis Kimia,SMK Analis Farmas, Teknologi Informasi', 4, 'image_Kimia Kosmetik.jpg'),
-(5, 'Kimia OTSK', 'Membantu Pekerjaan di Lab Kimia OTSK', 'Farmasi,Analis Farmasi,Kimia,Analis Kimia,Teknologi Kosmetik,SMK Analis Kimia,SMK Analis Farmas, Teknologi Informasi', 2, 'image_Kimia OTSK.jpg'),
-(6, 'Kimia Pangan', 'Membantu Pekerjaan di Lab Kimia Pangan', 'Farmasi,Analis Farmasi,Kimia,Analis Kimia,Teknologi Kosmetik,SMK Analis Kimia,SMK Analis Farmas, Teknologi Informasi', 2, ''),
 (8, 'Inforkom', 'membantu pekerjaan di inforkom', 'Teknologi Informasi , Tekhnik Komputer', 3, ''),
-(9, 'Penyidik', 'Membantu bidang penyidikan', 'Hukum, Teknologi', 2, '');
+(9, 'Penyidik', 'Membantu bidang penyidikan', 'Hukum, Teknologi', 2, ''),
+(10, 'Tata Usaha', 'membantu Pekerjaan di tata Usaha', 'Informatika', 4, '');
 
 -- --------------------------------------------------------
 
@@ -248,7 +264,8 @@ INSERT INTO `pengajuan_pkl` (`id_pengajuan`, `nama`, `email`, `phone`, `universi
 (13, 'Ardha', 'ardha@gmail.com', '08555555554', 'Universitas Bumigora', 'Teknologi Informasi', 'Tata Usaha', '2024-08-01 - 2024-08-31', './Asset/Document/surat pengajuan_Ardha.pdf', './Asset/Document/proposal_Ardha.pdf', 'Diterima', './Asset/Document/surat_balasan_Ardha.pdf', '2024-08-06 00:21:09', 'Tata Usaha', '', '', NULL),
 (14, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', '082145554182', 'Universitas Bumigora', 'Teknologi Informasi', 'Tata Usaha, Kimia Obat, Kimia Kosmetik, Kimia OTSK, Kimia Pangan, inforkom', '2024-08-07 - 2024-08-13', './Asset/Document/surat_pengajuan_Mukhlis Wardin Juaini.pdf', './Asset/Document/proposal_Mukhlis Wardin Juaini.pdf', 'Diterima', './Asset/Document/surat_balasan_Mukhlis Wardin Juaini.pdf', '2024-08-06 03:47:22', 'Kimia OTSK', 'Asset/Document/laporan_Mukhlis Wardin Juainipdf', './Asset/certificates/sertifikat_MUKHLIS WARDIN JUAINI.pdf', NULL),
 (15, 'Ayu Ningsih', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'TI', 'Kimia Kosmetik, Kimia OTSK', '2024-08-01 - 2024-08-31', './Asset/Document/surat_pengajuan_Ayu Ningsih.pdf', './Asset/Document/proposal_Ayu Ningsih.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-12 04:39:28', 'Kimia Kosmetik', '', '', NULL),
-(16, 'Ayu Ningsih', 'ayu@gmail.com', '08214554182', 'Universitas Bumigora', 'Desain Komunikasi Visual', 'Inforkom', '2024-09-01 - 2024-09-30', './Asset/Document/surat_pengajuan_ayuni.pdf', './Asset/Document/proposal_ayuni.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-23 14:04:22', 'Inforkom', '', '', NULL);
+(16, 'Ayu Ningsih', 'ayu@gmail.com', '08214554182', 'Universitas Bumigora', 'Desain Komunikasi Visual', 'Inforkom', '2024-09-01 - 2024-09-30', './Asset/Document/surat_pengajuan_ayuni.pdf', './Asset/Document/proposal_ayuni.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-23 14:04:22', 'Inforkom', '', '', NULL),
+(17, 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', 'Universitas Mataram', 'F1D020011', 'Tata Usaha', '2024-09-30 - 2024-12-03', './Asset/Document/surat_pengajuan_bagas adinata.pdf', './Asset/Document/proposal_bagas adinata.pdf', 'Diterima', '', '2024-11-06 05:49:26', 'Tata Usaha', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -275,7 +292,7 @@ CREATE TABLE `tb_seo` (
 --
 
 INSERT INTO `tb_seo` (`id`, `image`, `instansi`, `keyword`, `deskripsi`, `template`, `warna`, `footer`, `urlweb`, `user`, `date`) VALUES
-(1, 'logo_admin_20241801142644.png', 'Dragon Store', 'Top Up Game Murah, Joki Mobile Legend dan Layanan Booster Social Media, Instant 24 Jam, Mobile Legends, Diamond Mobile Legends, Free Fire, DM FF,  Mobile, PUBGM, Genshin Impact, CODM, Valorant, Wild Rift', 'Dragon Store Adalah Tempat Top Up Game Murah, Joki Mobile Legends dan Booster Media Yang Aman, Murah dan Terpercaya. Menyediakan Layanan Top Up Games, Joki Mobile Legends, Booster Social Media. Untuk Mempermudah Pembayaran Anda Disini Kami Juga Menyediakan Berbagai Macam Metode Pembayaran', 2, 3, 2, 'http://localhost/PKL-BBPOM-Mataram', 'admin', '2024-01-17 20:55:37');
+(1, 'logo_admin_20241801142644.png', 'Dragon Store', 'Top Up Game Murah, Joki Mobile Legend dan Layanan Booster Social Media, Instant 24 Jam, Mobile Legends, Diamond Mobile Legends, Free Fire, DM FF,  Mobile, PUBGM, Genshin Impact, CODM, Valorant, Wild Rift', 'Dragon Store Adalah Tempat Top Up Game Murah, Joki Mobile Legends dan Booster Media Yang Aman, Murah dan Terpercaya. Menyediakan Layanan Top Up Games, Joki Mobile Legends, Booster Social Media. Untuk Mempermudah Pembayaran Anda Disini Kami Juga Menyediakan Berbagai Macam Metode Pembayaran', 2, 3, 2, 'http://localhost/PKL-BBPOM-Mataram/', 'admin', '2024-01-17 20:55:37');
 
 -- --------------------------------------------------------
 
@@ -372,7 +389,8 @@ ALTER TABLE `notifikasi`
 -- Indexes for table `penempatan_pkl`
 --
 ALTER TABLE `penempatan_pkl`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `posisi` (`posisi`);
 
 --
 -- Indexes for table `pengajuan_pkl`
@@ -411,7 +429,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -435,19 +453,19 @@ ALTER TABLE `kunjungan`
 -- AUTO_INCREMENT for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `penempatan_pkl`
 --
 ALTER TABLE `penempatan_pkl`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `pengajuan_pkl`
 --
 ALTER TABLE `pengajuan_pkl`
-  MODIFY `id_pengajuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_pengajuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tb_seo`
