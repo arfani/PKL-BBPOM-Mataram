@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2024 at 09:41 AM
+-- Generation Time: Nov 11, 2024 at 07:00 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -110,6 +110,7 @@ CREATE TABLE `kunjungan` (
   `id` int(11) NOT NULL,
   `nama` varchar(255) DEFAULT NULL,
   `no_hp` varchar(20) DEFAULT NULL,
+  `permohonan` enum('Kunjungan','Narasumber') DEFAULT NULL,
   `instansi` varchar(100) DEFAULT NULL,
   `keperluan` text NOT NULL,
   `jumlah_peserta` int(11) NOT NULL,
@@ -125,10 +126,10 @@ CREATE TABLE `kunjungan` (
 -- Dumping data for table `kunjungan`
 --
 
-INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`) VALUES
-(5, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', NULL, ''),
-(6, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
-(7, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
+INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `permohonan`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`) VALUES
+(5, 'bagas adinata', '087750292514', NULL, 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', './Asset/Document/kunjungan/surat_balasan_bagas adinata.pdf', ''),
+(6, 'bagas adinata', '087750292514', NULL, 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
+(7, 'bagas adinata', '087750292514', NULL, 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -228,6 +229,37 @@ INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`, `
 (8, 'Inforkom', 'membantu pekerjaan di inforkom', 'Teknologi Informasi , Tekhnik Komputer', 3, ''),
 (9, 'Penyidik', 'Membantu bidang penyidikan', 'Hukum, Teknologi', 2, ''),
 (10, 'Tata Usaha', 'membantu Pekerjaan di tata Usaha', 'Informatika', 4, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengaduan`
+--
+
+CREATE TABLE `pengaduan` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `no_hp` varchar(25) NOT NULL,
+  `subject` enum('kosmetik','makanan','obat') NOT NULL,
+  `pesan` text NOT NULL,
+  `foto_pengaduan` text DEFAULT NULL,
+  `tanggal` date NOT NULL,
+  `jam` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengaduan`
+--
+
+INSERT INTO `pengaduan` (`id`, `nama`, `email`, `no_hp`, `subject`, `pesan`, `foto_pengaduan`, `tanggal`, `jam`) VALUES
+(1, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', '2sdasdwasda', NULL, '2024-11-08', '10:00:10'),
+(2, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, '2024-11-08', '10:07:46'),
+(3, 'Bagas Adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, '2024-11-08', '10:08:31'),
+(4, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasdwasd', NULL, '2024-11-08', '10:26:12'),
+(5, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, '2024-11-08', '10:30:55'),
+(6, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, '2024-11-08', '10:33:39'),
+(7, 'Bagas Adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'adwasdwasd', NULL, '2024-11-08', '14:57:45');
 
 -- --------------------------------------------------------
 
@@ -393,6 +425,12 @@ ALTER TABLE `penempatan_pkl`
   ADD KEY `posisi` (`posisi`);
 
 --
+-- Indexes for table `pengaduan`
+--
+ALTER TABLE `pengaduan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pengajuan_pkl`
 --
 ALTER TABLE `pengajuan_pkl`
@@ -460,6 +498,12 @@ ALTER TABLE `notifikasi`
 --
 ALTER TABLE `penempatan_pkl`
   MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `pengaduan`
+--
+ALTER TABLE `pengaduan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `pengajuan_pkl`

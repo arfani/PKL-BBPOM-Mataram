@@ -97,6 +97,7 @@ if (isset($_GET['message'])) {
     <link rel="stylesheet" href="vendor\fontawesome\css\all.min.css">
     <link rel="stylesheet" href="Asset/CSS/style_pkl.css">
     <title>pkl</title>
+    <link rel="stylesheet" href="CSS/style.css">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->

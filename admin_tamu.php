@@ -13,10 +13,6 @@ if (isset($_SESSION['role'])) {
 } else {
     header("Location: " . $urlweb);
 }
-
-
-
-
 ?>
 
 
@@ -167,6 +163,11 @@ if (isset($_GET['message'])) {
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="admin_pengaduan.php">
+                                Pengaduan
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="admin_web.php">
                                 Setting Website
                             </a>
@@ -187,6 +188,7 @@ if (isset($_GET['message'])) {
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Nomor HP</th>
+                                    <th scope="col">Jenis Permohonan</th>
                                     <th scope="col">Instansi</th>
                                     <th scope="col">Keperluan</th>
                                     <th scope="col">Jumlah Peserta</th>
@@ -206,7 +208,9 @@ if (isset($_GET['message'])) {
                             while ($row2 = mysqli_fetch_assoc($result2)) {
                                 echo "<tr>";
                                 echo "<td scope='row'>{$no}</td>";
+                                echo "<td>{$row2['nama']}</td>";
                                 echo "<td>{$row2['no_hp']}</td>";
+                                echo "<td>{$row2['permohonan']}</td>";
                                 echo "<td>{$row2['instansi']}</td>";
                                 echo "<td>{$row2['keperluan']}</td>";
                                 echo "<td>{$row2['jumlah_peserta']}</td>";
@@ -228,9 +232,12 @@ if (isset($_GET['message'])) {
                                     if (empty($row2['surat_balasan'])) {
                                         // Tombol untuk mengunggah file jika belum ada file
                                         echo "
-                                            <button class='btn btn-primary btn-upload-pdf' data-bs-toggle='modal' data-bs-target='#uploadModal'>
-                                                Tambah Surat Balasan
-                                            </button>";
+                                            <form action='function/update_balasan_tamu.php' method='POST' enctype='multipart/form-data'>
+                                            <input type='file' name='surat_balasan' id='surat_balasan' required>
+                                            <input type='hidden' name='id' id='id' value='{$row2['id']}'>
+                                            <input type='hidden' name='nama' id='nama' value='{$row2['nama']}'  >
+                                            <button type='submit' name='submit' class='btn btn-primary'>Unggah</button>
+                                            </form>";
                                     } else {
                                         // Tombol untuk menampilkan file jika sudah ada file
                                         echo "
@@ -244,6 +251,7 @@ if (isset($_GET['message'])) {
                                     echo "</td>";
 
                                 echo "<td>{$row2['status_kunjungan']}</td>";
+                                
                                 echo "</tr>";
                                 $no++;
                             }
@@ -265,7 +273,7 @@ if (isset($_GET['message'])) {
                             <form action="function/update_balasan_tamu.php" method="POST" enctype="multipart/form-data">
                                 <div class="modal-body">
                                     <input type="file" name="surat_balasan" id="surat_balasan" required>
-                                    <input type="hidden" name="user_id" id="user_id">
+                                    <input type="hidden" name="id" id="id">
                                     <input type="hidden" name="nama" id="nama">
                                 </div>
                                 <div class="modal-footer">

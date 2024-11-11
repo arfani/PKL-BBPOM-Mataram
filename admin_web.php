@@ -164,6 +164,11 @@ if (isset($_GET['message'])) {
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="admin_pengaduan.php">
+                                Pengaduan
+                            </a>
+                        </li>   
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="admin_posisi.php">
                                 Setting Website
                             </a>
