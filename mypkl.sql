@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2024 at 07:00 AM
+-- Generation Time: Nov 13, 2024 at 01:31 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -110,7 +110,6 @@ CREATE TABLE `kunjungan` (
   `id` int(11) NOT NULL,
   `nama` varchar(255) DEFAULT NULL,
   `no_hp` varchar(20) DEFAULT NULL,
-  `permohonan` enum('Kunjungan','Narasumber') DEFAULT NULL,
   `instansi` varchar(100) DEFAULT NULL,
   `keperluan` text NOT NULL,
   `jumlah_peserta` int(11) NOT NULL,
@@ -126,10 +125,11 @@ CREATE TABLE `kunjungan` (
 -- Dumping data for table `kunjungan`
 --
 
-INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `permohonan`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`) VALUES
-(5, 'bagas adinata', '087750292514', NULL, 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', './Asset/Document/kunjungan/surat_balasan_bagas adinata.pdf', ''),
-(6, 'bagas adinata', '087750292514', NULL, 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
-(7, 'bagas adinata', '087750292514', NULL, 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
+INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`) VALUES
+(5, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', './Asset/Document/kunjungan/surat_balasan_bagas adinata.pdf', ''),
+(6, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
+(7, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, ''),
+(8, 'bagas adinata', '087750292514', 'Universitas Mataram', 'Kunjungan', 30, 'Mahasiswa', '2024-11-21', '08:02:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -485,7 +485,7 @@ ALTER TABLE `api`
 -- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `notifikasi`
