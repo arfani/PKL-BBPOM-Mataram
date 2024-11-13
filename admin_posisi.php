@@ -115,16 +115,18 @@ if (isset($_GET['message'])) {
                     <a class="nav-link" href="admin.php">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin_posisi.php">Posisi Penempatan PKL</a>
+                    <a class="nav-link active" href="admin_posisi.php">Posisi Penempatan PKL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_pkl.php">PKL</a>
+                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
+                        PKL
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_narasumber.php">Narasumber</a>
+                    <a class="nav-link" href="admin_pengaduan.php">Pengaduan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -162,12 +164,7 @@ if (isset($_GET['message'])) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="admin_tamu.php">
-                                Kunjungan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_narasumber.php">
-                                Narasumber
+                                Permohonan
                             </a>
                         </li>
                         <li class="nav-item">

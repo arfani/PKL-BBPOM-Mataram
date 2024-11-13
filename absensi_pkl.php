@@ -17,6 +17,8 @@ if (isset($_SESSION['role'])) {
 
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
+    $tanggal_hari_ini = date('Y-m-d');
+
     if ($role == "admin") {
         $email = "";
         $nama = "";
@@ -30,6 +32,17 @@ if (isset($_SESSION['id'])) {
         $nama = $row['nama'];
         $no_hp = $row['no_hp'];
         $status = $row['status'];
+
+        $sql_absensi = "SELECT waktu_masuk, waktu_keluar FROM absensi WHERE user_id = ? AND tanggal = ?";
+        $stmt = $conn->prepare($sql_absensi);
+        $stmt->bind_param("is", $id, $tanggal_hari_ini);
+        $stmt->execute();
+        $result_absensi = $stmt->get_result();
+        $data_absensi = $result_absensi->fetch_assoc();
+
+        // Ambil waktu_masuk dan waktu_keluar jika tersedia
+        $waktu_masuk = $data_absensi['waktu_masuk'] ?? "";
+        $waktu_keluar = $data_absensi['waktu_keluar'] ?? "";
     }
 } else {
     $email = "";
@@ -103,10 +116,7 @@ if (isset($_GET['message'])) {
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .bidang-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
+        
 
         .card-img-top {
             border-radius: 10px;
@@ -135,9 +145,11 @@ if (isset($_GET['message'])) {
             }
         }
     </style>
-</head>
+    </head>
 
-<body>
+    <body>
+        
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -290,10 +302,59 @@ if (isset($_GET['message'])) {
     <div class="text-center mt-3">
         <h2 class="title">Rekap Absensi <?php echo htmlspecialchars($nama) ?></h2>
     </div>
-    
+    <div class="container" style="cursor:default;">
+    <div class="row align-items-center">
+    <div class="col-md-6">
+        <div class="row mt-4">
+                <div class="card bidang-card">
+                        <div class="card-body">
+                                <div class="text-center">
+                                <label for="jam_masuk" style="font-size: 1.5rem;">Waktu Masuk</label><br>
+                                <input type="text" id="jam_masuk" readonly 
+                                   style="font-size: 1.5rem; border: none; background: transparent; text-align: center;" 
+                                   value="<?php echo $waktu_masuk ? $waktu_masuk : ''; ?>"><br>
+                                   <?php if($waktu_masuk == NULL){?>
+                                    <a href="tambah_absensi.php?keterangan=Masuk" class="btn btn-primary" style="margin:auto">
+                                    Absen Masuk
+                                    </a>
+                                   <?php } else { ?>
+                                    <a  class="btn btn-primary" style="margin:auto; background-color:#6c757d; cursor:no-drop" disabled>
+                                    Absen Berhasil
+                                    </a>
+                                   <?php } ?>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="row mt-4">
+                    <div class="card bidang-card">
+                        <di class="card-body">
+                            <div class="text-center">
+                            <label for="jam_masuk" style="font-size: 1.5rem;">Waktu Keluar</label><br>
+                                <input type="text" id="jam_keluar" readonly 
+                                   style="font-size: 1.5rem; border: none; background: transparent; text-align: center;" 
+                                   value="<?php echo $waktu_keluar ? $waktu_keluar: ''; ?>"><br>
+                                   <?php if($waktu_keluar == NULL){?>
+                                    <a href="tambah_absensi.php?keterangan=Keluar" class="btn btn-primary" style="margin:auto">
+                                    Absen Keluar
+                                    </a>
+                                   <?php } else { ?>
+                                    <a  class="btn btn-primary" style="margin:auto; background-color:#6c757d; cursor:no-drop" disabled>
+                                    Absen Berhasil
+                                    </a>
+                                   <?php } ?>
+                                </div>
+                        </div>
+            </div>
+        </div>
+
+        </div>
+    </div>
 
     <div class="container mt-3 mb-5">
-        <a href="tambah_absensi.php" class='btn btn-primary' style="margin-bottom:10px;">Buat Absensi</a><br>
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover text-center">
                 <thead class="bg-primary" style="vertical-align: middle; color: white;">
@@ -361,7 +422,44 @@ if (isset($_GET['message'])) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script>
+        <script>
+            function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const currentTime = `${hours}:${minutes}:${seconds}`;
 
+            // Update waktu_masuk hanya jika belum ada di database
+            <?php if (!$waktu_masuk): ?>
+                document.getElementById('jam_masuk').value = currentTime;
+            <?php endif; ?>
+                
+            // Update waktu_keluar hanya jika belum ada di database
+            <?php if (!$waktu_keluar): ?>
+                document.getElementById('jam_keluar').value = currentTime;
+            <?php endif; ?>
+    }
+        // Jalankan updateClock setiap detik
+        setInterval(updateClock, 1000);
+        updateClock(); // Panggil sekali saat halaman pertama kali dimuat
+
+        </script>
+        <?php
+        // Pastikan variabel $message sudah didefinisikan sebelumnya
+        if (isset($message) && !empty($message)) {
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Informasi',
+                        text: '" . addslashes($message) . "',
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            </script>";
+        }
+        ?>
 </body>
 
 </html>

@@ -15,8 +15,13 @@
     background-color: #ffffff;
 }
 .navbar {
-    padding: 20px;
+    padding: 10px;
     background: #2B547E;
+    position:fixed;
+    width:100%;
+    z-index: 100;
+    top: 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .navbar .navbar-toggler {
@@ -31,7 +36,7 @@
 .navbar #navbarNav {
     text-align: center;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .navbar .navbar-brand {
@@ -78,8 +83,38 @@
 }
 
 .navbar ul li a:hover {
-    color: #FFA500;
+    color: #fff;
 }
+.nav-link {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    transform: scaleX(0);
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    background-color: #FFA500;
+    transition: transform 0.15s ease-out;
+  }
+  
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+  
+  .nav-link::after {
+    transform-origin: bottom right;
+  }
+  
+  .nav-link:hover::after {
+    transform-origin: bottom left;
+  }
+  
+
 
 .name{
     font-size: 30px;
@@ -94,6 +129,7 @@
     padding: 20px;
     background: #2B547E;
     margin-bottom: 5%;
+    margin-top: 5%;
 }
 
 .hero-section .text-content {
@@ -134,6 +170,10 @@
     height: 300px;
     width: auto;
 }
+.hero-section .animated img{
+    animation: up-down 2s ease-in-out infinite alternate-reverse both;
+}
+
 
 /* services section  */
 
@@ -416,7 +456,7 @@
 }
 
 .contact-section .info-box .bi {
-    background: #088F8F;
+    background: #1c456d;
     border-radius: 55%;
     padding: 15px 18px;
     color: #fff;
@@ -436,7 +476,7 @@
 }
 
 .contact-section .info-box:hover {
-    background: #088F8F;
+    background: #1c456d;
     color: #fff;
     transform: scale(0.9);
 }
@@ -447,7 +487,7 @@
 
 .contact-section .info-box:hover .bi {
     background: #fff;
-    color: #088F8F;
+    color: #1c456d;
     font-size: 25px;
     text-align: center;
 }
@@ -480,7 +520,7 @@
     border-radius: 30px;
     color: #fff;
     border: none;
-    background-color: #088F8F;
+    background-color: #1c456d;
     height: 50px;
     width: 170px;
     text-transform: capitalize;

@@ -48,7 +48,7 @@ if (isset($_POST['kirim'])) {
     }
 
     $insert = mysqli_query($conn, "INSERT INTO kunjungan (nama,  
-        no_hp, instansi, keperluan, jumlah_peserta, segmen_peserta, tanggal, jam, surat_masuk) 
+        no_hp,  keperluan, instansi, jumlah_peserta, segmen_peserta, tanggal, jam, surat_masuk) 
         VALUES ('$nama',  '$no_hp', '$keperluan', '$instansi', '$jml_peserta', '$sgm_peserta', 
         '$tanggal', '$jam', '$surat_path')");
     if ($insert) {
@@ -273,14 +273,15 @@ if (isset($_GET['message'])) {
                     </span>
                 </div>
                 <div class="mb-3">
+                    <label for="kunjungan" class="form-label">keperluan :</label>
+                    <input type="textbox" class="form-control" id="keperluan" name="keperluan"
+                        placeholder="Tulis Keperluan Anda (Kunjungan/Narasumber)" required>
+                </div>
+
+                <div class="mb-3">
                     <label for="instansi" class="form-label">Instansi :</label>
                     <input type="text" class="form-control" id="instansi" name="instansi"
                         placeholder="Masukkan Nama Instansi Anda" required>
-                </div>
-                <div class="mb-3">
-                    <label for="kunjungan" class="form-label">keperluan :</label>
-                    <input type="textbox" class="form-control" id="keperluan" name="keperluan"
-                        placeholder="Tulis Keperluan Anda" required>
                 </div>
                 <div class="mb-3">
                     <label for="jumlah_peserta" class="form-label">Jumlah Peserta :</label>

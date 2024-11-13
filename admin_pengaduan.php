@@ -3,38 +3,50 @@ session_start();
 include('koneksi.php');
 
 // Mengecek apakah permintaan foto dilakukan
-if (isset($_GET['fetch_photo']) && isset($_GET['id']) && isset($_GET['type'])) {
-    $attendanceId = intval($_GET['id']);
-    $type = $_GET['type']; // 'foto' atau 'foto_keluar'
+if (isset($_GET['fetch_photo']) && isset($_GET['id']) && $_GET['type'] === 'foto') {
+    $pengaduanId = intval($_GET['id']);
 
-    // Query untuk mengambil foto atau foto_keluar dari absensi
-    $sql = "SELECT $type FROM absensi WHERE id = ?";
+    // Query untuk mengambil foto dari pengaduan
+    $sql = "SELECT foto FROM pengaduan WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $attendanceId);
+    $stmt->bind_param("i", $pengaduanId);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
 
-    if ($row && !empty($row[$type])) {
-        $photoPath = 'Asset/Gambar/' . $row[$type];
+    if ($row && !empty($row['foto'])) {
+        $photoPath = 'Asset/Gambar/' . $row['foto'];
         echo json_encode(['status' => 'success', 'photoPath' => $photoPath]);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Foto tidak ditemukan untuk absensi ini']);
+        echo json_encode(['status' => 'error', 'message' => 'Foto tidak ditemukan untuk pengaduan ini']);
     }
 
     exit;
 }
 
-// Logika utama absensi
-$tanggal = isset($_POST['tanggal']) ? $_POST['tanggal'] : date('Y-m-d');
-$sql2 = "SELECT * FROM absensi WHERE tanggal = ? ORDER BY tanggal DESC";
+// Query utama untuk menampilkan data pengaduan
+$sql2 = "SELECT * FROM pengaduan ORDER BY tanggal DESC";
+$result2 = $conn->query($sql2);
+$no = 1;
+// Handle pagination
+$limit = 20; // Entries per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Fetch `pengaduan` data with pagination
+$sql2 = "SELECT * FROM pengaduan ORDER BY tanggal DESC LIMIT ?, ?";
 $stmt = $conn->prepare($sql2);
-$stmt->bind_param("s", $tanggal);
+$stmt->bind_param("ii", $offset, $limit);
 $stmt->execute();
 $result2 = $stmt->get_result();
 
-$batas_waktu = '08:31:00';
-$no = 1;
+// Count total rows for pagination
+$total_sql = "SELECT COUNT(*) AS total FROM pengaduan";
+$total_result = $conn->query($total_sql);
+$total_row = $total_result->fetch_assoc();
+$total_pages = ceil($total_row['total'] / $limit);
+
+$no = $offset + 1;
 ?>
 <?php
 if (isset($_GET['message'])) {
@@ -130,16 +142,18 @@ if (isset($_GET['message'])) {
                     <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_pkl.php">PKL</a>
+                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
+                        PKL
+                        <a class="nav-link" href="admin_absensi.php">
+                            Absensi
+                        </a>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin_tamu.php">Kunjungan</a>
+                    <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_narasumber.php">Narasumber</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_pengaduan.php">Pengaduan</a>
+                    <a class="nav-link active" href="admin_pengaduan.php">Pengaduan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -177,13 +191,9 @@ if (isset($_GET['message'])) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="admin_tamu.php">
-                                Kunjungan
+                                Permohonan
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_narasumber.php">
-                                Narasumber
-                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="admin_pengaduan.php">
@@ -202,75 +212,65 @@ if (isset($_GET['message'])) {
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-3">
                     <div class="text-center">
-                        <h3 class="fw-bold">Data Absensi PKL</h3>
-                    </div>
-                    
-                    <div class="container mt-4" style="width: 20%; margin-left: 0;">
-                    <!-- Form untuk memilih tanggal -->
-                        <form action="" method="post" class="form-inline my-3">
-                        <label for="tanggal" class="mr-2">Pilih Tanggal:</label>
-                        <input type="date" name="tanggal" id="tanggal" class="form-control mr-2" value="<?php echo $tanggal; ?>" required>
-                        <button type="submit" name="filter_tanggal" class="btn btn-primary" style="margin-top:5%;">Tampilkan Absensi</button>
-                        </form>
+                        <h3 class="fw-bold">Data Pengaduan</h3>
                     </div>
 
                     <div class="table-responsive">
+
                         <table class="table table-bordered table-striped table-hover text-center">
                             <thead class="table" style="background-color: skyblue;">
-                            <tr>
-                                <th>#</th>
-                                <th>Tanggal</th>
-                                <th>Nama</th>
-                                <th>Status</th>
-                                <th>Jam Masuk</th>
-                                <th>Foto Masuk</th>
-                                <th>Lat & Long<br>Masuk</th>
-                                <th>Jam Keluar</th>
-                                <th>Foto Keluar</th>
-                                <th>Lat & Long<br>keluar</th>
-                                <th>Total Jam Kerja</th>
-                                <th>Kesimpulan</th>
-                            </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>No. HP</th>
+                                    <th>Subject</th>
+                                    <th>Pesan</th>
+                                    <th>Foto</th>
+                                    <th>Tanggal</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <?php
-                                while ($row2 = mysqli_fetch_assoc($result2)) {
-                                    echo "<tr>";
-                                    echo "<td scope='row'>{$no}</td>";
-                                    echo "<td>{$row2['tanggal']}</td>";
-                                    echo "<td>{$row2['nama']}</td>";
-                                    echo "<td>{$row2['status']}</td>";
-                                    echo "<td>{$row2['waktu_masuk']}</td>";
-                                    // Tombol untuk foto masuk
-                                    echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto'>Lihat Foto</button></td>";
-                                    $formatted_latitude = number_format($row2['latitude'], 3);
-                                    $formatted_longitude = number_format($row2['longitude'], 3);
-                                    echo "<td> Lat : $formatted_latitude<br>Long : $formatted_longitude</td>";
-                                    // Kolom untuk jam keluar dan foto keluar
-                                    if ($row2['waktu_keluar'] != NULL) {
-                                        echo "<td>{$row2['waktu_keluar']}</td>";
-                                        // Tombol untuk foto keluar
-                                        echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto_keluar'>Lihat Foto</button></td>";
-                                        $formatted_latitude2 = number_format($row2['latitude_keluar'], 3);
-                                        $formatted_longitude2 = number_format($row2['longitude_keluar'], 3);
-                                        echo "<td> Lat : $formatted_latitude2<br>Long : $formatted_longitude2</td>";
-                                        echo "<td>{$row2['durasi']}</td>";
-                                        echo "<td>{$row2['kesimpulan']}</td>";
-                                    } else {
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                    }
-
-                                    echo "</tr>";
-                                    $no++;
-                                }
-                                ?>
+                                <?php while ($row = mysqli_fetch_assoc($result2)) : ?>
+                                    <tr>
+                                        <td><?php echo $no++; ?></td>
+                                        <td><?php echo htmlspecialchars($row['nama']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['no_hp']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['subject']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['pesan']); ?></td>
+                                        <!-- Display image if available -->
+                                        <td>
+                                            <?php if (!empty($row['foto'])) : ?>
+                                                <img src="Asset/Gambar/<?php echo htmlspecialchars($row['foto']); ?>" alt="Foto Pengaduan" class="img-thumbnail" style="width: 100px;">
+                                            <?php else : ?>
+                                                Tidak ada foto
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
                             </tbody>
                         </table>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <?php if ($page > 1): ?>
+                                    <li class="page-item"><a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a></li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                    </li>
+                                <?php endfor; ?>
+                                
+                                <?php if ($page < $total_pages): ?>
+                                    <li class="page-item"><a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a></li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
                         <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -299,19 +299,18 @@ if (isset($_GET['message'])) {
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".btn-view-photo").forEach(button => {
             button.addEventListener("click", function () {
-                const attendanceId = this.getAttribute("data-id");
+                const pengaduanId = this.getAttribute("data-id");
                 const userName = this.getAttribute("data-name");
-                const photoType = this.getAttribute("data-type");
 
                 document.getElementById("photoUserName").innerText = `Nama: ${userName}`;
 
-                // Mengambil foto menggunakan ID absensi dan jenis foto (foto masuk atau keluar)
-                fetch(`<?php echo $_SERVER['PHP_SELF']; ?>?fetch_photo=true&id=${attendanceId}&type=${photoType}`)
+                // Mengambil foto menggunakan ID pengaduan
+                fetch(`<?php echo $_SERVER['PHP_SELF']; ?>?fetch_photo=true&id=${pengaduanId}&type=foto`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
                             // Memperbarui sumber gambar pada modal
-                            document.getElementById("absensiPhoto").src = data.photoPath;
+                            document.getElementById("pengaduanPhoto").src = data.photoPath;
                             new bootstrap.Modal(document.getElementById("photoModal")).show();
                         } else {
                             Swal.fire({

@@ -152,13 +152,10 @@ if (isset($_GET['message'])) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="admin_tamu.php">
-                                Kunjungan
+                                Permohonan
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin_narasumber.php">
-                                Narasumber
-                            </a>
+                        
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="admin_pengaduan.php">

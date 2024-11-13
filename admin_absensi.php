@@ -130,13 +130,18 @@ if (isset($_GET['message'])) {
                     <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_pkl.php">PKL</a>
+                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
+                        PKL
+                        <a class="nav-link active" href="admin_absensi.php">
+                            Absensi
+                        </a>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin_tamu.php">Kunjungan</a>
+                    <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_narasumber.php">Narasumber</a>
+                    <a class="nav-link" href="admin_pengaduan.php">Pengaduan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -177,14 +182,10 @@ if (isset($_GET['message'])) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="admin_tamu.php">
-                                Kunjungan
+                                Permohonan
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_narasumber.php">
-                                Narasumber
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="admin_pengaduan.php">
                                 Pengaduan
@@ -209,7 +210,7 @@ if (isset($_GET['message'])) {
                     <!-- Form untuk memilih tanggal -->
                         <form action="" method="post" class="form-inline my-3">
                         <label for="tanggal" class="mr-2">Pilih Tanggal:</label>
-                        <input type="date" name="tanggal" id="tanggal" class="form-control mr-2" value="<?php echo $tanggal; ?>" required>
+                        <input type="date" name="tanggal" id="tanggal" class="form-control mr-2" value="<?php echo $tanggal; ?>" required><br>
                         <button type="submit" name="filter_tanggal" class="btn btn-primary" style="margin-top:5%;">Tampilkan Absensi</button>
                         </form>
                     </div>
@@ -262,7 +263,6 @@ if (isset($_GET['message'])) {
                                         echo "<td>-</td>";
                                         echo "<td>-</td>";
                                         echo "<td>-</td>";
-                                        echo "<td>-</td>";
                                     }
 
                                     echo "</tr>";
@@ -290,6 +290,11 @@ if (isset($_GET['message'])) {
             </div>
         </div>
     </div>
+    <form method="POST" action="function/download_data.php" class="mb-3 text-center">
+        <label for="month">Select Month:</label>
+        <input type="month" id="month" name="month" required>
+        <button type="submit" class="btn btn-success">Download Data</button>
+    </form>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

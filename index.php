@@ -123,11 +123,12 @@ if (!empty($message)) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="Asset/CSS/index.css">
     <title>pkl</title>
+    
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    
 </head>
 
 <body>
@@ -142,17 +143,15 @@ if (!empty($message)) {
                             <a class="nav-link" aria-current="page" href="#home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#fitur">Fitur</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="#dokumentasi">Dokumentasi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#pengaduan">Buat Pengaduan</a>
+                            <a class="nav-link" href="#fitur">Fitur</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">login</a>
+                            <a class="nav-link" href="#pengaduan">Pengaduan</a>
                         </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -164,15 +163,18 @@ if (!empty($message)) {
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h1 class="hero-title">Siap Melayani</h1>
+                    
+                    <h1 class="hero-title">Siap Melayani </h1>
                     <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Infokom</p>
-                    <a href="login.php" class="btn btn-warning btn-cta " style="width:35%;">Mulai ➔</a>
+                    <a href="login.php" class="btn btn-warning btn-cta " style="width:35%;">Login ➔</a>
+                    
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="Asset/Gambar/logo.png" alt="Hero Image" class="hero-section">
+                    <img src="Asset/Gambar/logo.png" alt="Hero Image" class="hero-section animated">
                 </div>
             </div>
         </div>
+        <br>
         <br><br><br>
     </div>
     
@@ -223,7 +225,8 @@ if (!empty($message)) {
                 </button>
             </div>
         </div>
-    </div></section>
+    </div>
+</section>
 
     <section class="fitur-section" id="fitur">
     <div class="vision-mission-section mt-5">
@@ -378,7 +381,7 @@ if (!empty($message)) {
                                     required></textarea>
                             </div>
                             <div class="col-md-12">
-                                <label style="color:#088F8F">Masukkan Foto (Optional)</label>
+                                <label style="color:#1c456d">Masukkan Foto (Optional)</label>
                                 <input type="file" class="form-control" name="foto_pengaduan" placeholder="Subject">
                             </div>
                             
@@ -407,8 +410,9 @@ if (!empty($message)) {
 
         </div>
     </div>
+    
     </section>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
@@ -452,5 +456,8 @@ if (!empty($message)) {
     </script>
     <?php require_once('cs.php'); ?>
 </body>
+<footer class="bg-dark text-white text-center py-2" style="bottom:0">
+        <p>Copyright &copy; 2023 BPOM. All rights reserved.</p>
+    </footer>
 
 </html>

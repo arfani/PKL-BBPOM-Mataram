@@ -37,6 +37,7 @@ $message = '';
 
 
 if (isset($_POST['submit'])) {
+    
     // Ambil semua data dari form
     $nama = $user['nama']; // Get user's name from session
     $status = $_POST['status'];
@@ -45,7 +46,9 @@ if (isset($_POST['submit'])) {
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
     $jam = $_POST['jam']; // Automatically set the current time for storage
-
+    if($latitude == NULL || $longitude == NULL){
+        $message = 'Lokasi Tidak Ditemukan, silahkan nyalakan GPS';
+    } else {
     // Proses upload foto
     $foto = $_FILES['foto'];
     $target_dir = "Asset/Gambar/";
@@ -114,16 +117,19 @@ if (isset($_POST['submit'])) {
 
                 if ($result) {
                     $message = "Absensi Telah Disimpan.";
+                    header("Location: absensi_pkl.php");
                 } else {
                     $message = "Woops! Ada Kesalahan saat menyimpan: " . $conn->error;
                 }
             }
+        
         } else {
             $message = "Anda Sudah Membuat Absensi Masuk, Silahkan Cek Absensi Anda";
         }
     } else {
         $message = "Upload foto gagal.";
     }
+}
 }
 
 // Tutup koneksi
@@ -168,7 +174,7 @@ $conn->close();
         <!-- Tanggal Otomatis (Tidak Bisa Diubah) -->
         <div class="form-group">
             <label for="tanggal">Tanggal :</label>
-            <input type="text" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>" readonly>
+            <input type="text" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('d-m-Y'); ?>" readonly>
         </div>
 
         <!-- Keterangan Hadir/Izin/Sakit -->

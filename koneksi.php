@@ -1,8 +1,8 @@
 <?php
 $server = "localhost";
-$user = "bbpo_admin";
-$pass = "pkl@123";
-$database = "bbpo_pkl";
+$user = "root";
+$pass = "";
+$database = "mypkl";
 
 $conn = mysqli_connect($server, $user, $pass, $database);
 

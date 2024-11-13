@@ -125,8 +125,7 @@ if (isset($_GET['message'])) {
                 <select name="role" required>
                     <option value="" disabled selected>Tujuan :</option>
                     <option value="pkl">PKL</option>
-                    <option value="tamu">Kunjungan</option>
-                    <option value="narasumber">Permohonan Narasumber</option>
+                    <option value="tamu">Permohonan Kunjungan atau Narasumber</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>

@@ -110,13 +110,15 @@ if (isset($_GET['message'])) {
                     <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_pkl.php">PKL</a>
+                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
+                        PKL
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin_tamu.php">Kunjungan</a>
+                    <a class="nav-link active" href="admin_tamu.php">Kunjungan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_narasumber.php">Narasumber</a>
+                    <a class="nav-link" href="admin_narasumber.php">Pengaduan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -154,12 +156,7 @@ if (isset($_GET['message'])) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="admin_tamu.php">
-                                Kunjungan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_narasumber.php">
-                                Narasumber
+                                Permohonan
                             </a>
                         </li>
                         <li class="nav-item">
@@ -188,7 +185,7 @@ if (isset($_GET['message'])) {
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Nomor HP</th>
-                                    <th scope="col">Jenis Permohonan</th>
+                                   
                                     <th scope="col">Instansi</th>
                                     <th scope="col">Keperluan</th>
                                     <th scope="col">Jumlah Peserta</th>
@@ -210,7 +207,6 @@ if (isset($_GET['message'])) {
                                 echo "<td scope='row'>{$no}</td>";
                                 echo "<td>{$row2['nama']}</td>";
                                 echo "<td>{$row2['no_hp']}</td>";
-                                echo "<td>{$row2['permohonan']}</td>";
                                 echo "<td>{$row2['instansi']}</td>";
                                 echo "<td>{$row2['keperluan']}</td>";
                                 echo "<td>{$row2['jumlah_peserta']}</td>";
@@ -250,7 +246,8 @@ if (isset($_GET['message'])) {
                                     }
                                     echo "</td>";
 
-                                echo "<td>{$row2['status_kunjungan']}</td>";
+                                echo "<td>
+                                </td>";
                                 
                                 echo "</tr>";
                                 $no++;

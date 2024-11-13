@@ -7,7 +7,9 @@ body {
   /* overflow-y: hidden; */
   font-family: 'Poppins', sans-serif;
 }
-
+.text-center{
+  font-size: 20px;
+}
 /* Sidebar */
 .sidebar {
   background-color: #00aaff;
