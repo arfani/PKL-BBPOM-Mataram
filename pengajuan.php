@@ -33,6 +33,7 @@ if (isset($_SESSION['id'])) {
 if (isset($_POST['kirim'])) {
     $universitas = $_POST['universitas'];
     $department = $_POST['department'];
+    $nim = $_POST['nim'];
     $posisi = implode(', ', $_POST['posisi']);
     $periode = $_POST['periode1'] . ' - ' . $_POST['periode2'];
     $surat = $_FILES['surat']['name'];
@@ -56,7 +57,8 @@ if (isset($_POST['kirim'])) {
         move_uploaded_file($sumber_proposal, $proposal_path);
     }
 
-    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal) VALUES ('$nama', '$email', '$no_hp', '$universitas', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path')");
+    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal, nim) 
+    VALUES ('$nama', '$email', '$no_hp', '$universitas', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path', '$nim')");
     if ($insert) {
 
         $text = 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin';
@@ -300,7 +302,7 @@ if (isset($_GET['message'])) {
                 </div>
                 <div class="mb-3">
                     <label for="nim" class="form-label">NIM :</label>
-                    <input type="text" class="form-control" id="department" name="department"
+                    <input type="text" class="form-control" id="nim" name="nim"
                         placeholder="Nomor Induk Mahasiswa" required>
                 </div>
                 <div class="mb-3">  
