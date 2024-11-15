@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2024 at 02:26 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Generation Time: Nov 15, 2024 at 08:57 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,16 +44,16 @@ CREATE TABLE `absensi` (
   `waktu_keluar` time DEFAULT NULL,
   `durasi` time DEFAULT NULL,
   `kesimpulan` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `absensi`
 --
 
 INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `foto_keluar`, `latitude`, `latitude_keluar`, `longitude`, `longitude_keluar`, `waktu_masuk`, `waktu_keluar`, `durasi`, `kesimpulan`) VALUES
-(24, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-06', 'pexels-ken123films-1796794.jpg', '', '-8.58800000', '0.00000000', '116.11600000', '0.00000000', '14:38:24', NULL, NULL, NULL),
-(27, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-07', 'pexels-ken123films-1796794.jpg', 'pexels-nicole-avagliano-1132392-2236713.jpg', '-8.58800000', '-8.58800000', '116.11600000', '116.11600000', '08:14:08', '08:14:15', '00:00:07', 'Waktu Kerja Kurang 8 jam 29 Menit'),
-(33, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-13', 'images (1).jfif', NULL, '-8.58800000', NULL, '116.11600000', NULL, '09:57:30', NULL, NULL, NULL);
+(24, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-06', 'pexels-ken123films-1796794.jpg', '', -8.58800000, 0.00000000, 116.11600000, 0.00000000, '14:38:24', NULL, NULL, NULL),
+(27, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-07', 'pexels-ken123films-1796794.jpg', 'pexels-nicole-avagliano-1132392-2236713.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:14:08', '08:14:15', '00:00:07', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(33, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-13', 'images (1).jfif', NULL, -8.58800000, NULL, 116.11600000, NULL, '09:57:30', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ CREATE TABLE `admin` (
   `email` varchar(50) NOT NULL,
   `no_hp` varchar(20) NOT NULL,
   `password` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
@@ -92,7 +92,7 @@ CREATE TABLE `api` (
   `no_cs` varchar(20) NOT NULL,
   `jenis` int(2) NOT NULL,
   `status` int(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `api`
@@ -120,7 +120,7 @@ CREATE TABLE `kunjungan` (
   `surat_masuk` varchar(255) DEFAULT NULL,
   `surat_balasan` varchar(255) DEFAULT NULL,
   `status_kunjungan` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `kunjungan`
@@ -143,7 +143,7 @@ CREATE TABLE `notifikasi` (
   `userid` int(10) NOT NULL,
   `text` text NOT NULL,
   `status` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `notifikasi`
@@ -221,7 +221,7 @@ CREATE TABLE `penempatan_pkl` (
   `jurusan` text NOT NULL,
   `kuota` int(5) NOT NULL,
   `gambar` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `penempatan_pkl`
@@ -240,28 +240,32 @@ INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`, `
 
 CREATE TABLE `pengaduan` (
   `id` int(11) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `no_hp` varchar(25) NOT NULL,
-  `subject` enum('kosmetik','makanan','obat') NOT NULL,
-  `pesan` text NOT NULL,
-  `foto_pengaduan` text DEFAULT NULL,
   `tanggal` date NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `alamat` text NOT NULL,
+  `no_hp` varchar(25) NOT NULL,
+  `subject` enum('obat','obat bahan alam','suplemen kesehatan','kosmetik','pangan olahan','lainnya') NOT NULL,
+  `pesan` text NOT NULL,
+  `foto_ktp` text DEFAULT NULL,
+  `foto_pengaduan` text DEFAULT NULL,
   `jam` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengaduan`
 --
 
-INSERT INTO `pengaduan` (`id`, `nama`, `email`, `no_hp`, `subject`, `pesan`, `foto_pengaduan`, `tanggal`, `jam`) VALUES
-(1, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', '2sdasdwasda', NULL, '2024-11-08', '10:00:10'),
-(2, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, '2024-11-08', '10:07:46'),
-(3, 'Bagas Adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, '2024-11-08', '10:08:31'),
-(4, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasdwasd', NULL, '2024-11-08', '10:26:12'),
-(5, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, '2024-11-08', '10:30:55'),
-(6, 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, '2024-11-08', '10:33:39'),
-(7, 'Bagas Adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'adwasdwasd', NULL, '2024-11-08', '14:57:45');
+INSERT INTO `pengaduan` (`id`, `tanggal`, `nama`, `alamat`, `no_hp`, `subject`, `pesan`, `foto_ktp`, `foto_pengaduan`, `jam`) VALUES
+(1, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', '2sdasdwasda', NULL, NULL, '10:00:10'),
+(2, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, NULL, '10:07:46'),
+(3, '2024-11-08', 'Bagas Adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, NULL, '10:08:31'),
+(4, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasdwasd', NULL, NULL, '10:26:12'),
+(5, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, NULL, '10:30:55'),
+(6, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, NULL, '10:33:39'),
+(7, '2024-11-08', 'Bagas Adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'adwasdwasd', NULL, NULL, '14:57:45'),
+(8, '2024-11-15', 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'asdwadswasdwa', NULL, NULL, '09:17:26'),
+(9, '2024-11-15', 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'asdwasdwasdwadasdwasdwa', 'si inges (1).png', 'si solah (1).png', '09:54:40'),
+(10, '2024-11-15', 'bagas adinata', 'jalanpendidikan', '087750292514', 'pangan olahan', 'anfjafajdnjagnasdmawsdwasdwasd', 'si inges (2).png', 'si solah (1).png', '13:33:33');
 
 -- --------------------------------------------------------
 
@@ -287,7 +291,7 @@ CREATE TABLE `pengajuan_pkl` (
   `penempatan` varchar(50) DEFAULT NULL,
   `laporan_akhir` text DEFAULT NULL,
   `sertifikat` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengajuan_pkl`
@@ -318,7 +322,7 @@ CREATE TABLE `tb_seo` (
   `urlweb` text NOT NULL,
   `user` text NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_seo`
@@ -340,7 +344,7 @@ CREATE TABLE `tb_slide` (
   `sort` int(11) NOT NULL,
   `user` text NOT NULL,
   `status` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tb_slide`
@@ -366,7 +370,7 @@ CREATE TABLE `users` (
   `password` varchar(50) NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   `foto` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -504,7 +508,7 @@ ALTER TABLE `penempatan_pkl`
 -- AUTO_INCREMENT for table `pengaduan`
 --
 ALTER TABLE `pengaduan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `pengajuan_pkl`

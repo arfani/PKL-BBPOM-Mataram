@@ -144,16 +144,19 @@ if (isset($_GET['message'])) {
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="admin_pkl.php">
                         PKL
-                        <a class="nav-link" href="admin_absensi.php">
-                            Absensi
-                        </a>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="admin_pengaduan.php">Pengaduan</a>
+                    <a class="nav-link active" href="admin_pengaduan.php">
+                        Pengaduan
+                        <a class="nav-link" href="admin_pengaduan_statistik.php">
+                            Statistik
+                        </a>
+                    </a>
+                    
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -198,6 +201,9 @@ if (isset($_GET['message'])) {
                         <li class="nav-item">
                             <a class="nav-link active" href="admin_pengaduan.php">
                                 Pengaduan
+                                <a class="nav-link" href="admin_pengaduan_statistik.php">
+                                    Statistik
+                                </a>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -221,41 +227,63 @@ if (isset($_GET['message'])) {
                             <thead class="table" style="background-color: skyblue;">
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>No. HP</th>
-                                    <th>Subject</th>
-                                    <th>Pesan</th>
-                                    <th>Foto</th>
                                     <th>Tanggal</th>
+                                    <th>Nama</th>
+                                    <th>No. HP</th>
+                                    <th>Alamat</th>
+                                    <th>Komoditas</th>
+                                    <th>Detail Pengaduan</th>
+                                    <th>Foto Identitas</th>
+                                    <th>Foto Tambahan</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php while ($row = mysqli_fetch_assoc($result2)) : ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
+                                        <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
                                         <td><?php echo htmlspecialchars($row['nama']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['email']); ?></td>
                                         <td><?php echo htmlspecialchars($row['no_hp']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['alamat']); ?></td>
                                         <td><?php echo htmlspecialchars($row['subject']); ?></td>
                                         <td><?php echo htmlspecialchars($row['pesan']); ?></td>
-                                        <!-- Display image if available -->
+                                        <!-- Button for Foto KTP -->
                                         <td>
-                                            <?php if (!empty($row['foto'])) : ?>
-                                                <img src="Asset/Gambar/<?php echo htmlspecialchars($row['foto']); ?>" alt="Foto Pengaduan" class="img-thumbnail" style="width: 100px;">
+                                            <?php if (!empty($row['foto_ktp'])) : ?>
+                                                <button class="btn btn-primary btn-view-photo" 
+                                                        data-photo-src="Asset/Gambar/<?php echo htmlspecialchars($row['foto_ktp']); ?>" 
+                                                        data-user-name="<?php echo htmlspecialchars($row['nama']); ?>">
+                                                    Lihat Foto KTP
+                                                </button>
                                             <?php else : ?>
                                                 Tidak ada foto
                                             <?php endif; ?>
                                         </td>
-                                        <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
+                                        
+                                        
+                                        <!-- Button for Foto Pengaduan -->
+                                        <td>
+                                            <?php if (!empty($row['foto_pengaduan'])) : ?>
+                                                <button class="btn btn-primary btn-view-photo" 
+                                                        data-photo-src="Asset/Gambar/<?php echo htmlspecialchars($row['foto_pengaduan']); ?>" 
+                                                        data-user-name="<?php echo htmlspecialchars($row['nama']); ?>">
+                                                    Lihat Foto Pengaduan
+                                                </button>
+                                            <?php else : ?>
+                                                Tidak ada foto
+                                            <?php endif; ?>
+                                        </td>
+                                        
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
+                        
 
                         <!-- Pagination -->
                         <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-end">
                                 <?php if ($page > 1): ?>
                                     <li class="page-item"><a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a></li>
                                 <?php endif; ?>
@@ -271,15 +299,16 @@ if (isset($_GET['message'])) {
                                 <?php endif; ?>
                             </ul>
                         </nav>
+                        <!-- Modal -->
                         <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="photoModalLabel">Foto Absensi</h5>
+                                        <h5 class="modal-title" id="photoModalLabel">Foto</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <img id="absensiPhoto" src="" alt="Foto Absensi" class="img-fluid">
+                                        <img id="absensiPhoto" src="" alt="Foto" class="img-fluid">
                                         <p id="photoUserName" class="mt-2"></p>
                                     </div>
                                 </div>
@@ -296,42 +325,25 @@ if (isset($_GET['message'])) {
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".btn-view-photo").forEach(button => {
-            button.addEventListener("click", function () {
-                const pengaduanId = this.getAttribute("data-id");
-                const userName = this.getAttribute("data-name");
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = new bootstrap.Modal(document.getElementById('photoModal'));
+        const absensiPhoto = document.getElementById('absensiPhoto');
+        const photoUserName = document.getElementById('photoUserName');
 
-                document.getElementById("photoUserName").innerText = `Nama: ${userName}`;
-
-                // Mengambil foto menggunakan ID pengaduan
-                fetch(`<?php echo $_SERVER['PHP_SELF']; ?>?fetch_photo=true&id=${pengaduanId}&type=foto`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            // Memperbarui sumber gambar pada modal
-                            document.getElementById("pengaduanPhoto").src = data.photoPath;
-                            new bootstrap.Modal(document.getElementById("photoModal")).show();
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal',
-                                text: data.message,
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Kesalahan',
-                            text: 'Gagal memuat foto. Silakan coba lagi.',
-                        });
-                        console.error('Error fetching photo:', error);
-                    });
+        // Event listener untuk tombol lihat foto
+        document.querySelectorAll('.btn-view-photo').forEach(button => {
+            button.addEventListener('click', function() {
+                const photoSrc = button.getAttribute('data-photo-src');
+                const userName = button.getAttribute('data-user-name');
+                
+                absensiPhoto.src = photoSrc; // Set foto di modal
+                photoUserName.textContent = userName; // Set nama pengguna di modal
+                
+                modal.show(); // Tampilkan modal
             });
         });
     });
-    </script>
+</script>
 </body>
 
 </html>
