@@ -186,7 +186,7 @@ if (isset($_GET['message'])) {
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="admin_pkl.php">
                         PKL
-                        <a class="nav-link" href="admin_absensi.php">
+                        <a class="nav-link" href="admin_pkl_absensi.php">
                             Absensi
                         </a>
                     </a>
@@ -229,9 +229,16 @@ if (isset($_GET['message'])) {
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="admin_pkl.php" >
                                 PKL
-                            </a>
-                            <a class="nav-link " href="admin_absensi.php" style="margin-left:5%">
-                                Absensi
+                            
+                                <a class="nav-link " href="admin_pkl_absensi.php" style="margin-left:5%">
+                                    Absensi
+                                </a>
+                                <a class="nav-link " href="admin_pkl_statistik.php" style="margin-left:5%">
+                                    statistik
+                                </a>
+                                <a class="nav-link " href="admin_pkl_posisi.php" style="margin-left:5%">
+                                    Posisi Penempatan PKL
+                                </a>
                             </a>
                         </li>
                         

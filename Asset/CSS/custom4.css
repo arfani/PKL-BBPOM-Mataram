@@ -206,45 +206,115 @@ body {
   transition: transform 0.3s, background-color 0.3s;
   cursor: pointer; /* Menambahkan cursor pointer */
 }
+.card:hover{
+    background-color: #007bff; /* warna biru */
+    transform: scale(1.05); /* memperbesar */
+    color: #fff; /* Ubah teks menjadi putih */
+}
+.card.active {
+    background-color: #007bff; /* warna biru */
+    transform: scale(1.15); /* memperbesar */
+    color: #fff; /* Ubah teks menjadi putih */
+}
+.card:hover, .card.active {
+    background-color: #ffffff;
+    color: #007bff;
+    transform: scale(1.05);
+}
 .card-section{
-            cursor:default;
-        }
-        
-        /* Hover style untuk memperbesar dan mengubah warna */
-        .card:hover {
-        background-color: #007bff; /* warna biru */
-        transform: scale(1.05); /* memperbesar */
-        color: #fff; /* Ubah teks menjadi putih */
-        }
-
-        /* Style untuk kartu yang tetap aktif setelah diklik */
-        .card.active {
-        background-color: #007bff; /* warna biru */
-        transform: scale(1.15); /* memperbesar */
-        color: #fff; /* Ubah teks menjadi putih */
-        }
-
-        .card h2 {
-        font-size: 2.5rem;
-        margin: 0;
-        color: inherit; /* Agar warna h2 berubah sesuai konteks */
-        }
-
-        .card .card-icon {
-        font-size: 3rem;
-        color: inherit; /* Agar warna ikon berubah sesuai konteks */
-        }
+    cursor:default;
+}
+    
+.card h2 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+.card .card-title {
+    font-size: 2rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+.card .card-icon {
+    font-size: 3rem;
+    color: inherit; /* Agar warna ikon berubah sesuai konteks */
+}
 
 
-        .card .card-icon {
-        font-size: 3rem;
-        color: #777;
-        }
-        .cards {
+.card .card-icon {
+    font-size: 3rem;
+    color: #777;
+}
+.card .dropdown-content{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 5px;
+    width: 100%; /* Sesuaikan dengan lebar dropdown-toggle */
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1s ease, opacity 1s ease;
+    text-decoration: none;
+    
+}
+.card.active .dropdown-content,
+    .card:hover .dropdown-content {
+        display: block;
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    .card.active .dropdown-content .link a:link{
+      text-decoration: none;
+    }
+.cards {
+        color:#000000;
+        background-color: #fff; /* warna biru */
+        display: flex;
+        flex-direction: row; /* Menyusun elemen secara horizontal */
+        align-items: center; /* Menyelaraskan elemen secara vertikal di tengah */
+        justify-content: center; /* Menyelaraskan elemen secara horizontal */
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
         text-align: center;
-        }
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        gap: 1rem; /* Menambah jarak antar-elemen */
+        margin-bottom: 5px;
+}
+.cards:hover{
+    background-color: #007bff; /* warna biru */
+    transform: scale(1.05); /* memperbesar */
+    color: #fff; /* Ubah teks menjadi putih */
+}
+
+.cards p {
+    font-size: 1.5rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+.cards h2 {
+    align-items: end;
+    font-size: 2.5rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+
+
+.cards .cards-icon {
+    font-size: 2rem;
+    color: inherit; /* Agar warna ikon berubah sesuai konteks */
+}
+
+
+.cards .card-icon {
+    font-size: 3rem;
+    color: #777;
+}
 .nav-link .active{
   cursor: default;
 }

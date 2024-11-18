@@ -6,68 +6,41 @@ $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
 
-// Check for `POST` request to fetch specific chart data
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (isset($input['subject'])) {
-        $subject = $input['subject'];
-        $chartData = [];
-
-        // Fetch monthly data for the selected subject
-        for ($i = 1; $i <= 12; $i++) {
-            $sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE subject = '$subject' AND MONTH(SUBSTRING_INDEX(tanggal, ' - ', 1)) = $i";
-            $result = mysqli_query($conn, $sql);
-            $chartData[] = mysqli_fetch_assoc($result)['jumlah'];
-        }
-
-        // Respond with JSON containing chart data
-        echo json_encode(['success' => true, 'chartData' => $chartData]);
-        exit;
+if (isset($_SESSION['role'])) {
+    $role = $_SESSION['role'];
+    if ($role != "admin") {
+        header('location:' . $urlweb . '/' . $role . '.php');
     }
+} else {
+    header("Location: " . $urlweb);
 }
-?>
-<?php
 
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE nama != NULL";
+// Menghitung jumlah lowongan (total kuota di tabel penempatan_pkl)
+$sql = "SELECT SUM(kuota) as jumlah FROM penempatan_pkl";
 $result = mysqli_query($conn, $sql);
-$jml_pengaduan = mysqli_fetch_assoc($result)['jumlah'];
+$lowongan = mysqli_fetch_assoc($result)['jumlah'];
 
-// Menghitung jumlah Pengaduan Obat
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE subject = 'obat'";
+// Menghitung jumlah PKL batal
+$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'failed'";
 $result = mysqli_query($conn, $sql);
-$jml_obat = mysqli_fetch_assoc($result)['jumlah'];
+$pkl_batal = mysqli_fetch_assoc($result)['jumlah'];
 
-// Menghitung jumlah Pengaduan Obat Bahan Alam
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE subject = 'obat bahan alam'";
+// Menghitung jumlah PKL sedang
+$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'active'";
 $result = mysqli_query($conn, $sql);
-$jml_obat_bahan = mysqli_fetch_assoc($result)['jumlah'];
-
-// Menghitung jumlah Suplemen Kesehatan
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE subject = 'suplemen kesehatan'";
-$result = mysqli_query($conn, $sql);
-$jml_sup_kesehatan = mysqli_fetch_assoc($result)['jumlah'];
-
-// Menghitung jumlah Pengaduan Kosmetik
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE subject = 'kosmetik'";
-$result = mysqli_query($conn, $sql);
-$jml_kosmetik = mysqli_fetch_assoc($result)['jumlah'];
+$sedang_pkl = mysqli_fetch_assoc($result)['jumlah'];
 
 // Menghitung jumlah PKL selesai
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE subject = 'pangan olahan'";
+$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'done'";
 $result = mysqli_query($conn, $sql);
-$jml_pangan_olahan = mysqli_fetch_assoc($result)['jumlah'];
-
-//menghitung Jumlah Pengaduan 'Lainnya'
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE subject = 'lainnya'";
-$result = mysqli_query($conn, $sql);
-$jml_lainnya = mysqli_fetch_assoc($result)['jumlah'];
+$selesai_pkl = mysqli_fetch_assoc($result)['jumlah'];
 
 // Menghitung jumlah PKL per bulan dari kolom 'periode' pada tabel 'pengajuan_pkl'
-$pengaduan_perbulan = [];
+$pkl_perbulan = [];
 for ($i = 1; $i <= 12; $i++) {
-    $sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE MONTH(SUBSTRING_INDEX(tanggal, ' - ', 1)) = $i";
+    $sql = "SELECT COUNT(*) as jumlah FROM pengajuan_pkl WHERE MONTH(SUBSTRING_INDEX(periode, ' - ', 1)) = $i";
     $result = mysqli_query($conn, $sql);
-    $pengaduan_perbulan[$i] = mysqli_fetch_assoc($result)['jumlah'];
+    $pkl_perbulan[$i] = mysqli_fetch_assoc($result)['jumlah'];
 }
 ?>
 
@@ -122,47 +95,6 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
-    <style>
-        .card-section{
-            cursor:default;
-        }
-        
-        /* Hover style untuk memperbesar dan mengubah warna */
-        .card:hover {
-        background-color: #007bff; /* warna biru */
-        transform: scale(1.05); /* memperbesar */
-        color: #fff; /* Ubah teks menjadi putih */
-        }
-
-        /* Style untuk kartu yang tetap aktif setelah diklik */
-        .card.active {
-        background-color: #007bff; /* warna biru */
-        transform: scale(1.15); /* memperbesar */
-        color: #fff; /* Ubah teks menjadi putih */
-        }
-
-        .card h2 {
-        font-size: 2.5rem;
-        margin: 0;
-        color: inherit; /* Agar warna h2 berubah sesuai konteks */
-        }
-
-        .card .card-icon {
-        font-size: 3rem;
-        color: inherit; /* Agar warna ikon berubah sesuai konteks */
-        }
-
-
-        .card .card-icon {
-        font-size: 3rem;
-        color: #777;
-        }
-        .cards {
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        }
-    </style>
     <header class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
         <a class="navbar-brand" href="#">
             <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
@@ -202,24 +134,30 @@ if (isset($_GET['message'])) {
             </form>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="admin.php">Overview</a>
+                    <a class="nav-link" href="admin.php">Overview</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_pkl.php">PKL</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_tamu.php">Permohonan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_pengaduan.php">
-                        Narasumber
-                        <a class="nav-link active" href="admin_pengaduan_statistik.php">
+                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
+                        PKL
+                        <a class="nav-link" href="admin_pkl_absensi.php">
+                            Absensi
+                        </a>
+                        <a class="nav-link active" href="admin_pkl_statistik.php">
                             Statistik
                         </a>
+                        <a class="nav-link" href="admin_pkl_posisi.php">
+                            Posisi Penempatan PKL
+                        </a>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin_pengaduan.php">Pengaduan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -239,11 +177,11 @@ if (isset($_GET['message'])) {
 
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
+        <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
                 <div class="position-sticky pt-2 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="admin.php">
+                            <a class="nav-link" href="admin.php">
                                 Overview
                             </a>
                         </li>
@@ -255,10 +193,19 @@ if (isset($_GET['message'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="admin_pkl.php">
                                 PKL
+                                <a class="nav-link" href="admin_pkl_absensi.php" style="margin-left:5%">
+                                Absensi
+                                </a>
+                                <a class="nav-link active" href="admin_pkl_statistik.php" style="margin-left:5%">
+                                Statistik
+                                </a>
+                                <a class="nav-link" href="admin_pkl_posisi.php" style="margin-left:5%">
+                                Posisi Penempatan PKL
+                                </a>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_tamu.php">
+                            <a class="nav-link" aria-current="page" href="admin_tamu.php">
                                 Permohonan
                             </a>
                         </li>
@@ -266,9 +213,6 @@ if (isset($_GET['message'])) {
                         <li class="nav-item">
                             <a class="nav-link" href="admin_pengaduan.php">
                                 Pengaduan
-                                <a class="nav-link active" href="admin_pengaduan_statistik.php" style="margin-left:5%">
-                                    Statistik
-                                </a>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -283,69 +227,55 @@ if (isset($_GET['message'])) {
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Overview</h1>
                 </div>
             </div>
             <div class="col-md-9 ms-sm-auto col-lg-10 ">
                 <div class="container mt-2">
                     <div class="text-center">
-                        <h3 class="fw-bold">Data Pengaduan</h3>
+                        <h3 class="fw-bold">Data PKL</h3>
                     </div>
 
                     <!-- Card Section -->
-                    <section class="card-section">
                     <div class="row my-4">
-                        <div class="col-md-2" >
-                            <div class="card p-2" data-subject="obat">
-                                <div class="card-icon">💊</div>
-                                <h2><?php echo $jml_obat; ?></h2>
-                                <p>Obat</p>
+                        <div class="col-md-3">
+                            <div class="card p-3">
+                                <div class="card-icon">😊</div>
+                                <h2><?php echo $selesai_pkl; ?></h2>
+                                <p>PKL Selesai</p>
                             </div>
                         </div>
-                        
-                        <div class="col-md-2">
-                            <div class="card p-2" data-subject="obat bahan alam">
-                                <div class="card-icon">🍵</div>
-                                <h2><?php echo $jml_obat_bahan; ?></h2>
-                                <p>Obat Bahan Alam</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="card p-2" data-subject="suplemen kesehatan">
-                                <div class="card-icon">🧴</div>
-                                <h2><?php echo $jml_sup_kesehatan; ?></h2>
-                                <p>Suplemen Kesehatan</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="card p-2" data-subject="kosmetik">
-                                <div class="card-icon">💄</div>
-                                <h2><?php echo $jml_kosmetik; ?></h2>
-                                <p>Kosmetik</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="card p-2" data-subject="pangan olahan">
-                                <div class="card-icon">🍞</div>
-                                <h2><?php echo $jml_pangan_olahan; ?></h2>
-                                <p>Pangan Olahan</p>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="card p-2" data-subject="lainnya">
+                        <div class="col-md-3">
+                            <div class="card p-3">
                                 <div class="card-icon">📋</div>
-                                <h2><?php echo $jml_lainnya; ?></h2>
-                                <p>Lainnya</p>
+                                <h2><?php echo $sedang_pkl; ?></h2>
+                                <p>Sedang PKL</p>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="card p-3">
+                                <div class="card-icon">🎧</div>
+                                <h2><?php echo $pkl_batal; ?></h2>
+                                <p>Batal</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card p-3">
+                                <div class="card-icon">👥</div>
+                                <h2><?php echo $lowongan; ?></h2>
+                                <p>Lowongan</p>
+                            </div>
+                        </div>
+
                     </div>
-                    </section>
+
                     <!-- Chart Section -->
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="cards mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-line me-1"></i>
-                                    Statistik Pengaduan
+                                    Data PKL
                                 </div>
                                 <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                             </div>
@@ -354,7 +284,7 @@ if (isset($_GET['message'])) {
                             <div class="cards mb-4">
                                 <div class="card-header">
                                     <i class="fas fa-chart-pie me-1"></i>
-                                    Pengaduan
+                                    PKL
                                 </div>
                                 <div class="card-body"><canvas id="myPieChart" width="100%" height="40"></canvas></div>
                             </div>
@@ -376,10 +306,10 @@ if (isset($_GET['message'])) {
                                     'Nov', 'Dec'
                                 ],
                                 datasets: [{
-                                    label: 'Jumlah Pengaduan',
+                                    label: 'Jumlah PKL',
                                     data: [
                                         <?php
-                                        foreach ($pengaduan_perbulan as $jumlah) {
+                                        foreach ($pkl_perbulan as $jumlah) {
                                             echo $jumlah . ', ';
                                         }
                                         ?>
@@ -388,16 +318,11 @@ if (isset($_GET['message'])) {
                                     borderColor: 'rgba(54, 162, 235, 1)',
                                     borderWidth: 1
                                 }]
-                                
                             },
                             options: {
                                 scales: {
                                     y: {
-                                        min: 0,           // Set nilai minimum sumbu y
-                                        max: 20,          // Set nilai maksimum sumbu y
-                                        ticks: {
-                                            stepSize: 2   // Set interval antar nilai di sumbu y
-                                        }
+                                        beginAtZero: true
                                     }
                                 }
                             }
@@ -408,66 +333,19 @@ if (isset($_GET['message'])) {
                         var myPieChart = new Chart(ctx, {
                             type: 'pie',
                             data: {
-                                labels: ['Obat', 'Obat Bahan Alam', 'Suplemen Kesehatan', 'Kosmetik', 'Pangan Olahan', 'Lainnya'],
+                                labels: ['Selesai', 'Sedang PKL', 'Batal', 'Lowongan'],
                                 datasets: [{
                                     data: [
-                                        <?php echo $jml_obat; ?>,
-                                        <?php echo $jml_obat_bahan; ?>,
-                                        <?php echo $jml_sup_kesehatan; ?>,
-                                        <?php echo $jml_kosmetik; ?>,
-                                        <?php echo $jml_pangan_olahan; ?>,
-                                        <?php echo $jml_lainnya; ?>
+                                        <?php echo $selesai_pkl; ?>,
+                                        <?php echo $sedang_pkl; ?>,
+                                        <?php echo $pkl_batal; ?>,
+                                        <?php echo $lowongan; ?>
                                     ],
-                                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A','#9966FF', '#FF9F40']
+                                    backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745']
                                 }]
                             }
                         });
                     </script>
-                    <script>
-                        // Default data from PHP (static)
-                        const defaultData = [<?php echo implode(',', $pengaduan_perbulan); ?>];
-
-                        document.querySelectorAll('.card').forEach(card => {
-                            card.addEventListener('click', function () {
-                                let subject = this.getAttribute('data-subject');
-
-                                // Toggle active class on the card
-                                if (this.classList.contains('active')) {
-                                    this.classList.remove('active'); // Remove active class
-
-                                    // Send default data to chart
-                                    updateChart(defaultData);
-                                } else {
-                                    // Remove active class from all cards
-                                    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-                                    this.classList.add('active'); // Set current card as active
-
-                                    // Fetch updated data for selected subject
-                                    fetch(window.location.href, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({ subject: subject })
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.success) {
-                                            updateChart(data.chartData); // Update chart with fetched data
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
-                                }
-                            });
-                        });
-
-                        // Function to update the chart based on new data
-                        function updateChart(chartData) {
-                            myAreaChart.data.datasets[0].data = chartData;
-                            myAreaChart.update();
-                        }
-                    </script>
-
 
 </body>
 

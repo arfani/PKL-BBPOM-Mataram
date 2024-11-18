@@ -1,7 +1,6 @@
 <?php
 include('koneksi.php');
 session_start();
-
 $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
@@ -15,51 +14,16 @@ if (isset($_SESSION['role'])) {
     header("Location: " . $urlweb);
 }
 
-$sql = "SELECT SUM(kuota) as jumlah FROM penempatan_pkl";
-$result = mysqli_query($conn, $sql);
-$lowongan = mysqli_fetch_assoc($result)['jumlah'];
+$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 
-// Menghitung jumlah PKL batal
-$sql = "SELECT COUNT(*) as jumlah FROM kunjungan WHERE keperluan = 'kunjungan'";
-$result = mysqli_query($conn, $sql);
-$jml_kunjungan = mysqli_fetch_assoc($result)['jumlah'];
+$sql = "SELECT * FROM penempatan_pkl WHERE 
+        posisi LIKE '%$search%' OR 
+        deskripsi LIKE '%$search%' OR 
+        jurusan LIKE '%$search%' OR 
+        kuota LIKE '%$search%'";
 
-// Menghitung jumlah PKL sedang
-$sql = "SELECT COUNT(*) as jumlah FROM kunjungan WHERE keperluan = 'narasumber'";
 $result = mysqli_query($conn, $sql);
-$jml_narasumber = mysqli_fetch_assoc($result)['jumlah'];
-
-$total_permohonan = $jml_kunjungan + $jml_narasumber;
-// Menghitung jumlah lowongan (total kuota di tabel penempatan_pkl)
-$sql = "SELECT SUM(kuota) as jumlah FROM penempatan_pkl";
-$result = mysqli_query($conn, $sql);
-$lowongan = mysqli_fetch_assoc($result)['jumlah'];
-
-// Menghitung jumlah PKL batal
-$sql = "SELECT COUNT(*) as jumlah FROM kunjungan WHERE nama != 'NULL'";
-$result = mysqli_query($conn, $sql);
-$permohonan = mysqli_fetch_assoc($result)['jumlah'];
-
-// Menghitung jumlah PKL sedang
-$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE nama != 'NULL'";
-$result = mysqli_query($conn, $sql);
-$pengaduan = mysqli_fetch_assoc($result)['jumlah'];
-
-// Menghitung jumlah PKL selesai
-$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'active'";
-$result = mysqli_query($conn, $sql);
-$sedang_pkl = mysqli_fetch_assoc($result)['jumlah'];
-
-// Menghitung jumlah PKL per bulan dari kolom 'periode' pada tabel 'pengajuan_pkl'
-$pkl_perbulan = [];
-for ($i = 1; $i <= 12; $i++) {
-    $sql = "SELECT COUNT(*) as jumlah FROM pengajuan_pkl WHERE MONTH(SUBSTRING_INDEX(periode, ' - ', 1)) = $i";
-    $result = mysqli_query($conn, $sql);
-    $pkl_perbulan[$i] = mysqli_fetch_assoc($result)['jumlah'];
-}
 ?>
-
-
 <?php
 if (isset($_GET['message'])) {
     $message = htmlspecialchars($_GET['message']); // Menghindari XSS
@@ -105,8 +69,7 @@ if (isset($_GET['message'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="Asset/CSS/custom4.css">
-
+    <link rel="stylesheet" href="Asset/CSS/custom2.css">
 </head>
 
 <body>
@@ -149,19 +112,21 @@ if (isset($_GET['message'])) {
             </form>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin.php">Overview</a>
+                    <a class="nav-link" href="admin.php">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
+                    <a class="nav-link active" href="admin_posisi.php">Posisi Penempatan PKL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_pkl.php">PKL</a>
+                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
+                        PKL
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin_narasumber.php">Narasumber</a>
+                    <a class="nav-link" href="admin_pengaduan.php">Pengaduan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -177,26 +142,33 @@ if (isset($_GET['message'])) {
         </div>
     </header>
 
-
-
     <div class="container-fluid">
         <div class="row">
             <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
                 <div class="position-sticky pt-2 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin.php">
+                            <a class="nav-link" href="admin.php">
                                 Overview
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_posisi.php">
+                            <a class="nav-link" aria-current="page" href="admin_posisi.php">
                                 Posisi Penempatan PKL
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="admin_pkl.php">
+                            <a class="nav-link" aria-current="page" href="admin_pkl.php" >
                                 PKL
+                                <a class="nav-link " href="admin_pkl_absensi.php" style="margin-left:5%">
+                                    Absensi
+                                </a>
+                                <a class="nav-link " href="admin_pkl_statistik.php" style="margin-left:5%">
+                                    statistik
+                                </a>
+                                <a class="nav-link active" href="admin_pkl_posisi.php" style="margin-left:5%">
+                                    Posisi Penempatan PKL
+                                </a>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -204,7 +176,6 @@ if (isset($_GET['message'])) {
                                 Permohonan
                             </a>
                         </li>
-                        
                         <li class="nav-item">
                             <a class="nav-link" href="admin_pengaduan.php">
                                 Pengaduan
@@ -219,113 +190,74 @@ if (isset($_GET['message'])) {
                 </div>
             </div>
 
-            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Overview</h1>
-                </div>
-            </div>
-            <div class="col-md-9 ms-sm-auto col-lg-10 ">
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-2">
                     <div class="text-center">
-                        <h3 class="fw-bold">Data PKL</h3>
+                        <h3 class="fw-bold">Data Penempatan PKL</h3>
                     </div>
-
-                    <!-- Card Section -->
-                    <div class="row my-4">
-                        <div class="col-md-4" >
-                            <div class="card p-3">
-                                <div class="card-icon">😊</div>
-                                <h2><?php echo $sedang_pkl; ?></h2>
-                                <p class="card-title">PKL</p>
-                                
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                        <div onclick="toggleDropdown()" class="card p-3">
-                            <div class="card-icon">🎧</div>
-                            <h2><?php echo $permohonan; ?></h2>
-                            <p class="card-title">Permohonan</p>
-                            <div id="dropdownMenu" class="dropdown-content">
-                                <a href="admin_tamu_kunjungan.php">
-                                <div class="cards">
-                                    <p class="cards-title">Kunjungan</p>
-                                </div>
-                                </a>
-                                <a class="link" href="admin_tamu_narasumber.php">
-                                <div class="cards">
-                                    <p class="cards-title">Narasumber</p>
-                                </div>
-                                </a>
-                                <a href="admin_tamu_statistik.php">
-                                <div class="cards">
-                                    <p class="cards-title">Statistik</p>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-start mb-3">
+                        <a href="function/tambah.php" class="btn btn-success">Tambah Data</a>
                     </div>
-                        <div class="col-md-4">
-                            <div class="card p-3">
-                                <div class="card-icon">🎧</div>
-                                <h2><?php echo $pengaduan; ?></h2>
-                                <p class="card-title">Pengaduan</p>
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover text-center">
+                            <thead class="table" style="background-color: skyblue;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Posisi & Penempatan</th>
+                                    <th>Deskripsi</th>
+                                    <th>Kualifikasi Jurusan</th>
+                                    <th>Kuota</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                                <?php
+                                $no = 1;
+                                while ($row2 = mysqli_fetch_assoc($result)) {
+                                    echo "<tr>";
+                                    echo "<td>{$no}</td>";
+                                    echo "<td>{$row2['posisi']}</td>";
+                                    echo "<td>{$row2['deskripsi']}</td>";
+                                    echo "<td>{$row2['jurusan']}</td>";
+                                    echo "<td>{$row2['kuota']}</td>";
+                                    echo "<td>
+                                        <form action='$urlweb/function/edit.php' method='post' style='display:inline-block;'>
+                                            <input type='hidden' name='id' value='{$row2['id']}'>
+                                            <button type='submit' name='action' value='edit' class='btn btn-warning btn-sm'>Edit</button>
+                                        </form>
+                                        <form action='$urlweb/function/actions.php' method='post' style='display:inline-block;'>
+                                            <input type='hidden' name='id' value='{$row2['id']}'>
+                                            <button type='submit' name='action' value='delete' class='btn btn-danger btn-sm' onclick='return confirm(\"Apakah Anda yakin ingin menghapus data ini?\")'>Hapus</button>
+                                        </form>
+                                    </td>";
+                                    echo "</tr>";
+                                    $no++;
+                                }
+                                $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
+            </div>
+            
+        </div>
+        <script>
+            $(document).ready(function() {
+                document.addEventListener('DOMContentLoaded', function() {
+                    const searchInput = document.getElementById('searchInput');
+                    const searchForm = document.getElementById('searchForm');
 
-                    <!-- Chart Section -->
-                    
-
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                        crossorigin="anonymous">
-                    </script>
-                    <script>
-    let dropdownOpen = false;
-
-    // Function to toggle dropdown on click
-    function toggleDropdown() {
-        dropdownOpen = !dropdownOpen;
-        updateDropdown();
-    }
-
-    // Function to show/hide dropdown based on hover or click
-    function updateDropdown() {
-        const dropdownMenu = document.getElementById("dropdownMenu");
-        if (dropdownOpen) {
-            dropdownMenu.style.display = "block";
-        } else {
-            dropdownMenu.style.display = "none";
-        }
-    }
-
-    // Show dropdown on hover
-    document.querySelector(".card").addEventListener("mouseenter", function() {
-        dropdownOpen = true;
-        updateDropdown();
-    });
-
-    // Hide dropdown when not hovered and not clicked
-    document.querySelector(".card").addEventListener("mouseleave", function() {
-        if (!dropdownOpen) {
-            updateDropdown();
-        }
-    });
-
-    // Close dropdown if clicking outside of it
-    window.onclick = function(event) {
-        if (!event.target.closest('.card')) {
-            dropdownOpen = false;
-            updateDropdown();
-        }
-    }
-</script>
-
-
-                    
+                    searchInput.addEventListener('input', function() {
+                        searchForm.submit(); // Kirim form secara otomatis saat input berubah
+                    });
+                });
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
 
 </body>
 
