@@ -85,6 +85,13 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
+    <style>
+        .question-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-bottom: 1px dashed #ccc;
+    }
+    </style>
     <header class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
         <a class="navbar-brand" href="#">
             <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
@@ -185,6 +192,9 @@ if (isset($_GET['message'])) {
                                 <a class="nav-link " href="admin_pkl_posisi.php" style="margin-left:5%">
                                     Posisi Penempatan PKL
                                 </a>
+                                <a class="nav-link " href="admin_pkl_kuis.php" style="margin-left:5%">
+                                    Kuis
+                                </a>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -248,33 +258,73 @@ if (isset($_GET['message'])) {
                                     echo "<td>{$row2['tanggal']}</td>";
                                     echo "<td>{$row2['nama']}</td>";
                                     echo "<td>{$row2['status']}</td>";
-                                    echo "<td>{$row2['waktu_masuk']}</td>";
-                                    // Tombol untuk foto masuk
-                                    echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto'>Lihat Foto</button></td>";
-                                    $formatted_latitude = number_format($row2['latitude'], 3);
-                                    $formatted_longitude = number_format($row2['longitude'], 3);
-                                    echo "<td> Lat : $formatted_latitude<br>Long : $formatted_longitude</td>";
-                                    // Kolom untuk jam keluar dan foto keluar
-                                    if ($row2['waktu_keluar'] != NULL) {
-                                        echo "<td>{$row2['waktu_keluar']}</td>";
-                                        // Tombol untuk foto keluar
-                                        echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto_keluar'>Lihat Foto</button></td>";
-                                        $formatted_latitude2 = number_format($row2['latitude_keluar'], 3);
-                                        $formatted_longitude2 = number_format($row2['longitude_keluar'], 3);
-                                        echo "<td> Lat : $formatted_latitude2<br>Long : $formatted_longitude2</td>";
-                                        echo "<td>{$row2['durasi']}</td>";
-                                        echo "<td>{$row2['kesimpulan']}</td>";
+                                
+                                    // Periksa apakah status adalah "izin"
+                                    if (strtolower($row2['status']) === 'izin') {
+                                        // Kolom kesimpulan dengan tombol untuk modal
+                                        $modal_id = "modal_kesimpulan_" . $no; // ID unik untuk setiap modal
+                                        echo "<td></td>"; // Kosongkan kolom lainnya
+                                        echo "<td></td>";
+                                        echo "<td></td>";
+                                        echo "<td></td>";
+                                        echo "<td></td>";
+                                        echo "<td></td>";
+                                        echo "<td></td>";
+                                        echo "<td><button class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#{$modal_id}'>Lihat Kesimpulan</button></td>";
+                                
+                                        // Modal untuk kesimpulan
+                                        echo "
+                                        <div class='modal fade' id='{$modal_id}' tabindex='-1' aria-labelledby='modalLabel_{$modal_id}' aria-hidden='true'>
+                                            <div class='modal-dialog'>
+                                                <div class='modal-content'>
+                                                    <div class='modal-header'>
+                                                            <h5 class='modal-title' id='modalLabel_{$modal_id}'>Keterangan Izin : <strong>{$row2['nama']}</strong></h5>
+                                                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                    </div>
+                                                    <div class='modal-body'>
+                                                        
+                                                        <div class='question-item'>
+                                                            <p>{$row2['kesimpulan']}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class='modal-footer'>
+                                                        <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Tutup</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>";
                                     } else {
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
-                                        echo "<td>-</td>";
+                                        // Data untuk status selain "izin"
+                                        echo "<td>{$row2['waktu_masuk']}</td>";
+                                        // Tombol untuk foto masuk
+                                        echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto'>Lihat Foto</button></td>";
+                                        $formatted_latitude = number_format($row2['latitude'], 3);
+                                        $formatted_longitude = number_format($row2['longitude'], 3);
+                                        echo "<td>Lat: $formatted_latitude<br>Long: $formatted_longitude</td>";
+                                
+                                        // Kolom untuk jam keluar dan foto keluar
+                                        if ($row2['waktu_keluar'] != NULL) {
+                                            echo "<td>{$row2['waktu_keluar']}</td>";
+                                            // Tombol untuk foto keluar
+                                            echo "<td><button class='btn btn-primary btn-view-photo' data-id='{$row2['id']}' data-name='{$row2['nama']}' data-type='foto_keluar'>Lihat Foto</button></td>";
+                                            $formatted_latitude2 = number_format($row2['latitude_keluar'], 3);
+                                            $formatted_longitude2 = number_format($row2['longitude_keluar'], 3);
+                                            echo "<td>Lat: $formatted_latitude2<br>Long: $formatted_longitude2</td>";
+                                            echo "<td>{$row2['durasi']}</td>";
+                                            echo "<td>{$row2['kesimpulan']}</td>";
+                                        } else {
+                                            echo "<td>-</td>";
+                                            echo "<td>-</td>";
+                                            echo "<td>-</td>";
+                                            echo "<td>-</td>";
+                                            echo "<td>-</td>";
+                                        }
                                     }
-
+                                
                                     echo "</tr>";
                                     $no++;
                                 }
+                                
                                 ?>
                             </tbody>
                         </table>

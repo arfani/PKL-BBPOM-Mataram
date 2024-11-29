@@ -118,7 +118,6 @@ body {
     padding-top: 50px;
   }
 }
-
 /* Main content */
 .main-content {
   padding-top: 70px;
@@ -203,6 +202,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  z-index: 0;
   transition: transform 0.3s, background-color 0.3s;
   cursor: pointer; /* Menambahkan cursor pointer */
 }
@@ -252,15 +252,14 @@ body {
     left: 0;
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    z-index: 4;
     border-radius: 5px;
     width: 100%; /* Sesuaikan dengan lebar dropdown-toggle */
     opacity: 0;
     transform: scaleY(0);
     transform-origin: top;
     transition: transform 1s ease, opacity 1s ease;
-    text-decoration: none;
-    
+    text-decoration: none;   
 }
 .card.active .dropdown-content,
     .card:hover .dropdown-content {

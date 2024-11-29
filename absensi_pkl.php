@@ -92,7 +92,7 @@ if (isset($_GET['message'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="vendor\fontawesome\css\all.min.css">
-    <link rel="stylesheet" href="Asset/CSS/style_pkl.css">
+    
     <title>pkl</title>
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -167,7 +167,7 @@ if (isset($_GET['message'])) {
                     if ($status == "active" || $status == "done") {
                     ?>
                         <li class="nav-item me-3 dashboard">
-                            <a class="nav-link" style="color: white;" href="tambah_absensi.php">
+                            <a class="nav-link" style="color: white;" href="absensi_pkl.php">
                                 <i class="fas fa-calendar"></i>
                                 Absen</a>
                         </li>
@@ -383,23 +383,42 @@ if (isset($_GET['message'])) {
                     
                     // Menampilkan data absensi
                     while ($row2 = mysqli_fetch_assoc($result2)) {
-                        echo "<tr>";
-                        echo "<td scope='row'>{$no}</td>";
-                        echo "<td>{$row2['tanggal']}</td>";
-                        echo "<td>{$row2['status']}</td>";
-                        echo "<td>{$row2['waktu_masuk']}</td>";
-                        if ($row2['waktu_keluar'] != NULL) {
-                            echo "<td>{$row2['waktu_keluar']}</td>";
-                            echo "<td>{$row2['durasi']}</td>";
-                            echo "<td>{$row2['kesimpulan']}</td>";
-                            
+                        if($row2['status'] === "hadir"){
+                            echo "<tr>";
+                            echo "<td scope='row'>{$no}</td>";
+                            echo "<td>{$row2['tanggal']}</td>";
+                            echo "<td>{$row2['status']}</td>";
+                            echo "<td>{$row2['waktu_masuk']}</td>";
+                            if ($row2['waktu_keluar'] != NULL) {
+                                echo "<td>{$row2['waktu_keluar']}</td>";
+                                echo "<td>{$row2['durasi']}</td>";
+                                echo "<td>{$row2['kesimpulan']}</td>";
+                                
+                            } else {
+                                echo "<td>-</td>";
+                                echo "<td>-</td>";
+                                echo "<td>-</td>";
+                            }
+                            echo "</tr>";
                         } else {
-                            echo "<td>-</td>";
-                            echo "<td>-</td>";
-                            echo "<td>-</td>";
+                            echo "<tr>";
+                            echo "<td scope='row'>{$no}</td>";
+                            echo "<td>{$row2['tanggal']}</td>";
+                            echo "<td>{$row2['status']}</td>";
+                            echo "<td>{$row2['waktu_masuk']}</td>";
+                            if ($row2['waktu_keluar'] != NULL) {
+                                echo "<td>{$row2['waktu_keluar']}</td>";
+                                echo "<td>{$row2['durasi']}</td>";
+                                echo "<td>{$row2['kesimpulan']}</td>";
+                                
+                            } else {
+                                echo "<td>-</td>";
+                                echo "<td>-</td>";
+                                echo "<td>-</td>";
+                            }
+                            echo "</tr>";
                         }
-                        echo "</tr>";
-                        $no++;
+                            $no++;
                     }
                     ?>
                 </tbody>

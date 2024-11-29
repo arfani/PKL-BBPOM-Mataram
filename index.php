@@ -53,6 +53,7 @@ if (isset($_POST['submit'])) {
     $foto_pengaduan_nama = NULL;
     $foto_identitas_nama = NULL;
 
+    
     // Check jika ada file foto_pengaduan yang diunggah
     if (!empty($foto_pengaduan['name'])) {
         $target_dir = "Asset/Gambar/";
@@ -145,6 +146,7 @@ if (!empty($message)) {
                         </li>
                         
                     </ul>
+                    <a href="login.php"><button class="bthLogin-popup">Login</button></a>
                 </div>
             </div>
         </nav>
@@ -158,7 +160,6 @@ if (!empty($message)) {
                     
                     <h1 class="hero-title">Siap Melayani </h1>
                     <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Infokom</p>
-                    <a href="login.php" class="btn btn-warning btn-cta " style="width:35%;">Login ➔</a>
                     
                 </div>
                 <div class="col-md-6 text-center">

@@ -6,6 +6,7 @@ include('koneksi.php');
 if (isset($_GET['fetch_photo']) && isset($_GET['id']) && $_GET['type'] === 'foto') {
     $pengaduanId = intval($_GET['id']);
 
+    
     // Query untuk mengambil foto dari pengaduan
     $sql = "SELECT foto FROM pengaduan WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -48,6 +49,66 @@ $total_pages = ceil($total_row['total'] / $limit);
 
 $no = $offset + 1;
 ?>
+<?php 
+if (isset($_POST['submit'])) {
+    // Dapatkan data dari form
+    $id = $_POST['id'];
+    $keterangan = $_POST['keterangan'];
+
+    // Pastikan input tidak kosong
+    if (!empty($id) && !empty($keterangan)) {
+        // Buat query untuk update data
+        $sql = "UPDATE pengaduan SET keterangan = ? WHERE id = ?";
+        
+        // Persiapkan statement untuk menghindari SQL Injection
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $keterangan, $id);
+
+        if ($stmt->execute()) {
+            // Redirect ke halaman sebelumnya atau tampilkan pesan sukses
+            echo "<script>alert('Keterangan berhasil diperbarui.'); window.location.href='admin_pengaduan.php';</script>";
+        } else {
+            echo "<script>alert('Gagal memperbarui keterangan.'); window.location.href='admin_pengaduan.php';</script>";
+        }
+
+        $stmt->close();
+    } else {
+        echo "<script>alert('ID atau keterangan tidak boleh kosong.'); window.location.href='halaman_sebelumnya.php';</script>";
+    }
+}
+
+$conn->close();
+?>
+<?php
+
+// Check if the required data is available in the POST request
+if (isset($_POST['status']) && isset($_POST['id'])) {
+    // Get the status and ID from the form
+    $status = $_POST['status'];
+    $id = $_POST['id'];
+
+    // Prepare an SQL statement to update the status in the database
+    $sql = "UPDATE pengaduan SET status = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters to prevent SQL injection
+    $stmt->bind_param("si", $status, $id);
+
+    // Execute the query and check for success
+    if ($stmt->execute()) {
+        echo "Status updated successfully!";
+    } else {
+        echo "Error updating status: " . $stmt->error;
+    }
+
+    // Close the statement and connection
+    $stmt->close();
+    $conn->close();
+} else {
+    echo "Invalid request.";
+}
+?>
+
 <?php
 if (isset($_GET['message'])) {
     $message = htmlspecialchars($_GET['message']); // Menghindari XSS
@@ -232,7 +293,7 @@ if (isset($_GET['message'])) {
                                     <th>No. HP</th>
                                     <th>Alamat</th>
                                     <th>Komoditas</th>
-                                    <th>Detail Pengaduan</th>
+                                    <th>Informasi Pengaduan</th>
                                     <th>Foto Identitas</th>
                                     <th>Foto Tambahan</th>
                                     
@@ -274,6 +335,24 @@ if (isset($_GET['message'])) {
                                                 Tidak ada foto
                                             <?php endif; ?>
                                         </td>
+                                        <td>
+                                                <button class='btn btn-primary btn-open-pdf' data-bs-toggle='modal' data-bs-target='#uploadModal'>
+                                                    Edit Keterangan
+                                                </button>
+                                        </td>
+                                        <td>
+                                        <?php if (empty($row['status'])) : ?>
+                                                <form action="" method="POST">
+                                                    <button type="submit" class="btn btn-success" name="status" value="diterima">Terima</button>
+                                                    <button type="submit" class="btn btn-danger" name="status" value="ditolak">Tolak</button>
+                                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                                </form>
+                                            <?php else : ?>
+                                                <span style="font-size: 1rem;" class="badge <?php echo ($row['status'] == 'diterima') ? 'bg-success' : 'bg-danger'; ?>">
+                                                    <?php echo ucfirst(htmlspecialchars($row['status'])); ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </td>
                                         
                                     </tr>
                                 <?php endwhile; ?>
@@ -299,7 +378,7 @@ if (isset($_GET['message'])) {
                                 <?php endif; ?>
                             </ul>
                         </nav>
-                        <!-- Modal -->
+                        <!-- Photo Modal -->
                         <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -311,6 +390,31 @@ if (isset($_GET['message'])) {
                                         <img id="absensiPhoto" src="" alt="Foto" class="img-fluid">
                                         <p id="photoUserName" class="mt-2"></p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal Pengisian Keterangan -->
+                        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="uploadModalLabel">Masukkan Keterangan</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="" method="POST" >
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                            <label for="keterangan" class="form-label">Keterangan</label>
+                                            <textarea name="keterangan" id="keterangan" rows="5" class="form-control" placeholder="Masukkan keterangan Anda di sini..."></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" name="submit" class="btn btn-primary">Unggah</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

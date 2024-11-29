@@ -160,10 +160,10 @@ if (isset($_GET['message'])) {
                                 <a class="nav-link active" aria-current="page" href="admin_tamu_kunjungan.php">
                                 Kunjungan
                                 </a>
-                                <a class="nav-link" aria-current="page" href="admin_tamu.php">
+                                <a class="nav-link" aria-current="page" href="admin_tamu_narasumber.php">
                                 Narasumber
                                 </a>
-                                <a class="nav-link" aria-current="page" href="admin_tamu.php">
+                                <a class="nav-link" aria-current="page" href="admin_tamu_statistik.php">
                                 Statistik
                                 </a>
                             </a>
@@ -207,7 +207,7 @@ if (isset($_GET['message'])) {
                             </thead>
                             <tbody>
                             <?php
-                            $sql2 = "SELECT * FROM kunjungan";
+                            $sql2 = "SELECT * FROM kunjungan WHERE keperluan = 'kunjungan'";
                             $result2 = mysqli_query($conn, $sql2);
                             $no = 1;
 

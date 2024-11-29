@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2024 at 08:57 AM
+-- Generation Time: Nov 29, 2024 at 04:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -53,7 +53,10 @@ CREATE TABLE `absensi` (
 INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `foto_keluar`, `latitude`, `latitude_keluar`, `longitude`, `longitude_keluar`, `waktu_masuk`, `waktu_keluar`, `durasi`, `kesimpulan`) VALUES
 (24, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-06', 'pexels-ken123films-1796794.jpg', '', -8.58800000, 0.00000000, 116.11600000, 0.00000000, '14:38:24', NULL, NULL, NULL),
 (27, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-07', 'pexels-ken123films-1796794.jpg', 'pexels-nicole-avagliano-1132392-2236713.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:14:08', '08:14:15', '00:00:07', 'Waktu Kerja Kurang 8 jam 29 Menit'),
-(33, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-13', 'images (1).jfif', NULL, -8.58800000, NULL, 116.11600000, NULL, '09:57:30', NULL, NULL, NULL);
+(33, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-13', 'images (1).jfif', NULL, -8.58800000, NULL, 116.11600000, NULL, '09:57:30', NULL, NULL, NULL),
+(34, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-22', '10mb-example-jpg.jpg', 'WhatsApp Image 2024-11-20 at 11.12.52.jpeg', -8.58300000, -8.58800000, 116.10300000, 116.11600000, '13:49:16', '13:52:40', '00:03:24', 'Waktu Kerja Kurang 8 jam 26 Menit'),
+(36, 2, 'Ayu Ningsih', 'izin', NULL, '2024-11-29', '10mb-example-jpg.jpg', NULL, NULL, NULL, NULL, NULL, '09:34:38', NULL, NULL, 'asdwasdwasd'),
+(37, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-29', 'UNRAM-LOGO-FIX-STATUTA-.png', 'pexels-nicole-avagliano-1132392-2236713.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:43:06', '09:43:18', '00:00:12', 'Waktu Kerja Kurang 8 jam 29 Menit');
 
 -- --------------------------------------------------------
 
@@ -104,6 +107,61 @@ INSERT INTO `api` (`id`, `provider`, `api_key`, `private_key`, `merchant_code`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hasil_kuis`
+--
+
+CREATE TABLE `hasil_kuis` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `jenis_pertanyaan` varchar(255) DEFAULT NULL,
+  `question_text` text DEFAULT NULL,
+  `selected_option` char(1) DEFAULT NULL,
+  `is_correct` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hasil_kuis`
+--
+
+INSERT INTO `hasil_kuis` (`id`, `nama`, `jenis_pertanyaan`, `question_text`, `selected_option`, `is_correct`, `created_at`) VALUES
+(61, 'bagas adinata', 'pilihan_ganda', '', 'a', 0, '2024-11-28 07:06:03'),
+(62, 'bagas adinata', 'pilihan_ganda', 'apa warna dari gajah', 'D', 0, '2024-11-28 07:06:03'),
+(63, 'bagas adinata', 'pilihan_ganda', 'Apa warna buah Mangga', 'A', 1, '2024-11-28 07:06:03'),
+(64, 'bagas adinata', 'pilihan_ganda', 'apakah warna dari cangkang telur', 'B', 0, '2024-11-28 07:06:03'),
+(65, 'bagas adinata', 'pilihan_ganda', 'apapun', 'a', 0, '2024-11-28 07:06:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kuis`
+--
+
+CREATE TABLE `kuis` (
+  `id` int(11) NOT NULL,
+  `posisi` varchar(50) DEFAULT NULL,
+  `question_text` text DEFAULT NULL,
+  `option_a` text DEFAULT NULL,
+  `option_b` text DEFAULT NULL,
+  `option_c` text DEFAULT NULL,
+  `option_d` text DEFAULT NULL,
+  `correct_option` text DEFAULT NULL,
+  `jenis_pertanyaan` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kuis`
+--
+
+INSERT INTO `kuis` (`id`, `posisi`, `question_text`, `option_a`, `option_b`, `option_c`, `option_d`, `correct_option`, `jenis_pertanyaan`) VALUES
+(14, 'Inforkom', 'apakah warna dari cangkang telur', 'putih', 'kuning', 'coklat', 'abu', 'C', 'pilihan_ganda'),
+(15, 'Inforkom', 'apa warna dari gajah', 'coklat', 'kuning', 'Putih', 'abu', 'A', 'pilihan_ganda'),
+(16, 'Inforkom', 'Apa warna buah Mangga', 'hijau', 'biru', 'kuning', 'merah', 'A', 'pilihan_ganda'),
+(22, 'Inforkom', 'apapun', NULL, NULL, NULL, NULL, NULL, 'uraian');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kunjungan`
 --
 
@@ -127,10 +185,10 @@ CREATE TABLE `kunjungan` (
 --
 
 INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`) VALUES
-(5, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', './Asset/Document/kunjungan/surat_balasan_bagas adinata.pdf', ''),
-(6, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
-(7, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, ''),
-(8, 'bagas adinata', '087750292514', 'Universitas Mataram', 'Kunjungan', 30, 'Mahasiswa', '2024-11-21', '08:02:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
+(5, 'bagas adinata', '087750292514', 'jaghajangangagas', 'narasumber', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', './Asset/Document/kunjungan/surat_balasan_bagas adinata.pdf', ''),
+(6, 'bagas adinata', '087750292514', 'jaghajangangagas', 'narasumber', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
+(7, 'bagas adinata', '087750292514', 'jaghajangangagas', 'narasumber', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, ''),
+(8, 'bagas adinata', '087750292514', 'Universitas Mataram', 'kunjungan', 30, 'Mahasiswa', '2024-11-21', '08:02:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -206,7 +264,8 @@ INSERT INTO `notifikasi` (`id`, `userid`, `text`, `status`) VALUES
 (62, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
 (63, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
 (64, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
-(65, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl');
+(65, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl'),
+(66, 12, 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin', 'pkl');
 
 -- --------------------------------------------------------
 
@@ -230,7 +289,8 @@ CREATE TABLE `penempatan_pkl` (
 INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`, `gambar`) VALUES
 (8, 'Inforkom', 'membantu pekerjaan di inforkom', 'Teknologi Informasi , Tekhnik Komputer', 3, ''),
 (9, 'Penyidik', 'Membantu bidang penyidikan', 'Hukum, Teknologi', 2, ''),
-(10, 'Tata Usaha', 'membantu Pekerjaan di tata Usaha', 'Informatika', 4, '');
+(10, 'Tata Usaha', 'membantu Pekerjaan di tata Usaha', 'Informatika', 4, ''),
+(11, 'kimia', 'coba coba', 'farmasi', 1, '');
 
 -- --------------------------------------------------------
 
@@ -248,24 +308,26 @@ CREATE TABLE `pengaduan` (
   `pesan` text NOT NULL,
   `foto_ktp` text DEFAULT NULL,
   `foto_pengaduan` text DEFAULT NULL,
-  `jam` time NOT NULL
+  `jam` time NOT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengaduan`
 --
 
-INSERT INTO `pengaduan` (`id`, `tanggal`, `nama`, `alamat`, `no_hp`, `subject`, `pesan`, `foto_ktp`, `foto_pengaduan`, `jam`) VALUES
-(1, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', '2sdasdwasda', NULL, NULL, '10:00:10'),
-(2, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, NULL, '10:07:46'),
-(3, '2024-11-08', 'Bagas Adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, NULL, '10:08:31'),
-(4, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasdwasd', NULL, NULL, '10:26:12'),
-(5, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, NULL, '10:30:55'),
-(6, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, NULL, '10:33:39'),
-(7, '2024-11-08', 'Bagas Adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'adwasdwasd', NULL, NULL, '14:57:45'),
-(8, '2024-11-15', 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'asdwadswasdwa', NULL, NULL, '09:17:26'),
-(9, '2024-11-15', 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'asdwasdwasdwadasdwasdwa', 'si inges (1).png', 'si solah (1).png', '09:54:40'),
-(10, '2024-11-15', 'bagas adinata', 'jalanpendidikan', '087750292514', 'pangan olahan', 'anfjafajdnjagnasdmawsdwasdwasd', 'si inges (2).png', 'si solah (1).png', '13:33:33');
+INSERT INTO `pengaduan` (`id`, `tanggal`, `nama`, `alamat`, `no_hp`, `subject`, `pesan`, `foto_ktp`, `foto_pengaduan`, `jam`, `status`, `keterangan`) VALUES
+(1, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', '2sdasdwasda', NULL, NULL, '10:00:10', NULL, NULL),
+(2, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, NULL, '10:07:46', NULL, NULL),
+(3, '2024-11-08', 'Bagas Adinata', 'bagasadinata321@gmail.com', '', 'kosmetik', 'asdwasdwas', NULL, NULL, '10:08:31', NULL, NULL),
+(4, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasdwasd', NULL, NULL, '10:26:12', NULL, NULL),
+(5, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, NULL, '10:30:55', NULL, NULL),
+(6, '2024-11-08', 'bagas adinata', 'bagasadinata321@gmail.com', '', 'obat', 'asdwasd', NULL, NULL, '10:33:39', NULL, NULL),
+(7, '2024-11-08', 'Bagas Adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'adwasdwasd', NULL, NULL, '14:57:45', NULL, NULL),
+(8, '2024-11-15', 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'asdwadswasdwa', NULL, NULL, '09:17:26', 'diterima', NULL),
+(9, '2024-11-15', 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', 'kosmetik', 'asdwasdwasdwadasdwasdwa', 'si inges (1).png', 'si solah (1).png', '09:54:40', 'ditolak', NULL),
+(10, '2024-11-15', 'bagas adinata', 'jalanpendidikan', '087750292514', 'pangan olahan', 'anfjafajdnjagnasdmawsdwasdwasd', 'si inges (2).png', 'si solah (1).png', '13:33:33', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -300,9 +362,10 @@ CREATE TABLE `pengajuan_pkl` (
 INSERT INTO `pengajuan_pkl` (`id_pengajuan`, `nama`, `email`, `phone`, `university`, `department`, `nim`, `posisi`, `periode`, `surat`, `proposal`, `status`, `surat_balasan`, `tanggal_pengajuan`, `penempatan`, `laporan_akhir`, `sertifikat`) VALUES
 (11, 'wardin', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'Desain Komunikasi Visual', NULL, 'Kimia Kosmetik', '2024-08-08 - 2024-09-08', './Asset/Document/surat pengajuan_wardin.pdf', './Asset/Document/proposal_wardin.pdf', 'Ditolak', 'km jelek', '2024-08-02 01:47:09', '', '', ''),
 (13, 'Ardha', 'ardha@gmail.com', '08555555554', 'Universitas Bumigora', 'Teknologi Informasi', NULL, 'Tata Usaha', '2024-08-01 - 2024-08-31', './Asset/Document/surat pengajuan_Ardha.pdf', './Asset/Document/proposal_Ardha.pdf', 'Diterima', './Asset/Document/surat_balasan_Ardha.pdf', '2024-08-06 00:21:09', 'Tata Usaha', '', ''),
-(14, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', '082145554182', 'Universitas Bumigora', 'Teknologi Informasi', NULL, 'Tata Usaha, Kimia Obat, Kimia Kosmetik, Kimia OTSK, Kimia Pangan, inforkom', '2024-08-07 - 2024-08-13', './Asset/Document/surat_pengajuan_Mukhlis Wardin Juaini.pdf', './Asset/Document/proposal_Mukhlis Wardin Juaini.pdf', 'Diterima', './Asset/Document/surat_balasan_Mukhlis Wardin Juaini.pdf', '2024-08-06 03:47:22', 'Kimia OTSK', 'Asset/Document/laporan_Mukhlis Wardin Juainipdf', './Asset/certificates/sertifikat_MUKHLIS WARDIN JUAINI.pdf'),
-(15, 'Ayu Ningsih', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'TI', NULL, 'Kimia Kosmetik, Kimia OTSK', '2024-08-01 - 2024-08-31', './Asset/Document/surat_pengajuan_Ayu Ningsih.pdf', './Asset/Document/proposal_Ayu Ningsih.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-12 04:39:28', 'Kimia Kosmetik', '', ''),
-(16, 'Ayu Ningsih', 'ayu@gmail.com', '08214554182', 'Universitas Bumigora', 'Desain Komunikasi Visual', NULL, 'Inforkom', '2024-09-01 - 2024-09-30', './Asset/Document/surat_pengajuan_ayuni.pdf', './Asset/Document/proposal_ayuni.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-23 14:04:22', 'Inforkom', '', '');
+(14, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', '082145554182', 'Universitas Bumigora', 'Teknologi Informasi', NULL, 'kimia', '2024-08-07 - 2024-08-13', './Asset/Document/surat_pengajuan_Mukhlis Wardin Juaini.pdf', './Asset/Document/proposal_Mukhlis Wardin Juaini.pdf', 'Diterima', './Asset/Document/surat_balasan_Mukhlis Wardin Juaini.pdf', '2024-08-06 03:47:22', 'Kimia OTSK', 'Asset/Document/laporan_Mukhlis Wardin Juainipdf', './Asset/certificates/sertifikat_MUKHLIS WARDIN JUAINI.pdf'),
+(15, 'Ayu Ningsih', 'wardin@gmail.com', '085338108858', 'Universitas Bumigora', 'TI', NULL, 'Inforkom', '2024-08-01 - 2024-08-31', './Asset/Document/surat_pengajuan_Ayu Ningsih.pdf', './Asset/Document/proposal_Ayu Ningsih.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-12 04:39:28', 'Kimia Kosmetik', '', ''),
+(16, 'Ayu Ningsih', 'ayu@gmail.com', '08214554182', 'Universitas Bumigora', 'Desain Komunikasi Visual', NULL, 'Inforkom', '2024-09-01 - 2024-09-30', './Asset/Document/surat_pengajuan_ayuni.pdf', './Asset/Document/proposal_ayuni.pdf', 'Diterima', './Asset/Document/surat_balasan_Ayu Ningsih.pdf', '2024-08-23 14:04:22', 'Inforkom', '', ''),
+(28, 'bagas adinata', 'bagasadinata321@gmail.com', '087750292514', '', 'Informatika', 'F1D020011', 'Inforkom', '2024-09-30 - 2024-12-03', './Asset/Document/surat_pengajuan_bagas+adinata.pdf', './Asset/Document/proposal_bagas+adinata.pdf', 'Pending', NULL, '2024-11-27 03:33:11', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -410,6 +473,18 @@ ALTER TABLE `api`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `hasil_kuis`
+--
+ALTER TABLE `hasil_kuis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kuis`
+--
+ALTER TABLE `kuis`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
@@ -472,7 +547,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -487,6 +562,18 @@ ALTER TABLE `api`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `hasil_kuis`
+--
+ALTER TABLE `hasil_kuis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT for table `kuis`
+--
+ALTER TABLE `kuis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
@@ -496,13 +583,13 @@ ALTER TABLE `kunjungan`
 -- AUTO_INCREMENT for table `notifikasi`
 --
 ALTER TABLE `notifikasi`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `penempatan_pkl`
 --
 ALTER TABLE `penempatan_pkl`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `pengaduan`
@@ -514,7 +601,7 @@ ALTER TABLE `pengaduan`
 -- AUTO_INCREMENT for table `pengajuan_pkl`
 --
 ALTER TABLE `pengajuan_pkl`
-  MODIFY `id_pengajuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_pengajuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `tb_seo`

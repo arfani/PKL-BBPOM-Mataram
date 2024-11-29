@@ -162,6 +162,52 @@ if (isset($_GET['message'])) {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: center;
         }
+        /* Untuk layar dengan lebar maksimum 768px (tablet dan handphone) */
+@media (max-width: 768px) {
+    .card-wrapper {
+        flex-direction: column; /* Atur elemen dalam kolom */
+        align-items: center;   /* Pusatkan elemen */
+        gap: 1rem;             /* Jarak antar elemen tetap */
+    }
+
+    .card {
+        flex: 0 0 100%;         /* Kartu mengambil lebar penuh */
+        padding: 1rem;         /* Tambahkan ruang di dalam kartu */
+        transform: scale(1);   /* Hindari pembesaran default */
+    }
+
+    .card:hover {
+        transform: scale(1.02); /* Efek hover sedikit untuk layar kecil */
+    }
+
+    .card h2 {
+        font-size: 1.8rem;      /* Ukuran font lebih kecil */
+    }
+
+    .card .card-icon {
+        font-size: 2.5rem;      /* Ukuran ikon lebih kecil */
+    }
+}
+
+/* Untuk layar dengan lebar maksimum 480px (handphone kecil) */
+@media (max-width: 480px) {
+    .card-wrapper {
+        gap: 0.5rem;            /* Kurangi jarak antar elemen */
+    }
+
+    .card {
+        padding: 0.8rem;        /* Kurangi padding di dalam kartu */
+    }
+
+    .card h2 {
+        font-size: 1.5rem;      /* Ukuran font lebih kecil */
+    }
+
+    .card .card-icon {
+        font-size: 2rem;        /* Ukuran ikon lebih kecil */
+    }
+}
+
     </style>
     <header class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
         <a class="navbar-brand" href="#">

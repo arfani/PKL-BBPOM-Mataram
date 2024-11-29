@@ -169,6 +169,9 @@ if (isset($_GET['message'])) {
                                 <a class="nav-link active" href="admin_pkl_posisi.php" style="margin-left:5%">
                                     Posisi Penempatan PKL
                                 </a>
+                                <a class="nav-link" href="admin_pkl_kuis.php" style="margin-left:5%">
+                                    kuis
+                                </a>
                             </a>
                         </li>
                         <li class="nav-item">

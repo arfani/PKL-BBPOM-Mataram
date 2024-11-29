@@ -160,10 +160,10 @@ if (isset($_GET['message'])) {
                                 <a class="nav-link" aria-current="page" href="admin_tamu_kunjungan.php">
                                 Kunjungan
                                 </a>
-                                <a class="nav-link" aria-current="page" href="admin_tamu.php">
+                                <a class="nav-link" aria-current="page" href="admin_tamu_narasumber.php">
                                 Narasumber
                                 </a>
-                                <a class="nav-link" aria-current="page" href="admin_tamu.php">
+                                <a class="nav-link" aria-current="page" href="admin_tamu_statistik.php">
                                 Statistik
                                 </a>
                             </a>

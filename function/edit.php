@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("../koneksi.php");
+include("koneksi.php");
 
 $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
