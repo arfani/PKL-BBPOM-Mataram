@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 04:27 AM
+-- Generation Time: Dec 02, 2024 at 06:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -56,7 +56,8 @@ INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal
 (33, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-13', 'images (1).jfif', NULL, -8.58800000, NULL, 116.11600000, NULL, '09:57:30', NULL, NULL, NULL),
 (34, 2, 'Ayu Ningsih', 'hadir', 'Masuk', '2024-11-22', '10mb-example-jpg.jpg', 'WhatsApp Image 2024-11-20 at 11.12.52.jpeg', -8.58300000, -8.58800000, 116.10300000, 116.11600000, '13:49:16', '13:52:40', '00:03:24', 'Waktu Kerja Kurang 8 jam 26 Menit'),
 (36, 2, 'Ayu Ningsih', 'izin', NULL, '2024-11-29', '10mb-example-jpg.jpg', NULL, NULL, NULL, NULL, NULL, '09:34:38', NULL, NULL, 'asdwasdwasd'),
-(37, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-29', 'UNRAM-LOGO-FIX-STATUTA-.png', 'pexels-nicole-avagliano-1132392-2236713.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:43:06', '09:43:18', '00:00:12', 'Waktu Kerja Kurang 8 jam 29 Menit');
+(37, 12, 'bagas adinata', 'hadir', 'Masuk', '2024-11-29', 'UNRAM-LOGO-FIX-STATUTA-.png', 'pexels-nicole-avagliano-1132392-2236713.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:43:06', '09:43:18', '00:00:12', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(38, 12, 'bagas adinata', 'izin', NULL, '2024-12-01', 'si inges (2).png', NULL, NULL, NULL, NULL, NULL, '12:07:32', NULL, NULL, 'asdwasdwasdwasd');
 
 -- --------------------------------------------------------
 
@@ -547,7 +548,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `admin`
