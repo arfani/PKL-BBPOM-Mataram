@@ -6,6 +6,7 @@ $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
 
+$message = '';
 if (isset($_SESSION['role'])) {
     $role = $_SESSION['role'];
     if ($role != "pkl") {
@@ -31,7 +32,6 @@ if (isset($_SESSION['id'])) {
 }
 
 if (isset($_POST['kirim'])) {
-    $universitas = $_POST['universitas'];
     $department = $_POST['department'];
     $nim = $_POST['nim'];
     $status = $_POST['status'];
@@ -62,6 +62,7 @@ if (isset($_POST['kirim'])) {
     VALUES ('$nama', '$email', '$no_hp', '$universitas', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path','$status', '$nim')");
     if ($insert) {
         
+        $message = 'Selamat Pengajuan Anda Berhasil Dikirim, Silahkan Menunggu Konfirmasi Dari Admin';
         $text = 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin';
         $notif = mysqli_query($conn, "INSERT INTO notifikasi (userid, text, status) VALUES ('$id', '$text', 'pkl')");
         $update = mysqli_query($conn, "UPDATE users SET status = 'active' WHERE id='$id'");

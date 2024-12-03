@@ -73,7 +73,12 @@ if (isset($_SESSION['id'])) {
                 $days_elapsed = $start_date->diff($current_date)->days;
                 $total_days = $start_date->diff($end_date)->days;
                 $days_left = $total_days - $days_elapsed;
-                $status_pkl = "$days_elapsed hari berjalan";
+                if($days_left < 10){
+                    $status_pkl = "$days_elapsed hari berjalan - tersisa $days_left hari";
+                } else {
+                    $status_pkl = "$days_elapsed hari berjalan";
+                }
+                
             }
         } else {
             // Jika periode kosong
@@ -305,6 +310,7 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -471,7 +477,7 @@ if (isset($_GET['message'])) {
                             Lengkapi Data Diri
                     </a>
                     <?php } else { ?>
-                        <a href="absensi_pkl.php" class="btn btn-primary btn-cta text-nowrap">
+                        <a href="pkl_absensi.php" class="btn btn-primary btn-cta text-nowrap">
                             <i class="fas fa-calendar"></i>
                             REKAP ABSENSI
                         </a>
@@ -578,7 +584,6 @@ if (isset($_GET['message'])) {
                         <th scope="col">Deskripsi</th>
                         <th scope="col">Jurusan</th>
                         <th scope="col">Kuota</th>
-                        
                     </tr>
                 </thead>
                 <tbody>

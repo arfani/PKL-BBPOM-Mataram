@@ -15,6 +15,7 @@ if (isset($_SESSION['role'])) {
     header("Location: " . $urlweb);
 }
 
+$message = '';
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
     $tanggal_hari_ini = date('Y-m-d');
@@ -99,6 +100,129 @@ if (isset($_GET['message'])) {
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        body {
+    background: #f7f9fc;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.download-container {
+    margin: 50px 20px; /* Margin lebih kecil untuk HP */
+}
+
+.header-title {
+    font-size: 2rem; /* Ukuran font lebih kecil untuk layar HP */
+    font-weight: bold;
+    color: #343a40;
+    text-align: center;
+}
+
+.download-card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.3s;
+    padding: 15px; /* Padding lebih kecil untuk HP */
+    text-align: center;
+    background: white;
+}
+
+.download-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-download {
+    background: #007bff;
+    color: white;
+    border-radius: 25px;
+    padding: 10px 15px; /* Padding lebih kecil untuk HP */
+    font-size: 1rem; /* Ukuran font lebih kecil untuk HP */
+    transition: background-color 0.3s;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-download:hover {
+    background: #0056b3;
+    color: white;
+}
+
+.icon-circle {
+    width: 80px; /* Ukuran ikon lebih kecil untuk HP */
+    height: 80px;
+    background: #007bff;
+    color: white;
+    font-size: 2rem; /* Ukuran font ikon lebih kecil untuk HP */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 15px auto;
+}
+
+.download-message {
+    font-size: 1rem; /* Ukuran font lebih kecil untuk HP */
+    color: #6c757d;
+    margin: 10px 0;
+}
+
+/* Media Query untuk layar dengan lebar maksimum 768px (HP dan tablet kecil) */
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 1.8rem;
+    }
+
+    .download-card {
+        padding: 10px;
+        margin: 0 auto;
+    }
+
+    .btn-download {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+
+    .download-message {
+        font-size: 0.9rem;
+    }
+}
+
+/* Media Query untuk layar dengan lebar maksimum 480px (HP kecil) */
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1.5rem;
+    }
+
+    .download-card {
+        padding: 8px;
+    }
+
+    .btn-download {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+
+    .icon-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+    }
+
+    .download-message {
+        font-size: 0.8rem;
+    }
+}
+
+    </style>
+    <style>
         .section-title {
             font-size: 2.5rem;
             color: #343a40;
@@ -148,7 +272,16 @@ if (isset($_GET['message'])) {
     </head>
 
     <body>
-        
+    <?php if ($message): ?>
+        <script>
+            Swal.fire({
+                title: 'Informasi',
+                text: '<?php echo $message; ?>',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
@@ -389,7 +522,7 @@ if (isset($_GET['message'])) {
                             echo "<td>{$row2['tanggal']}</td>";
                             echo "<td>{$row2['status']}</td>";
                             echo "<td>{$row2['waktu_masuk']}</td>";
-                            if ($row2['waktu_keluar'] != NULL) {
+                             if ($row2['waktu_keluar'] != NULL) {
                                 echo "<td>{$row2['waktu_keluar']}</td>";
                                 echo "<td>{$row2['durasi']}</td>";
                                 echo "<td>{$row2['kesimpulan']}</td>";
@@ -400,22 +533,17 @@ if (isset($_GET['message'])) {
                                 echo "<td>-</td>";
                             }
                             echo "</tr>";
-                        } else {
-                            echo "<tr>";
-                            echo "<td scope='row'>{$no}</td>";
-                            echo "<td>{$row2['tanggal']}</td>";
-                            echo "<td>{$row2['status']}</td>";
-                            echo "<td>{$row2['waktu_masuk']}</td>";
-                            if ($row2['waktu_keluar'] != NULL) {
-                                echo "<td>{$row2['waktu_keluar']}</td>";
-                                echo "<td>{$row2['durasi']}</td>";
+                            } else if (strtolower($row2['status'] === "izin" || $row2['status'] = 'izin')){
+                                echo "<tr>";
+                                echo "<td scope='row'>{$no}</td>";
+                                echo "<td>{$row2['tanggal']}</td>";
+                                echo "<td>{$row2['status']}</td>";
+                                echo "<td>{$row2['waktu_masuk']}</td>";
+                                echo "<td>-</td>";
+                                echo "<td>-</td>";
                                 echo "<td>{$row2['kesimpulan']}</td>";
-                                
                             } else {
-                                echo "<td>-</td>";
-                                echo "<td>-</td>";
-                                echo "<td>-</td>";
-                            }
+                            
                             echo "</tr>";
                         }
                             $no++;
@@ -425,6 +553,33 @@ if (isset($_GET['message'])) {
             </table>
         </div>
     </div>
+    
+
+    <div class="container download-container">
+    <h1 class="header-title">Download Absensi</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="download-card">
+                <div class="icon-circle">
+                    <i class="fas fa-download"></i>
+                </div>
+                <p class="download-message">
+                    Data Absensi Anda Dapat Diunduh
+                </p>
+                <form action="function/DownloadAbsensi.php" method="POST">
+                    <input type="hidden" name="nama" value="<?php echo htmlspecialchars($nama) ?>">
+                    <button type="submit" class="btn btn-download">
+                        <i class="fas fa-cloud-download-alt"></i> Unduh Sekarang
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             $(document).ready(function() {

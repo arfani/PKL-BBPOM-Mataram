@@ -442,7 +442,7 @@ if (isset($_GET['message'])) {
             <div class="download-box" style="border-color: #17a2b8;">
                 <i class='bx bxs-calendar bx-lg' style="color: #17a2b8;"></i>
                 <h3>Absensi</h3>
-                <a href="absensi_pkl.php" style="background-color: #17a2b8;">Absen</a>
+                <a href="pkl_absensi.php" style="background-color: #17a2b8;">Absen</a>
             </div>
         </div>
     </div>

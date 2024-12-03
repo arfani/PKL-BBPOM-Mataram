@@ -231,7 +231,7 @@ $conn->close();
         <button type="submit" name="submit" class="btn btn-primary">Simpan Absensi</button>
     </form>
     
-    <br><a href="absensi_pkl.php" class="btn btn-secondary">Rekap Absensi</a>
+    <br><a href="pkl_absensi.php" class="btn btn-secondary">Rekap Absensi</a>
     <br><br><a href="pkl.php" class="btn btn-primary">Kembali</a>
 </div>
 

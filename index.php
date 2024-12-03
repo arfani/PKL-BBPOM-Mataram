@@ -125,6 +125,7 @@ if (!empty($message)) {
 </head>
 
 <body>
+
     <header class="navbar-section">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -146,7 +147,7 @@ if (!empty($message)) {
                         </li>
                         
                     </ul>
-                    <a href="login.php"><button class="bthLogin-popup">Login</button></a>
+                    
                 </div>
             </div>
         </nav>
@@ -160,12 +161,13 @@ if (!empty($message)) {
                     
                     <h1 class="hero-title">Siap Melayani </h1>
                     <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Infokom</p>
-                    
+                    <a class="btn btn-primary" href="login.php">Login</a>
                 </div>
                 <div class="col-md-6 text-center">
                     <img src="Asset/Gambar/logo.png" alt="Hero Image" class="hero-section animated">
                 </div>
             </div>
+            
         </div>
         <br>
         <br><br><br>

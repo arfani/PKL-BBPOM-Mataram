@@ -235,46 +235,8 @@ if (isset($_GET['message'])) {
 
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
-                <div class="position-sticky pt-2 sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin.php">
-                                Overview
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_posisi.php">
-                                Posisi Penempatan PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_pkl.php">
-                                PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="admin_tamu.php">
-                                Permohonan
-                            </a>
-                        </li>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="admin_pengaduan.php">
-                                Pengaduan
-                                <a class="nav-link" href="admin_pengaduan_statistik.php">
-                                    Statistik
-                                </a>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_web.php">
-                                Setting Website
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <?php include('sidebar_admin.php'); ?>
+
 
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-3">
