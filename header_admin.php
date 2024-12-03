@@ -53,11 +53,13 @@
             <li class="nav-item">
             <a class="nav-link dropdown-toggle" href="#" id="pklDropdown" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    Posisi Penempatan PKL
+                    PKL
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="pklDropdown">
                     <li><a class="dropdown-item" href="admin_pkl_absensi.php">Absensi</a></li>
-                    <li><a class="dropdown-item" href="admin_posisi_add.php">Tambah Posisi</a></li>
+                    <li><a class="dropdown-item" href="admin_pkl_posisi.php">Posisi</a></li>
+                    <li><a class="dropdown-item" href="admin_pkl_kuis.php">Kuis</a></li>
+                    <li><a class="dropdown-item" href="admin_pkl_statistik.php">Statistik</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">

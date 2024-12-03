@@ -3,45 +3,21 @@ session_start();
 require('../koneksi.php'); // File koneksi database
 require('fpdf/fpdf.php'); // Pastikan FPDF sudah tersedia
 
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 // Periksa apakah user sudah login dan nilai nama dikirimkan
 $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
 
-if (isset($_SESSION['role'])) {
-    $role = $_SESSION['role'];
-    if ($role != "pkl" && $role != "admin") {
-        header('location:' . $urlweb . '/' . $role . '.php');
-    }
-} else {
-    header("Location: " . $urlweb);
-}
-
-
-if (isset($_SESSION['id'])) {
-    $id = $_SESSION['id'];
-    $tanggal_hari_ini = date('Y-m-d');
-
-    if ($role == "admin") {
-        $email = "";
-        $nama = "";
-        $no_hp = "";
-        $status = "";
-    } else {
-        $sql = "SELECT * FROM users where id ='$id'";
-        $result = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($result);
-        $email = $row['email'];
-        $nama = $row['nama'];
-        $no_hp = $row['no_hp'];
-        $status = $row['status'];
-    }
-}
 // Ambil nama dari POST
 $userName = $_POST['nama'];
 
+
 // Ambil periode dari tabel pengajuan_pkl
-$queryPeriode = "SELECT periode FROM pengajuan_pkl WHERE nama = ? LIMIT 1";
+$queryPeriode = "SELECT periode FROM pengajuan_pkl WHERE nama = ?";
 $stmtPeriode = $conn->prepare($queryPeriode);
 $stmtPeriode->bind_param('s', $userName);
 $stmtPeriode->execute();
@@ -61,7 +37,7 @@ $sql = "SELECT COUNT(*) as jumlah FROM absensi WHERE nama = '$userName' AND stat
 $result = mysqli_query($conn, $sql);
 $izin = mysqli_fetch_assoc($result)['jumlah'];
 
-$queryProdi = "SELECT department FROM pengajuan_pkl WHERE nama = ? LIMIT 1";
+$queryProdi = "SELECT department FROM pengajuan_pkl WHERE nama = ?";
 $stmtProdi = $conn->prepare($queryProdi);
 $stmtProdi->bind_param('s', $userName);
 $stmtProdi->execute();
@@ -69,7 +45,7 @@ $resultProdi = $stmtProdi->get_result();
 $Prodi = $resultProdi->fetch_assoc()['department'] ?? '-';
 $stmtProdi->close();
 
-$queryUniversitas = "SELECT university FROM pengajuan_pkl WHERE nama = ? LIMIT 1";
+$queryUniversitas = "SELECT university FROM pengajuan_pkl WHERE nama = ?";
 $stmtUniversitas = $conn->prepare($queryUniversitas);
 $stmtUniversitas->bind_param('s', $userName);
 $stmtUniversitas->execute();
@@ -200,9 +176,8 @@ $pdf->SetFillColor(255, 0, 0); // Merah
 $pdf->Cell(20, 10, '', 1, 0, 'C', true);
 $pdf->Cell(50, 10, '  sakit: ' . $sakit, 0, 1, 'L');
 // Unduh PDF
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: 0");
+$ttdValue = $ttdAbsensi ?: 'TTD'; // Gunakan value jika ada, atau "TTD" jika kosong
+    $pdf->Cell($widths[10], 10, $ttdValue, 1, 0, 'C');
 
 $pdf->Output('D', 'Rekap_Absensi_' . str_replace(' ', '_', $userName) . '.pdf');
 exit;

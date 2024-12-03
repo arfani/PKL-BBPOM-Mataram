@@ -318,6 +318,7 @@ if (isset($_GET['message'])) {
                                     <th scope="col" rowspan="2">Progress</th>
                                     <th scope="col" rowspan="2">Ubah Posisi</th>
                                     <th scope="col" rowspan="2">Sertifikat</th>
+                                    <th scope="col" rowspan="2">Absensi</th>
 
                                 </tr>
 
@@ -388,6 +389,15 @@ if (isset($_GET['message'])) {
                                         echo "<td>Ditolak</td>";
                                     } else {
                                         echo "<td class='text-nowrap'>{$sertifikat}</td>";
+                                        echo "<td class='text-nowrap'>
+                                                <form action='function/DownloadAbsensi.php' method='POST'>
+                                                    <input type='hidden' name='nama' value='{$row['nama']}'>
+                                                    <button type='submit' class='btn btn-primary'>
+                                                        <i class='fas fa-cloud-download-alt'></i> Unduh Sekarang
+                                                    </button>
+                                                </form>
+                                            </td>";
+
                                     }
                                     echo "</tr>";
                                     $no3++;
