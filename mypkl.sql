@@ -268,7 +268,7 @@ CREATE TABLE `hasil_kuis` (
   `nama` varchar(255) DEFAULT NULL,
   `jenis_pertanyaan` varchar(255) DEFAULT NULL,
   `question_text` text DEFAULT NULL,
-  `selected_option` char(1) DEFAULT NULL,
+  `selected_option` text DEFAULT NULL,
   `is_correct` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
