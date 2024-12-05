@@ -11,7 +11,9 @@ if (isset($_GET['posisi'])) {
 } else {
     echo "Tidak ada posisi yang dipilih.";
 }
+$message = '';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +90,51 @@ if (isset($_GET['posisi'])) {
                     </div>
                 </div>
                 <?php 
+                
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
+                    $delete_id = $_POST['delete_id'];
+                
+                    // Pastikan id tidak kosong dan valid
+                    if (!empty($delete_id)) {
+                        $delete_query = "DELETE FROM kuis WHERE id = ?";
+                        $stmt = $conn->prepare($delete_query);
+                        $stmt->bind_param('i', $delete_id);
+                        
+                        if ($stmt->execute()) {
+                            $message = 'Soal Berhasil Dihapus';
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Pesan',
+                                        text: '$message',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                });
+                            </script>";
+                            $message = '';
+                            
+                        } else {
+                            $message = 'Terjadi Kesalahan Saat Menghapus Data';
+                            echo "<script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    Swal.fire({
+                                        icon: 'danger',
+                                        title: 'Pesan',
+                                        text: '$message',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    });
+                                });
+                            </script>";
+                            $message = '';
+                            }
+                        $stmt->close();
+                    } else {
+                        echo "<div class='alert alert-warning'>ID tidak valid.</div>";
+                    }
+                }
                     // Ambil 10 pertanyaan acak dari tabel `kuis`
                     $query = "SELECT * FROM kuis WHERE posisi = '$posisi'";
                     $result = $conn->query($query);
@@ -97,21 +144,30 @@ if (isset($_GET['posisi'])) {
                         echo '<div class="question-list">';
 
                         while ($row3 = $result->fetch_assoc()) {
+                            // Tombol hapus di sebelah kanan atas
+                            echo "<form action='' method='POST' class='d-flex justify-content-end'>";
+                            echo "<input type='hidden' name='delete_id' value='{$row3['id']}'>";
+                            echo "<button type='submit' name='delete' class='btn btn-danger'>Hapus</button>";
+                            echo "</form>";
+
                             echo "<div class='question-item'>";
                             echo "<h4>{$no}. {$row3['question_text']}</h4>";
-                            
-                            // Menampilkan semua opsi jawaban
-                            echo "<ul>";
-                            echo "<li>A. {$row3['option_a']}</li>";
-                            echo "<li>B. {$row3['option_b']}</li>";
-                            echo "<li>C. {$row3['option_c']}</li>";
-                            echo "<li>D. {$row3['option_d']}</li>";
-                            echo "</ul>";
+                            if($row3['jenis_pertanyaan'] === 'pilihan_ganda'){
 
-                            // Menampilkan jawaban yang benar
-                            echo "<p><strong>Jawaban yang benar: </strong>{$row3['correct_option']}</p>";
+                                // Menampilkan semua opsi jawaban
+                                echo "<ul>";
+                                echo "<li>A. {$row3['option_a']}</li>";
+                                echo "<li>B. {$row3['option_b']}</li>";
+                                echo "<li>C. {$row3['option_c']}</li>";
+                                echo "<li>D. {$row3['option_d']}</li>";
+                                echo "</ul>";
+                                
+                                // Menampilkan jawaban yang benar
+                                echo "<p><strong>Jawaban yang benar: </strong>{$row3['correct_option']}</p>";
+                            }
                             echo "</div>";
                             $no++;
+                            
                         }
 
                         echo '</div>';

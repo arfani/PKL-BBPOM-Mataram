@@ -607,6 +607,18 @@ ALTER TABLE `api`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `hasil_kuis`
+--
+ALTER TABLE `hasil_kuis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kuis`
+--
+ALTER TABLE `kuis`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
@@ -682,6 +694,18 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `api`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `hasil_kuis`
+--
+ALTER TABLE `hasil_kuis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT for table `kuis`
+--
+ALTER TABLE `kuis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `kunjungan`
