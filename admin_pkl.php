@@ -14,7 +14,7 @@ if (isset($_SESSION['role'])) {
 } else {
     header("Location: " . $urlweb);
 }
-
+$message = "";
 $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 
 $sql = "SELECT * FROM pengajuan_pkl WHERE 
@@ -139,8 +139,9 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
-<?php include 'header_admin.php'; ?>
     
+<?php include 'header_admin.php'; ?>
+
     <div class="container-fluid">
         <div class="row">
             
@@ -182,7 +183,8 @@ if (isset($_GET['message'])) {
                                     $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary btn-sm' download>Download Surat</a>" : "Belum upload";
                                     $laporanAkhir = $row['laporan_akhir'] ? "<a href='{$row['laporan_akhir']}' class='btn btn-primary btn-sm' download>Download Laporan</a>" : "Belum upload";
                                     $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
-                                    $status = $row['status'] ? $row['status'] : "
+                                    
+                                    $status = $row['status'] ? $row['status'] == 'Pending': "
 <button type='button' class='btn btn-success btn-sm accept-btn' data-id='{$row['id_pengajuan']}'>Terima</button>
 <button type='button' class='btn btn-danger btn-sm reject-btn' data-id='{$row['id_pengajuan']}'>Tolak</button>
 ";
@@ -249,7 +251,7 @@ if (isset($_GET['message'])) {
 
                                     $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary btn-sm' download>Download Surat</a>" : "Belum upload";
                                     $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
-                                    $status = $row['status'] ? $row['status'] : "
+                                    $status = $row['status'] =='Diterima' || $row['status'] == 'Ditolak' ? $row['status'] : "
 <button type='button' class='btn btn-success btn-sm accept-btn' data-id='{$row['id_pengajuan']}'>Terima</button>
 <button type='button' class='btn btn-danger btn-sm reject-btn' data-id='{$row['id_pengajuan']}'>Tolak</button>
 ";
@@ -277,7 +279,7 @@ if (isset($_GET['message'])) {
                                     echo "<td class='text-nowrap'>{$row['periode']}</td>";
 
                                     echo "<td>{$row['tanggal_pengajuan']}</td>";
-                                    if ($row['status'] == "" or $row['status'] == null) {
+                                    if ($row['status'] == 'Pending') {
                                         echo "<td class='countdown-container' data-target='{$tanggal_kadaluarsa->format('Y-m-d H:i:s')}'>
         <div class='countdown-item'>
             <span class='hours'>00</span>
@@ -523,7 +525,12 @@ if (isset($_GET['message'])) {
                         type: 'POST',
                         data: formData,
                         success: function(response) {
-                            alert("Penerimaan berhasil.");
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Status Berhasil Diperbarui',
+                                icon: 'succes',
+                                confirmButtonText: 'OK'
+                            });
                             location.reload();
                         },
                         error: function() {

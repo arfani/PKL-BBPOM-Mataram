@@ -160,7 +160,7 @@ if (!empty($message)) {
                 <div class="col-md-6">
                     
                     <h1 class="hero-title">Siap Melayani </h1>
-                    <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Infokom</p>
+                    <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Informasi</p>
                     <a class="btn btn-primary" href="login.php">Login</a>
                 </div>
                 <div class="col-md-6 text-center">
@@ -228,12 +228,12 @@ if (!empty($message)) {
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h1 class="section-title">Portal Sapu Jagad BPOM</h1>
+                    <h1 class="section-title">Portal Layanan Informasi BBPOM di Mataram</h1>
                     <p>Merupakan website yang mengelola data PKL online, Kunjungan online, serta Pengajuan Narasumber
                         online yang di kelola oleh BBPOM di Mataram dengan penjelasan sbb :</p>
                 </div>
                 <div class="col-md-6">
-                    <h3 class="title">Fitur 1 : Pusat PKL Online</h3>
+                    <h3 class="title">Fitur 1 : Pendaftaran Dan Monitoring PKL</h3>
                     <p class="description">
                     Pengelolaan PKL meliputi proses permohonan, penerimaan 
                     peserta, serta monitoring jalannya PKL, baik reguler 
