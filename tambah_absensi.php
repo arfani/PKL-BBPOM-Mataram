@@ -2,7 +2,6 @@
 session_start();
 include('koneksi.php');
 
-
 $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
@@ -46,6 +45,7 @@ if (isset($_POST['submit'])) {
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
     $jam = $_POST['jam']; // Automatically set the current time for storage
+    $kesimpulan = $_POST['kesimpulan'];
     if($latitude == NULL || $longitude == NULL){
         $message = 'Lokasi Tidak Ditemukan, silahkan nyalakan GPS';
     } else {
@@ -64,14 +64,23 @@ if (isset($_POST['submit'])) {
         $result = $stmt->get_result();
 
         if ($result->num_rows == 0) {
-            if ($keterangan === "Masuk") {
+            if($status === "izin" || $status === "sakit"){
+                
+                // Jika Masuk, simpan waktu_masuk
+                $sql = "INSERT INTO absensi (user_id, nama, status,  tanggal, foto, waktu_masuk, kesimpulan)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("issssss", $user['id'], $nama, $status, $tanggal, $foto["name"], 
+                $jam, $kesimpulan);
+
+            } else if ($status === "hadir" && $keterangan === "Masuk") {
                 // Jika Masuk, simpan waktu_masuk
                 $sql = "INSERT INTO absensi (user_id, nama, status, keterangan, tanggal, foto, latitude, longitude, waktu_masuk)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("issssssss", $user['id'], $nama, $status, $keterangan, $tanggal, $foto["name"], 
                 $latitude, $longitude, $jam);
-            } else if ($keterangan === 'Keluar') {
+            } else if ($status === "hadir" && $keterangan === 'Keluar') {
                 // Cek apakah ada record check-in untuk user tersebut pada tanggal yang sama
                 $sql = "SELECT * FROM absensi WHERE user_id = ? AND tanggal = ? AND keterangan = 'Masuk' AND waktu_keluar IS NULL";
                 $stmt = $conn->prepare($sql);
@@ -164,7 +173,7 @@ $conn->close();
         </script>
     <?php endif; ?>
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <!-- Nama Lengkap dari Database -->
         <div class="form-group">
             <label for="nama">Nama Lengkap</label>
@@ -178,42 +187,51 @@ $conn->close();
         </div>
 
         <!-- Keterangan Hadir/Izin/Sakit -->
-        <div class="form-group">
+        <div class="form-group" >
             <label for="status">Keterangan:</label>
-            <select class="form-control" id="status" name="status" required>
+            <select class="form-control" id="status" name="status" onchange="toggleQuestionType()" required>
                 <option value="hadir">Hadir</option>
                 <option value="izin">Izin</option>
                 <option value="sakit">Sakit</option>
             </select>
         </div>
 
+        <div id="multiple_choice_options">
         <!-- Absensi Masuk/Keluar-->
-        <div class="form-group">
-            <label for="keterangan">Absensi Masuk Atau Keluar</label>
-            <select class="form-control" id="keterangan" name="keterangan" required>
-                <option value="Masuk">Masuk</option>
-                <option value="Keluar">Keluar</option>
-            </select>
+            <div class="form-group">
+                <label for="keterangan">Absensi Masuk Atau Keluar</label>
+                <select class="form-control" id="keterangan" name="keterangan">
+                    <option value="Masuk">Masuk</option>
+                    <option value="Keluar">Keluar</option>
+                </select>
+            </div>
+            <!-- Unggah Foto Selfie -->
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
         </div>
-
-        <!-- Unggah Foto Selfie -->
+        
+        <div id="essay_answer_option" style="display: none;">
+            <div class="form-group">
+                <label for="kesimpulan">Detail Izin :</label>
+                <textarea class="form-control" id="kesimpulan" name="kesimpulan"></textarea>
+            </div>
+        </div>
+        
         <div class="form-group">
-            <label for="foto">Foto Selfie Saat Membuat Absen:</label>
+            <label for="foto">Foto Bukti:</label>
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
         </div>
-
         <!-- Menampilkan Waktu saat user membuat absensi -->
         <div class="form-group">
             <input type="hidden" id="jam" name="jam">
         </div>
 
         <!-- Geotagging (Latitude & Longitude) -->
-        <input type="hidden" id="latitude" name="latitude">
-        <input type="hidden" id="longitude" name="longitude">
+        
         <button type="submit" name="submit" class="btn btn-primary">Simpan Absensi</button>
     </form>
     
-    <br><a href="absensi_pkl.php" class="btn btn-secondary">Rekap Absensi</a>
+    <br><a href="pkl_absensi.php" class="btn btn-secondary">Rekap Absensi</a>
     <br><br><a href="pkl.php" class="btn btn-primary">Kembali</a>
 </div>
 
@@ -248,6 +266,23 @@ $conn->close();
     // Perbarui jam setiap detik
     setInterval(updateClock, 1000);
     updateClock(); // Panggil sekali saat halaman pertama kali dimuat
+</script>
+<script>
+    function toggleQuestionType() {
+            const questionType = document.getElementById("status").value;
+            const multipleChoiceOptions = document.getElementById("multiple_choice_options");
+            const essayAnswerOption = document.getElementById("essay_answer_option");
+
+            if (questionType === "izin" || questionType === "sakit") {
+                // Tampilkan opsi pilihan ganda, sembunyikan opsi uraian
+                multipleChoiceOptions.style.display = "none";
+                essayAnswerOption.style.display = "block";
+            } else if (questionType === "hadir") {
+                // Tampilkan opsi uraian, sembunyikan opsi pilihan ganda
+                multipleChoiceOptions.style.display = "block";
+                essayAnswerOption.style.display = "none";
+            }
+        }
 </script>
 
 </body>

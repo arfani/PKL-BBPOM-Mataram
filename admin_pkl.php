@@ -14,7 +14,7 @@ if (isset($_SESSION['role'])) {
 } else {
     header("Location: " . $urlweb);
 }
-
+$message = "";
 $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 
 $sql = "SELECT * FROM pengajuan_pkl WHERE 
@@ -139,120 +139,13 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
-    <header class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand" href="#">
-            <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
-                style="margin-left: 15px; margin-right: 10px">
-            BBPOM MATARAM
-        </a>
-        <!-- Search and Sign Out for larger screens (md and above) -->
-        <div class="d-none d-md-flex order-1 flex-grow-1">
-            <form method="GET" action="" id="searchForm" class="d-flex me-auto">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInput"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButton">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <a class="nav-link signout text-nowrap" style="color: white; padding-top: 20px; padding-left: 10px;"
-                href="logout.php">Sign out</a>
-        </div>
-
-        <!-- Toggle button for mobile -->
-        <button class="navbar-toggler d-md-none collapsed me-1" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Navbar for mobile (sm and below) -->
-        <div class="collapse navbar-collapse ms-3 d-md-none" id="navbarMenu">
-            <form method="GET" action="" id="searchFormMobile" class="d-flex mb-2">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInputMobile"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButtonMobile">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="admin.php">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin_pkl.php">
-                        PKL
-                        <a class="nav-link" href="admin_absensi.php">
-                            Absensi
-                        </a>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_pengaduan.php">Pengaduan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_web.php">Setting Website</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: white; text-shadow: 
-        -1px -1px 0 #000,  
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000; " href="logout.php">Sign out</a>
-                </li>
-            </ul>
-        </div>
-    </header>
+    
+<?php include 'header_admin.php'; ?>
 
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
-                <div class="position-sticky pt-2 sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin.php">
-                                Overview
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_posisi.php">
-                                Posisi Penempatan PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin_pkl.php" >
-                                PKL
-                            </a>
-                            <a class="nav-link " href="admin_absensi.php" style="margin-left:5%">
-                                Absensi
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_tamu.php">
-                                Permohonan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_pengaduan.php">
-                                Pengaduan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_web.php">
-                                Setting Website
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            
+        <?php include('sidebar_admin.php'); ?>
 
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-2">
@@ -290,7 +183,8 @@ if (isset($_GET['message'])) {
                                     $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary btn-sm' download>Download Surat</a>" : "Belum upload";
                                     $laporanAkhir = $row['laporan_akhir'] ? "<a href='{$row['laporan_akhir']}' class='btn btn-primary btn-sm' download>Download Laporan</a>" : "Belum upload";
                                     $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
-                                    $status = $row['status'] ? $row['status'] : "
+                                    
+                                    $status = $row['status'] ? $row['status'] == 'Pending': "
 <button type='button' class='btn btn-success btn-sm accept-btn' data-id='{$row['id_pengajuan']}'>Terima</button>
 <button type='button' class='btn btn-danger btn-sm reject-btn' data-id='{$row['id_pengajuan']}'>Tolak</button>
 ";
@@ -357,7 +251,7 @@ if (isset($_GET['message'])) {
 
                                     $surat = $row['surat'] ? "<a href='{$row['surat']}' class='btn btn-primary btn-sm' download>Download Surat</a>" : "Belum upload";
                                     $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
-                                    $status = $row['status'] ? $row['status'] : "
+                                    $status = $row['status'] =='Diterima' || $row['status'] == 'Ditolak' ? $row['status'] : "
 <button type='button' class='btn btn-success btn-sm accept-btn' data-id='{$row['id_pengajuan']}'>Terima</button>
 <button type='button' class='btn btn-danger btn-sm reject-btn' data-id='{$row['id_pengajuan']}'>Tolak</button>
 ";
@@ -385,7 +279,7 @@ if (isset($_GET['message'])) {
                                     echo "<td class='text-nowrap'>{$row['periode']}</td>";
 
                                     echo "<td>{$row['tanggal_pengajuan']}</td>";
-                                    if ($row['status'] == "" or $row['status'] == null) {
+                                    if ($row['status'] == 'Pending') {
                                         echo "<td class='countdown-container' data-target='{$tanggal_kadaluarsa->format('Y-m-d H:i:s')}'>
         <div class='countdown-item'>
             <span class='hours'>00</span>
@@ -426,7 +320,8 @@ if (isset($_GET['message'])) {
                                     <th scope="col" rowspan="2">Progress</th>
                                     <th scope="col" rowspan="2">Ubah Posisi</th>
                                     <th scope="col" rowspan="2">Sertifikat</th>
-
+                                    <th scope="col" rowspan="2">Absensi</th>
+                                    <th scope="col" rowspan="2">Edit</th>
                                 </tr>
 
                             </thead>
@@ -494,9 +389,34 @@ if (isset($_GET['message'])) {
                                     }
                                     if ($status == "Ditolak") {
                                         echo "<td>Ditolak</td>";
+                                        echo "<td>-</td>";
+                                        echo "<td class='text-nowrap'>
+                                                <form action='function/reset_password.php' method='POST'>
+                                                    <input type='hidden' name='nama' value='{$row['nama']}'>
+                                                    <input type='hidden' name='user_id' value='{$row['id_pengajuan']}'>
+                                                    <button type='submit' class='btn btn-warning btn-sm'>Reset Password</button>
+                                                </form>
+                                            </td>";
                                     } else {
                                         echo "<td class='text-nowrap'>{$sertifikat}</td>";
+                                        echo "<td class='text-nowrap'>
+                                                <form action='function/DownloadAbsensi.php' method='POST'>
+                                                    <input type='hidden' name='nama' value='{$row['nama']}'>
+                                                    <button type='submit' class='btn btn-primary'>
+                                                        <i class='fas fa-cloud-download-alt'></i> Unduh Sekarang
+                                                    </button>
+                                                </form>
+                                            </td>";
+                                        echo "<td class='text-nowrap'>
+                                                <form action='function/reset_password.php' method='POST'>
+                                                    <input type='hidden' name='nama' value='{$row['nama']}'>
+                                                    <input type='hidden' name='user_id' value='{$row['id_pengajuan']}'>
+                                                    <button type='submit' class='btn btn-warning btn-sm'>Reset Password</button>
+                                                </form>
+                                            </td>";
+
                                     }
+
                                     echo "</tr>";
                                     $no3++;
                                 }
@@ -621,7 +541,12 @@ if (isset($_GET['message'])) {
                         type: 'POST',
                         data: formData,
                         success: function(response) {
-                            alert("Penerimaan berhasil.");
+                            Swal.fire({
+                                title: 'Berhasil',
+                                text: 'Status Berhasil Diperbarui',
+                                icon: 'succes',
+                                confirmButtonText: 'OK'
+                            });
                             location.reload();
                         },
                         error: function() {

@@ -32,7 +32,82 @@ if (isset($_SESSION['id'])) {
         $nama = $row['nama'];
         $no_hp = $row['no_hp'];
         $status = $row['status'];
+        $foto = $row['foto'] ?? '';
+
+    // Query ke tabel pengajuan_pkl untuk data tambahan
+    $sql2 = "SELECT * FROM pengajuan_pkl WHERE phone = '$no_hp'";
+    $result2 = mysqli_query($conn, $sql2);
+
+    if ($result2 && mysqli_num_rows($result2) > 0) {
+        $row2 = mysqli_fetch_assoc($result2);
+
+        // Menginisialisasi variabel dari tabel pengajuan_pkl dengan nilai default jika tidak ada data
+        $periode = $row2['periode'] ?? '';
+        $penempatan = $row2['penempatan'] ?? '';
+        $universitas = $row2['university'] ?? '';
+        $jurusan = $row2['department'] ?? '';
+        $surat_balasan = $row2['surat_balasan'] ?? '';
+        $laporanAkhir = $row2['laporan_akhir'] ?? '';
+        $sertifikat = $row2['sertifikat'] ?? '';
         
+        // Memproses data periode jika ada
+        if ($periode) {
+            // Pisahkan start_date dan end_date
+            list($start_date, $end_date) = explode(' - ', $periode);
+            $current_date = new DateTime();
+            $start_date = new DateTime($start_date);
+            $end_date = new DateTime($end_date);
+
+            // Hitung hari yang telah berlalu, total hari, dan hari tersisa
+            if ($current_date < $start_date) {
+                $days_elapsed = 0;
+                $total_days = $start_date->diff($end_date)->days;
+                $days_left = $total_days;
+                $status_pkl = "Belum Mulai";
+            } elseif ($current_date > $end_date) {
+                $days_elapsed = $start_date->diff($end_date)->days;
+                $total_days = $start_date->diff($end_date)->days;
+                $days_left = 0;
+                $status_pkl = "PKL Sudah Selesai";
+            } else {
+                $days_elapsed = $start_date->diff($current_date)->days;
+                $total_days = $start_date->diff($end_date)->days;
+                $days_left = $total_days - $days_elapsed;
+                if($days_left < 10){
+                    $status_pkl = "$days_elapsed hari berjalan - tersisa $days_left hari";
+                } else {
+                    $status_pkl = "$days_elapsed hari berjalan";
+                }
+                
+            }
+        } else {
+            // Jika periode kosong
+            $status_pkl = "Periode PKL tidak tersedia";
+            $days_elapsed = 0;
+            $total_days = 0;
+            $days_left = 0;
+        }
+    } else if($result2 && mysqli_num_rows($result2) == 0){
+        // Jika data tidak ditemukan di tabel pengajuan_pkl
+        $status_pkl = "Data pengajuan PKL tidak ditemukan";
+        $periode = '';
+        $penempatan = '';
+        $universitas = '';
+        $jurusan = '';
+        $surat_balasan = '';
+        $laporanAkhir = '';
+        $sertifikat = '';
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Data Belum Lengkap',
+                    text: 'Data belum lengkap, silahkan lengkapi data diri.',
+                    showConfirmButton: true
+                });
+            });
+        </script>";
+    } 
         // Query untuk mendapatkan waktu_masuk dan waktu_keluar pada tanggal hari ini
         $sql_absensi = "SELECT waktu_masuk, waktu_keluar FROM absensi WHERE user_id = ? AND tanggal = ?";
         $stmt = $conn->prepare($sql_absensi);
@@ -51,6 +126,7 @@ if (isset($_SESSION['id'])) {
     $no_hp = "";
     header("Location: index.php");
 }
+
 ?>
 
 
@@ -95,7 +171,6 @@ if (isset($_GET['message'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="vendor\fontawesome\css\all.min.css">
-    <link rel="stylesheet" href="Asset/CSS/style_pkl.css">
     <title>pkl</title>
     <link rel="stylesheet" href="CSS/style.css">
     <!-- SweetAlert2 CSS -->
@@ -104,6 +179,13 @@ if (isset($_GET['message'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        .disabled a{        
+            pointer-events: none;
+            cursor: default;
+        }
+        .hero-section{
+            margin-top:7%;
+        }
         .section-title {
             font-size: 2.5rem;
             color: #343a40;
@@ -184,11 +266,51 @@ if (isset($_GET['message'])) {
             height: 180px;
         }
     }
+    .progress-container {
+  position: relative;
+  background-color: #a7a7a7;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 30px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #009dff;
+  border-radius: 5px;
+}
+
+.progress-info {
+  position: absolute;
+  color: white;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.profile-header {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-header h3 {
+  margin-bottom: 5px;
+}
+
+.profile-header span {
+  font-size: 1rem;
+  color: #666;
+}
+
 
     </style>
 </head>
 
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -338,7 +460,7 @@ if (isset($_GET['message'])) {
         </div>
     </div>
 
-    <div class="hero-section">
+    <div class="hero-section ">
         <div class="container">
             <div class="row align-items-center" style="margin-top:5%">
                 <div class="col-md-6 text-center">
@@ -350,11 +472,28 @@ if (isset($_GET['message'])) {
                     <?php $sql2 = "SELECT * FROM pengajuan_pkl WHERE phone = '$no_hp'";
                     $result2 = mysqli_query($conn, $sql2);
                     if ($result2 && mysqli_num_rows($result2) == 0) {?>
-                    <a href="pengajuan.php" class="btn btn-warning btn-cta">Lengkapi Data Diri Anda ➔</a>
-                    <?php } else { ?>
-                        <a href="absensi_pkl.php" class="btn btn-warning btn-cta text-nowrap">
+                    <a href="pengajuan.php" class="btn btn-primary btn-cta text-nowrap">
                             <i class="fas fa-calendar"></i>
-                            REKAP ABSENSI</a>
+                            Lengkapi Data Diri
+                    </a>
+                    <?php } else { ?>
+                        <a href="pkl_absensi.php" class="btn btn-primary btn-cta text-nowrap">
+                            <i class="fas fa-calendar"></i>
+                            REKAP ABSENSI
+                        </a>
+                        <?php $sql3 = "SELECT * FROM hasil_kuis WHERE nama = '$nama'";
+                        $result3 = mysqli_query($conn, $sql3);
+                        if ($result3 && mysqli_num_rows($result3) == 0){ ?>
+                            <a href="pkl_kuis.php" class="btn btn-primary btn-cta text-nowrap ">
+                                <i class="fas fa-calendar"></i>
+                                Kerjakan Kuis
+                            </a>
+                        <?php } else { ?>
+                            <a style="cursor:no-drop" class="btn btn-secondary btn-cta text-nowrap" disabled>
+                            <i class="fas fa-calendar"></i>
+                            Kuis Sudah Dikerjakan
+                        </a>
+                        <?php }  ?>
                     <?php }  ?>
                 </div>
                 
@@ -386,7 +525,7 @@ if (isset($_GET['message'])) {
                 </div>
             </div>
         </div>
-        
+    
         <div class="col-md-6">
             <div class="row mt-4">
                     <div class="card bidang-card">
@@ -407,6 +546,21 @@ if (isset($_GET['message'])) {
                                    <?php } ?>
                                 </div>
                         </div>
+            </div>
+        </div>
+            <!-- Progres PKl -->
+        <div class="card mt-4 mx-auto" style="max-width: 100%;margin-bottom:50px;">
+            <h3 class='text-center mt-2'>Progres PKL</h3>
+            <div class="card-body">
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: <?php echo ($days_elapsed / $total_days) * 100; ?>%;">
+                    </div>
+                    <div class="progress-info d-flex justify-content-between">
+                        <span>Start: <?php echo $start_date->format('Y-m-d'); ?></span>
+                        <span><?php echo $status_pkl; ?></span>
+                        <span>Finish: <?php echo $end_date->format('Y-m-d'); ?></span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -430,7 +584,6 @@ if (isset($_GET['message'])) {
                         <th scope="col">Deskripsi</th>
                         <th scope="col">Jurusan</th>
                         <th scope="col">Kuota</th>
-                        
                     </tr>
                 </thead>
                 <tbody>

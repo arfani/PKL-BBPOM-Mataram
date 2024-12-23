@@ -65,118 +65,17 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
-    <header class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand" href="#">
-            <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
-                style="margin-left: 15px; margin-right: 10px">
-            BBPOM MATARAM
-        </a>
-        <!-- Search and Sign Out for larger screens (md and above) -->
-        <div class="d-none d-md-flex order-1 flex-grow-1">
-            <form method="GET" action="" id="searchForm" class="d-flex me-auto">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInput"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButton">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <a class="nav-link signout text-nowrap" style="color: white; padding-top: 20px; padding-left: 10px;"
-                href="logout.php">Sign out</a>
-        </div>
-
-        <!-- Toggle button for mobile -->
-        <button class="navbar-toggler d-md-none collapsed me-1" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Navbar for mobile (sm and below) -->
-        <div class="collapse navbar-collapse ms-3 d-md-none" id="navbarMenu">
-            <form method="GET" action="" id="searchFormMobile" class="d-flex mb-2">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInputMobile"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButtonMobile">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="admin.php">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
-                        PKL
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="admin_tamu.php">Kunjungan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_narasumber.php">Pengaduan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_web.php">Setting Website</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: white; text-shadow: 
-        -1px -1px 0 #000,  
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000; " href="logout.php">Sign out</a>
-                </li>
-            </ul>
-        </div>
-    </header>
-
+<?php include 'header_admin.php'; ?>
+    
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
-                <div class="position-sticky pt-2 sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin.php">
-                                Overview
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_posisi.php">
-                                Posisi Penempatan PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_pkl.php">
-                                PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin_tamu.php">
-                                Permohonan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_pengaduan.php">
-                                Pengaduan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_web.php">
-                                Setting Website
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            
+        <?php include('sidebar_admin.php'); ?>
 
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-3">
                     <div class="text-center">
-                        <h3 class="fw-bold">Data Rencana Kunjungan Realtime</h3>
+                        <h3 class="fw-bold">Data Rencana Kunjungan dan Narasumber</h3>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover text-center">
@@ -201,8 +100,13 @@ if (isset($_GET['message'])) {
                             $sql2 = "SELECT * FROM kunjungan";
                             $result2 = mysqli_query($conn, $sql2);
                             $no = 1;
-
                             while ($row2 = mysqli_fetch_assoc($result2)) {
+                                $status = $row2['status_kunjungan'] =='Diterima' || $row2['status_kunjungan'] == 'Ditolak' ? $row2['status_kunjungan'] : "
+                                    <form action='function/update_kunjungan.php' method='POST'>
+                                        <input type='hidden' name='id' value='" . htmlspecialchars($row2['id']) . "'>
+                                        <button type='submit' name='status' value='Diterima' class='btn btn-success'>Diterima</button>
+                                        <button type='submit' name='status' value='Ditolak' class='btn btn-danger'>Ditolak</button>
+                                    </form>";
                                 echo "<tr>";
                                 echo "<td scope='row'>{$no}</td>";
                                 echo "<td>{$row2['nama']}</td>";
@@ -246,8 +150,8 @@ if (isset($_GET['message'])) {
                                     }
                                     echo "</td>";
 
-                                echo "<td>
-                                </td>";
+                                
+                                    echo "<td>{$status}</td>";
                                 
                                 echo "</tr>";
                                 $no++;
@@ -300,7 +204,24 @@ if (isset($_GET['message'])) {
             </div>
         </div>
     </div>
-
+    
+    <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="acceptModalLabel">Pilih Posisi Penempatan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="acceptForm" action="<?php echo $urlweb ?>/function/update_status.php" method="post">
+                            <input type="hidden" name="id" id="acceptId">
+                            <div id="posisi"></div>
+                            <button type="submit" class="btn btn-primary mt-3">Kirim</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     
 
 

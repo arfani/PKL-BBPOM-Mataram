@@ -49,7 +49,17 @@ if (isset($_POST['submit'])) {
             $_SESSION['role'] = $role;
             header("Location: $role.php");
         } else {
-            echo "<script>alert('Woops! No Hp Atau Password anda Salah.')</script>";
+            
+        echo "<script type='text/javascript'>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Login Gagal',
+                        text: 'Email Dan Password Tidak Cocok',
+                        showConfirmButton: true
+                    });
+                });
+            </script>";
         }
     }
 }

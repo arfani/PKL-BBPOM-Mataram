@@ -38,57 +38,50 @@ $sql2 = "SELECT * FROM api where id = 8";
 $result2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_assoc($result2);
 $no_cs = $row2['no_cs'];
+
 // Pemrosesan form pengaduan
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) { 
     $nama = $_POST['nama'];
-    $email = $_POST['email'];
+    $alamat = $_POST['alamat'];
     $subject = $_POST['subject'];
     $pesan = $_POST['pesan'];
     $tanggal = date('Y-m-d');
     $jam = $_POST['jam'];
-    $foto = $_FILES['foto_pengaduan'];
+    $foto_pengaduan = $_FILES['foto_pengaduan'];
+    $foto_identitas = $_FILES['foto_identitas'];
     $no_hp = $_POST['no_hp'];
-    $foto_nama = NULL;
+    $foto_pengaduan_nama = NULL;
+    $foto_identitas_nama = NULL;
 
-    // Check jika ada file foto yang diunggah
-    if (!empty($foto['name'])) {
+    
+    // Check jika ada file foto_pengaduan yang diunggah
+    if (!empty($foto_pengaduan['name'])) {
         $target_dir = "Asset/Gambar/";
-        $foto_nama = basename($foto["name"]);
-        $target_file = $target_dir . $foto_nama;
-        move_uploaded_file($foto["tmp_name"], $target_file);
+        $foto_pengaduan_nama = basename($foto_pengaduan["name"]);
+        $target_file_pengaduan = $target_dir . $foto_pengaduan_nama;
+        move_uploaded_file($foto_pengaduan["tmp_name"], $target_file_pengaduan);
     }
 
-    // Query berdasarkan ada/tidaknya file foto yang diunggah
-    if ($foto_nama) {
-        // Jika ada foto, simpan data beserta path foto
-        $sql = "INSERT INTO pengaduan (nama, email, no_hp, subject, pesan, foto_pengaduan, tanggal, jam) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssss", $nama, $email, $no_hp, $subject, $pesan, $foto_nama, $tanggal, $jam);
-    } else {
-        // Jika tidak ada foto, simpan data tanpa kolom foto_pengaduan
-        $sql = "INSERT INTO pengaduan (nama, email, no_hp, subject, pesan, tanggal, jam) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssss", $nama, $email, $no_hp, $subject, $pesan, $tanggal, $jam);
+    // Check jika ada file foto_identitas yang diunggah
+    if (!empty($foto_identitas['name'])) {
+        $target_dir = "Asset/Gambar/";
+        $foto_identitas_nama = basename($foto_identitas["name"]);
+        $target_file_identitas = $target_dir . $foto_identitas_nama;
+        move_uploaded_file($foto_identitas["tmp_name"], $target_file_identitas);
     }
+
+    // Query untuk menyimpan data, termasuk foto_pengaduan dan foto_identitas jika ada
+    $sql = "INSERT INTO pengaduan (tanggal, nama, alamat, no_hp, subject, pesan,  foto_ktp, foto_pengaduan, jam) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssss", $tanggal, $nama, $alamat, $no_hp, $subject, $pesan, $foto_identitas_nama, $foto_pengaduan_nama,  $jam);
 
     $result = $stmt->execute();
 
     if ($result) {
-        // Pesan berhasil
-        $message = "Pengaduan telah dikirim.";
-
-        // Format pesan untuk WhatsApp
-        $whatsappMessage = urlencode("Halo Balai Besar POM Di Mataram, Saya $nama, ingin membuat Pengajuan tentang $subject\nMohon Bantuannya!!");
-
-        // Arahkan ke WhatsApp
-        $whatsappUrl = "https://api.whatsapp.com/send?phone=$no_cs&text=" . $whatsappMessage;
-        header("Location: $whatsappUrl");
-        exit;
+        echo "<script>alert('Pengaduan telah berhasil dikirim.');</script>";
     } else {
-        // Pesan error
-        $message = "Woops! Ada kesalahan saat menyimpan: " . $conn->error;
+        echo "<script>alert('Woops! Ada kesalahan saat menyimpan: " . $conn->error . "');</script>";
     }
 }
 
@@ -132,6 +125,7 @@ if (!empty($message)) {
 </head>
 
 <body>
+
     <header class="navbar-section">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -143,15 +137,17 @@ if (!empty($message)) {
                             <a class="nav-link" aria-current="page" href="#home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#dokumentasi">Dokumentasi</a>
+                            <a class="nav-link" href="#fitur">Fitur</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#fitur">Fitur</a>
+                            <a class="nav-link" href="#pkl">PKL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#permohonan">Permohonan</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#pengaduan">Pengaduan</a>
                         </li>
-                        
                     </ul>
                 </div>
             </div>
@@ -164,81 +160,34 @@ if (!empty($message)) {
             <div class="row align-items-center">
                 <div class="col-md-6">
                     
-                    <h1 class="hero-title">Siap Melayani </h1>
-                    <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Infokom</p>
-                    <a href="login.php" class="btn btn-warning btn-cta " style="width:35%;">Login ➔</a>
-                    
+                    <h1 class="hero-title">SIAP MELAYANI</h1>
+                    <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Informasi</p>
+                    <a class="btn btn-primary mb-0" href="login.php">Login</a>
+                    <div class="align-content-center">
+                        <img src="Asset/Gambar/si inges (1).png" alt="Hero Image" class="ms-5 p-0 mt-0 hero-section icon animated w-25 h-auto" >
+                        <img src="Asset/Gambar/si solah.png" alt="Hero Image" class="ms-5 p-0 mt-0 hero-section icon animated w-25 h-auto">
+                    </div>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="Asset/Gambar/logo.png" alt="Hero Image" class="hero-section animated">
+                    <img src="Asset/Gambar/SIAP MELAYANI logo.png" alt="Hero Image" class="hero-section logo animated p-0"
+                    style="width:400px; height:auto;">
                 </div>
             </div>
+            
         </div>
-        <br>
-        <br><br><br>
     </div>
     
-    <section class="dokumentasi-section" id="dokumentasi">
-    <div class="text-center">
-        <h1>Dokumentasi PKL BPOM</h1>
-    </div>
-
-    <div class="carousel-section mt-5">
-        <div class="container-fluid">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-wrap="true">
-                <div class="carousel-indicators">
-                    <?php
-                    $sql_2 = mysqli_query($conn, "SELECT * FROM `tb_slide` ORDER BY sort ASC LIMIT 7");
-                    $no = 0;
-                    while ($s2 = mysqli_fetch_array($sql_2)) {
-                        $active = $no === 0 ? 'active' : '';
-                        echo '<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="' . $no . '" class="' . $active . '" aria-current="true" aria-label="Slide ' . ($no + 1) . '" id="btn-carousel"></button>';
-                        $no++;
-                    }
-                    ?>
-                </div>
-                <center>
-                    <div class="carousel-inner">
-                        <?php
-                        $no = 0;
-                        mysqli_data_seek($sql_2, 0); // Reset result pointer to start
-                        while ($s2 = mysqli_fetch_array($sql_2)) {
-                            $active = $no === 0 ? 'active' : '';
-                            echo '
-                        <div class="carousel-item ' . $active . '">
-                            <img src="' . $urlweb . '/Asset/Gambar/' . $s2['image'] . '" alt="' . $s2['deskripsi'] . '" style="border-radius: 10px;">
-                        </div>';
-                            $no++;
-                        }
-                        ?>
-                    </div>
-                </center>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
-
     <section class="fitur-section" id="fitur">
     <div class="vision-mission-section mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h1 class="section-title">Portal Sapu Jagad BPOM</h1>
+                    <h1 class="section-title">Portal Layanan Informasi BBPOM di Mataram</h1>
                     <p>Merupakan website yang mengelola data PKL online, Kunjungan online, serta Pengajuan Narasumber
                         online yang di kelola oleh BBPOM di Mataram dengan penjelasan sbb :</p>
                 </div>
                 <div class="col-md-6">
-                    <h3 class="title">Fitur 1 : Pusat PKL Online</h3>
+                    <h3 class="title">Fitur 1 : Pendaftaran Dan Monitoring PKL</h3>
                     <p class="description">
                     Pengelolaan PKL meliputi proses permohonan, penerimaan 
                     peserta, serta monitoring jalannya PKL, baik reguler 
@@ -267,49 +216,137 @@ if (!empty($message)) {
     </div>
     </section>
 
-
-    <div class="contact-section" style="margin-bottom:0;margin-top:0">
-        <div class="container" style="margin-bottom:0;margin-top:0">
-            <div class="row mg-4" style="margin-bottom:0;margin-top:0">
-                <h1 style="margin-bottom:0;margin-top:0">Data PKL</h1>
+<section id="pkl">
+    <div class="contact-section p-0 ">
+        <div class="container p-0">
+            <div class="text-center p-0" >
+                <h1 class="mt-0 mb-3">Data PKL</h1>
             </div>
         </div>
-    </div>
-
         <!-- Card Section -->
-        <div class="row my-4">
-            <div class="col-md-3">
+        <div class="row d-flex justify-content-center mb-4">
+            <div class="col-md-2">
                 <div class="card p-3">
                     <div class="card-icon">😊</div>
                     <h2><?php echo $selesai_pkl; ?></h2>
                     <p>PKL Selesai</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card p-3">
                     <div class="card-icon">📋</div>
                     <h2><?php echo $sedang_pkl; ?></h2>
                     <p>Sedang PKL</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card p-3">
                     <div class="card-icon">🎧</div>
                     <h2><?php echo $pkl_batal; ?></h2>
                     <p>Batal</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card p-3">
                     <div class="card-icon">👥</div>
                     <h2><?php echo $lowongan; ?></h2>
                     <p>Lowongan</p>
                 </div>
             </div>
-
+        </div>
+        <div class="w-75 mx-auto p-3 ps-0">
+            <a href="register.php" class="btn btn-primary">Daftar Sekarang</a>
         </div>
     </div>
+        
+        <div class="table-responsive d-flex justify-content-center">
+            <table class="table table-bordered table-striped table-hover w-75">
+                <thead class="table text-center align-middle" style="background-color: skyblue;">
+                    <?php                      
+                    $sql = "SELECT * FROM penempatan_pkl ";
+                    $result = mysqli_query($conn, $sql);
+                    ?>
+                    <tr>
+                        <th>#</th>
+                        <th>Posisi & Penempatan</th>
+                        <th>Deskripsi</th>
+                        <th>Kualifikasi Jurusan</th>
+                        <th>Kuota Tersedia</th>
+                    </tr>
+                </thead>
+                <tbody>
+    
+                    <?php
+                    $no = 1;
+                    while ($row2 = mysqli_fetch_assoc($result)) {
+                        
+                        $sql3 = "SELECT COUNT(*) as jumlah FROM pengajuan_pkl WHERE  posisi = '{$row2['posisi']}' AND status = 'Diterima'";
+                        $result2 = mysqli_query($conn, $sql3);
+                        $aktif = mysqli_fetch_assoc($result2)['jumlah'] ?? 0;
+                        $tersedia = $row2['kuota'] - $aktif;
 
+                        echo "<tr>";
+                        echo "<td>{$no}</td>";
+                        echo "<td class='text-center align-middle'>{$row2['posisi']}</td>";
+                        echo "<td>{$row2['deskripsi']}</td>";
+                        echo "<td>{$row2['jurusan']}</td>";
+                        
+                        echo "<td class = 'text-center align-middle'>{$tersedia}</td>";
+                        echo "</tr>";
+                        $no++;
+                    }
+                    
+                    ?>
+                </tbody>
+            </table>
+            
+        </section>
+        <section>
+            <div class="contact-section p-0 mt-5">
+                <div class="container p-0">
+                    <div class="text-center p-0" >
+                        <h1 class="mt-0 mb-3">Jadwal Kegiatan Terdekat</h1>
+                    </div>
+                </div>
+                <div class="w-75 mx-auto p-3 ps-0">
+                    <a href="tamu_pengajuan.php" class="btn btn-primary">Buat Permohonan</a>
+                </div>
+                <div class="table-responsive d-flex justify-content-center">
+                    <table class="table table-bordered table-striped table-hover w-75">
+                        <thead class="table text-center align-middle" style="background-color: skyblue;">
+                            <?php                      
+                    $sql = "SELECT * FROM kunjungan";
+                    $result = mysqli_query($conn, $sql);
+
+                    ?>
+                    <tr>
+                        <th>#</th>
+                        <th>Instansi</th>
+                        <th>Keperluan</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $no = 1;
+                    while ($row3 = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>{$no}</td>";
+                        echo "<td>{$row3['instansi']}</td>";
+                        echo "<td>{$row3['keperluan']}</td>";
+                        echo "<td class='text-center align-middle'>{$row3['tanggal']}</td>";
+                        echo "<td class='text-center align-middle'>" . date('H:i', strtotime($row3['jam'])) . "</td>";
+                        echo "</tr>";
+                        $no++;
+                        }
+                    
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
     <section class="pengaduan-section" id="pengaduan">
     <div class="contact-section">
         <div class="container">
@@ -352,57 +389,55 @@ if (!empty($message)) {
 
                 <div class="col-lg-6 form" style="margin-top:0">
                     
-                    <form action="" method="POST" class="php-email-form">
-                        <div class="row gy-4">
-
-                            <div class="col-md-6">
-                                <input type="text" name="nama" class="form-control" placeholder="Nama Anda" required>
-                            </div>
-
-                            <div class="col-md-6 ">
-                                <input type="email" class="form-control" name="email" placeholder="Email Anda" required>
-                            </div>
-                            
-                            <div class="col-md-6 ">
-                                <input type="no_hp" class="form-control" name="no_hp" placeholder="Nomor HP" required>
-                            </div>
-
-                            <div class="col-md-6">
-                            <select class="form-control" id="subject" name="subject" required>
-                                <option value="" disabled selected hidden>Select an option</option>
-                                <option value="obat">obat</option>
-                                <option value="kosmetik">kosmetik</option>
-                                <option value="makanan">makanan</option>
-                            </select>
-                            </div>
-
-                            <div class="col-md-12">
-                                <textarea class="form-control" name="pesan" rows="5" placeholder="Pesan"
-                                    required></textarea>
-                            </div>
-                            <div class="col-md-12">
-                                <label style="color:#1c456d">Masukkan Foto (Optional)</label>
-                                <input type="file" class="form-control" name="foto_pengaduan" placeholder="Subject">
-                            </div>
-                            
-                            
-                                <input type="hidden" id="jam" name="jam">
-                                <input type="hidden" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>">
-                            
-                            <?php
-                            $sql2 = "SELECT * FROM api where id = 8";
-                            $result2 = mysqli_query($conn, $sql2);
-                            $row2 = mysqli_fetch_assoc($result2);
-                            $no_cs = $row2['no_cs'];
-                            $text = "halo, bpom";
-                            ?>
-                            <div class="col-md-12 text-center">
-                                <a href="https://wa.me/62<?php echo $no_cs ?>?text=<?php urlencode($text) ?>"><button type="submit" name="submit">Send Message</button></a>
-                                
-                            </div>
-
+                <form action="" method="POST" enctype="multipart/form-data" class="php-email-form">
+                    <div class="row gy-4">
+                        <div class="col-md-6">
+                            <input type="text" name="nama" class="form-control" placeholder="Nama Lengkap" required>
                         </div>
-                    </form>
+
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label style="color:#1c456d">Foto Kartu Identitas</label>
+                            <label style="color:darkgray">(Kerahasiaan Terjamin, hanya digunakan untuk persyaratan pengaduan)</label>
+                            <input type="file" class="form-control" name="foto_identitas" placeholder="Foto Identitas" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="no_hp" placeholder="Nomor HP" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <select class="form-control" id="subject" name="subject" required>
+                                <option value="" disabled selected hidden>Pilih Kategori</option>
+                                <option value="obat">Obat</option>
+                                <option value="obat bahan alam">Obat Bahan Alam</option>
+                                <option value="pangan olahan">Pangan Olahan</option>
+                                <option value="kosmetik">Kosmetik</option>
+                                <option value="Suplemen Kesehatan">Suplemen kesehatan</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <textarea class="form-control" name="pesan" rows="5" placeholder="Detail Pengaduan" required></textarea>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <label style="color:#1c456e">Dokumen Tambahan (Opsional)</label>
+                            <input type="file" class="form-control" name="foto_pengaduan" placeholder="Foto Pengaduan">
+                        </div>
+
+                        <input type="hidden" id="jam" name="jam">
+                        <input type="hidden" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>">
+
+                        <div class="col-md-12 text-center">
+                            <button type="submit" name="submit" class="btn btn-primary">Kirim Pengaduan</button>
+                        </div>
+                    </div>
+                </form>
 
                 </div>
 
@@ -417,43 +452,20 @@ if (!empty($message)) {
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var carousel = document.querySelector('#carouselExampleIndicators');
-        var nextButton = carousel.querySelector('.carousel-control-next');
-        var prevButton = carousel.querySelector('.carousel-control-prev');
-
-        carousel.addEventListener('slid.bs.carousel', function(event) {
-            // Check if it's the last slide
-            if (event.to === event.relatedTarget.length - 1) {
-                nextButton.classList.add('disabled'); // Disable Next button
-            } else {
-                nextButton.classList.remove('disabled'); // Enable Next button
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('jam').value = `${hours}:${minutes}:${seconds}`;
             }
 
-            // Check if it's the first slide
-            if (event.to === 0) {
-                prevButton.classList.add('disabled'); // Disable Prev button
-            } else {
-                prevButton.classList.remove('disabled'); // Enable Prev button
-            }
+            setInterval(updateClock, 1000);
+            updateClock();
         });
-    });
-    function updateClock() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const currentTime = `${hours}:${minutes}:${seconds}`;
-
-
-        // Simpan waktu di kolom tersembunyi untuk dikirim ke server
-        document.getElementById('jam').value = currentTime;
-    }
-
-    // Perbarui jam setiap detik
-    setInterval(updateClock, 1000);
-    updateClock(); // Panggil sekali saat halaman pertama kali dimuat
     </script>
+
     <?php require_once('cs.php'); ?>
 </body>
 <footer class="bg-dark text-white text-center py-2" style="bottom:0">

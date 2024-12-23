@@ -93,12 +93,12 @@
   .nav-link::after {
     content: '';
     position: absolute;
-    width: 50%;
+    width: 100%;
     transform: scaleX(0);
     height: 4px;
     bottom: 0;
     left: 0;
-    background-color: #FFA500;
+    background-color: #ffffff;
     transition: transform 0.15s ease-out;
   }
   
@@ -126,10 +126,9 @@
 /* hero section  */
 
 .hero-section {
-    padding: 20px;
-    background: #2B547E;
-    margin-bottom: 5%;
-    margin-top: 5%;
+    
+    background: linear-gradient(to bottom right, rgba(77, 208, 225, 1), rgba(0, 150, 136, 0.5));
+    
 }
 
 .hero-section .text-content {
@@ -151,7 +150,7 @@
 .hero-section button {
     margin-top: 20px;
     border-radius: 30px;
-    background-color: #FFA500;
+    background-color: #ffffff;
     height: 50px;
     width: 170px;
 }
@@ -166,13 +165,18 @@
     color: #fff;
 }
 
-.hero-section img {
-    height: 300px;
+.hero-section .logo img {
+    height: 500px;
+    width: auto;
+}
+.hero-section .icon img {
+    height: 200px;
     width: auto;
 }
 .hero-section .animated img{
     animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
+
 
 
 /* services section  */

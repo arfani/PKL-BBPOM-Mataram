@@ -6,6 +6,7 @@ $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
 
+$message = '';
 if (isset($_SESSION['role'])) {
     $role = $_SESSION['role'];
     if ($role != "pkl") {
@@ -31,9 +32,9 @@ if (isset($_SESSION['id'])) {
 }
 
 if (isset($_POST['kirim'])) {
-    $universitas = $_POST['universitas'];
     $department = $_POST['department'];
     $nim = $_POST['nim'];
+    $status = $_POST['status'];
     $posisi = implode(', ', $_POST['posisi']);
     $periode = $_POST['periode1'] . ' - ' . $_POST['periode2'];
     $surat = $_FILES['surat']['name'];
@@ -57,10 +58,11 @@ if (isset($_POST['kirim'])) {
         move_uploaded_file($sumber_proposal, $proposal_path);
     }
 
-    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal, nim) 
-    VALUES ('$nama', '$email', '$no_hp', '$universitas', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path', '$nim')");
+    $insert = mysqli_query($conn, "INSERT INTO pengajuan_pkl (nama, email, phone, university, department, posisi, periode, surat, proposal, status, nim) 
+    VALUES ('$nama', '$email', '$no_hp', '$universitas', '$department', '$posisi', '$periode', '$surat_path', '$proposal_path','$status', '$nim')");
     if ($insert) {
-
+        
+        $message = 'Selamat Pengajuan Anda Berhasil Dikirim, Silahkan Menunggu Konfirmasi Dari Admin';
         $text = 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin';
         $notif = mysqli_query($conn, "INSERT INTO notifikasi (userid, text, status) VALUES ('$id', '$text', 'pkl')");
         $update = mysqli_query($conn, "UPDATE users SET status = 'active' WHERE id='$id'");
@@ -158,7 +160,7 @@ if (isset($_GET['message'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="Asset/CSS/style_pkl.css">
+    
 
 </head>
 
@@ -260,11 +262,11 @@ if (isset($_GET['message'])) {
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary mt-4 ms-4" style="box-shadow: 0 3px 3px black;"><a href="pkl.php"
+    <button type="button" class="btn btn-primary mt-4 ms-4 mb-3" style="box-shadow: 0 3px 3px black;"><a href="pkl.php"
             style="color:white; text-decoration: none;">Kembali</a></button>
     <div class="container">
         <div class="form-container">
-            <h2 class="form-header">Form Pengajuan PKL BPOM</h2>
+            <h2 class="form-header text-center">Form Pengajuan PKL BPOM</h2>
             <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama Lengkap :</label>
@@ -304,6 +306,9 @@ if (isset($_GET['message'])) {
                     <label for="nim" class="form-label">NIM :</label>
                     <input type="text" class="form-control" id="nim" name="nim"
                         placeholder="Nomor Induk Mahasiswa" required>
+                </div>
+                <div class="mb-3">
+                    <input type="hidden" id="status" name="status" value="Pending" required>
                 </div>
                 <div class="mb-3">  
                     <label class="form-label">Posisi Penempatan : </label>

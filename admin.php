@@ -15,25 +15,40 @@ if (isset($_SESSION['role'])) {
     header("Location: " . $urlweb);
 }
 
+$sql = "SELECT SUM(kuota) as jumlah FROM penempatan_pkl";
+$result = mysqli_query($conn, $sql);
+$lowongan = mysqli_fetch_assoc($result)['jumlah'];
+
+// Menghitung jumlah PKL batal
+$sql = "SELECT COUNT(*) as jumlah FROM kunjungan WHERE keperluan = 'kunjungan'";
+$result = mysqli_query($conn, $sql);
+$jml_kunjungan = mysqli_fetch_assoc($result)['jumlah'];
+
+// Menghitung jumlah PKL sedang
+$sql = "SELECT COUNT(*) as jumlah FROM kunjungan WHERE keperluan = 'narasumber'";
+$result = mysqli_query($conn, $sql);
+$jml_narasumber = mysqli_fetch_assoc($result)['jumlah'];
+
+$total_permohonan = $jml_kunjungan + $jml_narasumber;
 // Menghitung jumlah lowongan (total kuota di tabel penempatan_pkl)
 $sql = "SELECT SUM(kuota) as jumlah FROM penempatan_pkl";
 $result = mysqli_query($conn, $sql);
 $lowongan = mysqli_fetch_assoc($result)['jumlah'];
 
 // Menghitung jumlah PKL batal
-$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'failed'";
+$sql = "SELECT COUNT(*) as jumlah FROM kunjungan WHERE nama != 'NULL'";
 $result = mysqli_query($conn, $sql);
-$pkl_batal = mysqli_fetch_assoc($result)['jumlah'];
+$permohonan = mysqli_fetch_assoc($result)['jumlah'];
 
 // Menghitung jumlah PKL sedang
+$sql = "SELECT COUNT(*) as jumlah FROM pengaduan WHERE nama != 'NULL'";
+$result = mysqli_query($conn, $sql);
+$pengaduan = mysqli_fetch_assoc($result)['jumlah'];
+
+// Menghitung jumlah PKL selesai
 $sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'active'";
 $result = mysqli_query($conn, $sql);
 $sedang_pkl = mysqli_fetch_assoc($result)['jumlah'];
-
-// Menghitung jumlah PKL selesai
-$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'done'";
-$result = mysqli_query($conn, $sql);
-$selesai_pkl = mysqli_fetch_assoc($result)['jumlah'];
 
 // Menghitung jumlah PKL per bulan dari kolom 'periode' pada tabel 'pengajuan_pkl'
 $pkl_perbulan = [];
@@ -90,119 +105,17 @@ if (isset($_GET['message'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="Asset/CSS/custom2.css">
+    <link rel="stylesheet" href="Asset/CSS/custom4.css">
 
 </head>
 
 <body>
-    <header class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand" href="#">
-            <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
-                style="margin-left: 15px; margin-right: 10px">
-            BBPOM MATARAM
-        </a>
-        <!-- Search and Sign Out for larger screens (md and above) -->
-        <div class="d-none d-md-flex order-1 flex-grow-1">
-            <form method="GET" action="" id="searchForm" class="d-flex me-auto">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInput"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButton">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <a class="nav-link signout text-nowrap" style="color: white; padding-top: 20px; padding-left: 10px;"
-                href="logout.php">Sign out</a>
-        </div>
-
-        <!-- Toggle button for mobile -->
-        <button class="navbar-toggler d-md-none collapsed me-1" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Navbar for mobile (sm and below) -->
-        <div class="collapse navbar-collapse ms-3 d-md-none" id="navbarMenu">
-            <form method="GET" action="" id="searchFormMobile" class="d-flex mb-2">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInputMobile"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButtonMobile">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="admin.php">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_pkl.php">PKL</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_narasumber.php">Narasumber</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_web.php">Setting Website</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: white; text-shadow: 
-        -1px -1px 0 #000,  
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000; " href="logout.php">Sign out</a>
-                </li>
-            </ul>
-        </div>
-    </header>
-
-
+<?php include 'header_admin.php'; ?>
 
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
-                <div class="position-sticky pt-2 sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="admin.php">
-                                Overview
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_posisi.php">
-                                Posisi Penempatan PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_pkl.php">
-                                PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_tamu.php">
-                                Permohonan
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_pengaduan.php">
-                                Pengaduan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_web.php">
-                                Setting Website
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            
+        <?php include('sidebar_admin.php'); ?>
 
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5">
                 <div
@@ -218,58 +131,50 @@ if (isset($_GET['message'])) {
 
                     <!-- Card Section -->
                     <div class="row my-4">
-                        <div class="col-md-3">
+                        <div class="col-md-4" >
                             <div class="card p-3">
                                 <div class="card-icon">😊</div>
-                                <h2><?php echo $selesai_pkl; ?></h2>
-                                <p>PKL Selesai</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card p-3">
-                                <div class="card-icon">📋</div>
                                 <h2><?php echo $sedang_pkl; ?></h2>
-                                <p>Sedang PKL</p>
+                                <p class="card-title">PKL</p>
+                                
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                        <div onclick="toggleDropdown()" class="card p-3">
+                            <div class="card-icon">🎧</div>
+                            <h2><?php echo $permohonan; ?></h2>
+                            <p class="card-title">Permohonan</p>
+                            <div id="dropdownMenu" class="dropdown-content">
+                                <a href="admin_tamu_kunjungan.php">
+                                <div class="cards">
+                                    <p class="cards-title">Kunjungan</p>
+                                </div>
+                                </a>
+                                <a class="link" href="admin_tamu_narasumber.php">
+                                <div class="cards">
+                                    <p class="cards-title">Narasumber</p>
+                                </div>
+                                </a>
+                                <a href="admin_tamu_statistik.php">
+                                <div class="cards">
+                                    <p class="cards-title">Statistik</p>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-4">
                             <div class="card p-3">
                                 <div class="card-icon">🎧</div>
-                                <h2><?php echo $pkl_batal; ?></h2>
-                                <p>Batal</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card p-3">
-                                <div class="card-icon">👥</div>
-                                <h2><?php echo $lowongan; ?></h2>
-                                <p>Lowongan</p>
+                                <h2><?php echo $pengaduan; ?></h2>
+                                <p class="card-title">Pengaduan</p>
                             </div>
                         </div>
 
                     </div>
 
                     <!-- Chart Section -->
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-line me-1"></i>
-                                    Data PKL
-                                </div>
-                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-pie me-1"></i>
-                                    PKL
-                                </div>
-                                <div class="card-body"><canvas id="myPieChart" width="100%" height="40"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -277,55 +182,48 @@ if (isset($_GET['message'])) {
                         crossorigin="anonymous">
                     </script>
                     <script>
-                        // Bar Chart
-                        var ctx = document.getElementById('myAreaChart').getContext('2d');
-                        var myAreaChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-                                    'Nov', 'Dec'
-                                ],
-                                datasets: [{
-                                    label: 'Jumlah PKL',
-                                    data: [
-                                        <?php
-                                        foreach ($pkl_perbulan as $jumlah) {
-                                            echo $jumlah . ', ';
-                                        }
-                                        ?>
-                                    ],
-                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                    borderColor: 'rgba(54, 162, 235, 1)',
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        });
+    let dropdownOpen = false;
 
-                        // Pie Chart
-                        var ctx = document.getElementById('myPieChart').getContext('2d');
-                        var myPieChart = new Chart(ctx, {
-                            type: 'pie',
-                            data: {
-                                labels: ['Selesai', 'Sedang PKL', 'Batal', 'Lowongan'],
-                                datasets: [{
-                                    data: [
-                                        <?php echo $selesai_pkl; ?>,
-                                        <?php echo $sedang_pkl; ?>,
-                                        <?php echo $pkl_batal; ?>,
-                                        <?php echo $lowongan; ?>
-                                    ],
-                                    backgroundColor: ['#007bff', '#ffc107', '#dc3545', '#28a745']
-                                }]
-                            }
-                        });
-                    </script>
+    // Function to toggle dropdown on click
+    function toggleDropdown() {
+        dropdownOpen = !dropdownOpen;
+        updateDropdown();
+    }
+
+    // Function to show/hide dropdown based on hover or click
+    function updateDropdown() {
+        const dropdownMenu = document.getElementById("dropdownMenu");
+        if (dropdownOpen) {
+            dropdownMenu.style.display = "block";
+        } else {
+            dropdownMenu.style.display = "none";
+        }
+    }
+
+    // Show dropdown on hover
+    document.querySelector(".card").addEventListener("mouseenter", function() {
+        dropdownOpen = true;
+        updateDropdown();
+    });
+
+    // Hide dropdown when not hovered and not clicked
+    document.querySelector(".card").addEventListener("mouseleave", function() {
+        if (!dropdownOpen) {
+            updateDropdown();
+        }
+    });
+
+    // Close dropdown if clicking outside of it
+    window.onclick = function(event) {
+        if (!event.target.closest('.card')) {
+            dropdownOpen = false;
+            updateDropdown();
+        }
+    }
+</script>
+
+
+                    
 
 </body>
 

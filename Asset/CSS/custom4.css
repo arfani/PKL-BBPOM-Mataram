@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 0;
+  /* overflow-y: hidden; */
+  font-family: 'Poppins', sans-serif;
+}
+.text-center{
+  font-size: 20px;
+}
+/* Sidebar */
+.sidebar {
+  background-color: #00aaff;
+  position: fixed;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding-top: 20px;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 56px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #ffffff;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.sidebar .nav-link:hover {
+  color: #000000;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #727272;
+}
+
+.sidebar .nav-link.active {
+  color: #000000;
+  background-color: #e4f3fb;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #00a2ff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1050;
+}
+
+.navbar-brand {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1rem;
+  background-color: transparent;
+}
+
+.navbar .navbar-toggler {
+  border: none;
+  background: transparent;
+}
+
+.navbar .form-control {
+  padding: 0.75rem 1rem;
+  border-width: 0;
+  border-radius: 25px;
+}
+
+.form-control {
+  color: #000000;
+  background-color: #7bcfff;
+  border: 1px solid rgb(113, 113, 113);
+}
+.disabled {
+  color: #545454;
+}
+
+.form-control:focus {
+  border-color: rgba(0, 100, 250, 0.635);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+.signout {
+  color: white;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    display: none; /* Hide sidebar on mobile */
+  }
+  .navbar .form-control {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .main-content {
+    padding-top: 50px;
+  }
+}
+/* Main content */
+.main-content {
+  padding-top: 70px;
+  padding-left: 250px; /* Offset for the sidebar */
+}
+
+@media (max-width: 767.98px) {
+  .main-content {
+    padding-left: 0; /* Remove offset on mobile */
+  }
+}
+
+.table-container {
+  padding-top: 20px;
+}
+
+.table {
+  font-size: 0.75rem;
+}
+
+.table th,
+.table td {
+  padding: 0.3rem;
+  vertical-align: middle;
+}
+
+.btn {
+  font-size: 0.75rem; /* Adjust the font size */
+  padding: 0.25rem 0.5rem; /* Adjust the padding */
+}
+
+.form-control {
+  font-size: 0.75rem; /* Adjust the font size */
+  padding: 0.25rem 0.5rem; /* Adjust the padding */
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2em;
+  padding: 0.5em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #f9f9f9;
+  color: #333;
+  margin: 5px;
+  position: relative;
+}
+
+.countdown-container::before {
+  top: -20px;
+  left: 0;
+  font-weight: bold;
+  color: #555;
+}
+
+.countdown-item {
+  margin: 0 3px;
+  text-align: center;
+}
+
+.countdown-item span {
+  display: block;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.countdown-item label {
+  font-size: 0.7em;
+  color: #666;
+}
+
+.expired {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Gaya dasar kartu */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 0;
+  transition: transform 0.3s, background-color 0.3s;
+  cursor: pointer; /* Menambahkan cursor pointer */
+}
+.card:hover{
+    background-color: #007bff; /* warna biru */
+    transform: scale(1.05); /* memperbesar */
+    color: #fff; /* Ubah teks menjadi putih */
+}
+.card.active {
+    background-color: #007bff; /* warna biru */
+    transform: scale(1.15); /* memperbesar */
+    color: #fff; /* Ubah teks menjadi putih */
+}
+.card:hover, .card.active {
+    background-color: #ffffff;
+    color: #007bff;
+    transform: scale(1.05);
+}
+.card-section{
+    cursor:default;
+}
+    
+.card h2 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+.card .card-title {
+    font-size: 2rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+.card .card-icon {
+    font-size: 3rem;
+    color: inherit; /* Agar warna ikon berubah sesuai konteks */
+}
+
+
+.card .card-icon {
+    font-size: 3rem;
+    color: #777;
+}
+.card .dropdown-content{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 4;
+    border-radius: 5px;
+    width: 100%; /* Sesuaikan dengan lebar dropdown-toggle */
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1s ease, opacity 1s ease;
+    text-decoration: none;   
+}
+.card.active .dropdown-content,
+    .card:hover .dropdown-content {
+        display: block;
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    .card.active .dropdown-content .link a:link{
+      text-decoration: none;
+    }
+.cards {
+        color:#000000;
+        background-color: #fff; /* warna biru */
+        display: flex;
+        flex-direction: row; /* Menyusun elemen secara horizontal */
+        align-items: center; /* Menyelaraskan elemen secara vertikal di tengah */
+        justify-content: center; /* Menyelaraskan elemen secara horizontal */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        text-align: center;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        gap: 1rem; /* Menambah jarak antar-elemen */
+        margin-bottom: 5px;
+}
+.cards:hover{
+    background-color: #007bff; /* warna biru */
+    transform: scale(1.05); /* memperbesar */
+    color: #fff; /* Ubah teks menjadi putih */
+}
+
+.cards p {
+    font-size: 1.5rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+.cards h2 {
+    align-items: end;
+    font-size: 2.5rem;
+    margin: 0;
+    color: inherit; /* Agar warna h2 berubah sesuai konteks */
+}
+
+
+.cards .cards-icon {
+    font-size: 2rem;
+    color: inherit; /* Agar warna ikon berubah sesuai konteks */
+}
+
+
+.cards .card-icon {
+    font-size: 3rem;
+    color: #777;
+}
+.nav-link .active{
+  cursor: default;
+}
+
+#searchForm {
+  width: 100%;
+}
+
+#searchButton {
+  display: none;
+}
+
+#searchInput {
+  width: calc(100% - 10px);
+  margin: 10px;
+}

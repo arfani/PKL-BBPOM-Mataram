@@ -6,6 +6,7 @@ include('koneksi.php');
 if (isset($_GET['fetch_photo']) && isset($_GET['id']) && $_GET['type'] === 'foto') {
     $pengaduanId = intval($_GET['id']);
 
+    
     // Query untuk mengambil foto dari pengaduan
     $sql = "SELECT foto FROM pengaduan WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -48,6 +49,66 @@ $total_pages = ceil($total_row['total'] / $limit);
 
 $no = $offset + 1;
 ?>
+<?php 
+if (isset($_POST['submit'])) {
+    // Dapatkan data dari form
+    $id = $_POST['id'];
+    $keterangan = $_POST['keterangan'];
+
+    // Pastikan input tidak kosong
+    if (!empty($id) && !empty($keterangan)) {
+        // Buat query untuk update data
+        $sql = "UPDATE pengaduan SET keterangan = ? WHERE id = ?";
+        
+        // Persiapkan statement untuk menghindari SQL Injection
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $keterangan, $id);
+
+        if ($stmt->execute()) {
+            // Redirect ke halaman sebelumnya atau tampilkan pesan sukses
+            echo "<script>alert('Keterangan berhasil diperbarui.'); window.location.href='admin_pengaduan.php';</script>";
+        } else {
+            echo "<script>alert('Gagal memperbarui keterangan.'); window.location.href='admin_pengaduan.php';</script>";
+        }
+
+        $stmt->close();
+    } else {
+        echo "<script>alert('ID atau keterangan tidak boleh kosong.'); window.location.href='halaman_sebelumnya.php';</script>";
+    }
+}
+
+$conn->close();
+?>
+<?php
+
+// Check if the required data is available in the POST request
+if (isset($_POST['status']) && isset($_POST['id'])) {
+    // Get the status and ID from the form
+    $status = $_POST['status'];
+    $id = $_POST['id'];
+
+    // Prepare an SQL statement to update the status in the database
+    $sql = "UPDATE pengaduan SET status = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters to prevent SQL injection
+    $stmt->bind_param("si", $status, $id);
+
+    // Execute the query and check for success
+    if ($stmt->execute()) {
+        echo "Status updated successfully!";
+    } else {
+        echo "Error updating status: " . $stmt->error;
+    }
+
+    // Close the statement and connection
+    $stmt->close();
+    $conn->close();
+} else {
+    echo "Invalid request.";
+}
+?>
+
 <?php
 if (isset($_GET['message'])) {
     $message = htmlspecialchars($_GET['message']); // Menghindari XSS
@@ -87,6 +148,8 @@ if (isset($_GET['message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->
@@ -144,16 +207,19 @@ if (isset($_GET['message'])) {
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="admin_pkl.php">
                         PKL
-                        <a class="nav-link" href="admin_absensi.php">
-                            Absensi
-                        </a>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="admin_pengaduan.php">Pengaduan</a>
+                    <a class="nav-link active" href="admin_pengaduan.php">
+                        Pengaduan
+                        <a class="nav-link" href="admin_pengaduan_statistik.php">
+                            Statistik
+                        </a>
+                    </a>
+                    
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin_web.php">Setting Website</a>
@@ -171,43 +237,8 @@ if (isset($_GET['message'])) {
 
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar" class="sidebar col-md-3 col-lg-2 d-none d-md-block">
-                <div class="position-sticky pt-2 sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin.php">
-                                Overview
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_posisi.php">
-                                Posisi Penempatan PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_pkl.php">
-                                PKL
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="admin_tamu.php">
-                                Permohonan
-                            </a>
-                        </li>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="admin_pengaduan.php">
-                                Pengaduan
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admin_web.php">
-                                Setting Website
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <?php include('sidebar_admin.php'); ?>
+
 
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="container mt-3">
@@ -221,41 +252,68 @@ if (isset($_GET['message'])) {
                             <thead class="table" style="background-color: skyblue;">
                                 <tr>
                                     <th>#</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>No. HP</th>
-                                    <th>Subject</th>
-                                    <th>Pesan</th>
-                                    <th>Foto</th>
                                     <th>Tanggal</th>
+                                    <th>Nama</th>
+                                    <th>No. HP</th>
+                                    <th>Alamat</th>
+                                    <th>Komoditas</th>
+                                    <th>Informasi Pengaduan</th>
+                                    <th>Foto Identitas</th>
+                                    <th>Foto Tambahan</th>
+                                    <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php while ($row = mysqli_fetch_assoc($result2)) : ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
+                                        <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
                                         <td><?php echo htmlspecialchars($row['nama']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['email']); ?></td>
                                         <td><?php echo htmlspecialchars($row['no_hp']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['alamat']); ?></td>
                                         <td><?php echo htmlspecialchars($row['subject']); ?></td>
                                         <td><?php echo htmlspecialchars($row['pesan']); ?></td>
-                                        <!-- Display image if available -->
+                                        <!-- Button for Foto KTP -->
                                         <td>
-                                            <?php if (!empty($row['foto'])) : ?>
-                                                <img src="Asset/Gambar/<?php echo htmlspecialchars($row['foto']); ?>" alt="Foto Pengaduan" class="img-thumbnail" style="width: 100px;">
+                                            <?php if (!empty($row['foto_ktp'])) : ?>
+                                                <button class="btn btn-primary btn-view-photo" 
+                                                        data-photo-src="Asset/Gambar/<?php echo htmlspecialchars($row['foto_ktp']); ?>" 
+                                                        data-user-name="<?php echo htmlspecialchars($row['nama']); ?>">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
                                             <?php else : ?>
                                                 Tidak ada foto
                                             <?php endif; ?>
                                         </td>
-                                        <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
+                                        
+                                        
+                                        <!-- Button for Foto Pengaduan -->
+                                        <td>
+                                            <?php if (!empty($row['foto_pengaduan'])) : ?>
+                                                <button class="btn btn-primary btn-view-photo" 
+                                                        data-photo-src="Asset/Gambar/<?php echo htmlspecialchars($row['foto_pengaduan']); ?>" 
+                                                        data-user-name="<?php echo htmlspecialchars($row['nama']); ?>">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            <?php else : ?>
+                                                Tidak ada foto
+                                            <?php endif; ?>
+                                        </td>
+                                        <td>
+                                                <button class='btn btn-primary btn-open-pdf' data-bs-toggle='modal' data-bs-target='#uploadModal'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </button>
+                                        </td>
+                                        
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
+                        
 
                         <!-- Pagination -->
                         <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-end">
                                 <?php if ($page > 1): ?>
                                     <li class="page-item"><a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a></li>
                                 <?php endif; ?>
@@ -271,17 +329,43 @@ if (isset($_GET['message'])) {
                                 <?php endif; ?>
                             </ul>
                         </nav>
+                        <!-- Photo Modal -->
                         <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="photoModalLabel">Foto Absensi</h5>
+                                        <h5 class="modal-title" id="photoModalLabel">Foto</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <img id="absensiPhoto" src="" alt="Foto Absensi" class="img-fluid">
+                                        <img id="absensiPhoto" src="" alt="Foto" class="img-fluid">
                                         <p id="photoUserName" class="mt-2"></p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal Pengisian Keterangan -->
+                        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="uploadModalLabel">Masukkan Keterangan</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="" method="POST" >
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                            <label for="keterangan" class="form-label">Keterangan</label>
+                                            <textarea name="keterangan" id="keterangan" rows="5" class="form-control" placeholder="Masukkan keterangan Anda di sini..."></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" name="submit" class="btn btn-primary">Unggah</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -296,42 +380,25 @@ if (isset($_GET['message'])) {
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".btn-view-photo").forEach(button => {
-            button.addEventListener("click", function () {
-                const pengaduanId = this.getAttribute("data-id");
-                const userName = this.getAttribute("data-name");
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = new bootstrap.Modal(document.getElementById('photoModal'));
+        const absensiPhoto = document.getElementById('absensiPhoto');
+        const photoUserName = document.getElementById('photoUserName');
 
-                document.getElementById("photoUserName").innerText = `Nama: ${userName}`;
-
-                // Mengambil foto menggunakan ID pengaduan
-                fetch(`<?php echo $_SERVER['PHP_SELF']; ?>?fetch_photo=true&id=${pengaduanId}&type=foto`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            // Memperbarui sumber gambar pada modal
-                            document.getElementById("pengaduanPhoto").src = data.photoPath;
-                            new bootstrap.Modal(document.getElementById("photoModal")).show();
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal',
-                                text: data.message,
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Kesalahan',
-                            text: 'Gagal memuat foto. Silakan coba lagi.',
-                        });
-                        console.error('Error fetching photo:', error);
-                    });
+        // Event listener untuk tombol lihat foto
+        document.querySelectorAll('.btn-view-photo').forEach(button => {
+            button.addEventListener('click', function() {
+                const photoSrc = button.getAttribute('data-photo-src');
+                const userName = button.getAttribute('data-user-name');
+                
+                absensiPhoto.src = photoSrc; // Set foto di modal
+                photoUserName.textContent = userName; // Set nama pengguna di modal
+                
+                modal.show(); // Tampilkan modal
             });
         });
     });
-    </script>
+</script>
 </body>
 
 </html>
