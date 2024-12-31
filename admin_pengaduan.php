@@ -30,7 +30,7 @@ $sql2 = "SELECT * FROM pengaduan ORDER BY tanggal DESC";
 $result2 = $conn->query($sql2);
 $no = 1;
 // Handle pagination
-$limit = 20; // Entries per page
+$limit = 10; // Entries per page
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
@@ -355,17 +355,56 @@ if (isset($_GET['message'])) {
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="" method="POST" >
-                                        <div class="modal-body">
-                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                            <label for="keterangan" class="form-label">Keterangan</label>
-                                            <textarea name="keterangan" id="keterangan" rows="5" class="form-control" placeholder="Masukkan keterangan Anda di sini..."></textarea>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" name="submit" class="btn btn-primary">Unggah</button>
-                                        </div>
-                                    </form>
+                                    
+                                    <form action="" method="POST">
+    <div class="modal-body">
+        <!-- Input Hidden untuk ID -->
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+
+        <!-- Input Hidden untuk Tanggal Saat Ini -->
+        <input type="hidden" name="tanggal" value="<?php echo date('Y-m-d H:i:s'); ?>">
+
+        <!-- Label Keterangan -->
+        <label for="keterangan" class="form-label">Keterangan</label>
+        <textarea name="keterangan" id="keterangan" rows="5" class="form-control" placeholder="Masukkan keterangan Anda di sini..."></textarea>
+
+        <!-- Radio Buttons -->
+        <div class="mt-3">
+            <label class="form-label">Pilih Status:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="terima" value="Terima">
+                <label class="form-check-label text-success fw-bold" for="terima" style="color: #28a745;">
+                    &#x2713; Terima
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="tindaklanjuti" value="Tindaklanjuti">
+                <label class="form-check-label text-info fw-bold" for="tindaklanjuti" style="color: #17a2b8;">
+                    &#x1F6A7; Tindaklanjuti
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="selesai" value="Selesai">
+                <label class="form-check-label text-primary fw-bold" for="selesai" style="color: #007bff;">
+                    &#x2714; Selesai
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="status" id="tolak" value="Tolak">
+                <label class="form-check-label text-danger fw-bold" for="tolak" style="color: #dc3545;">
+                    &#x274C; Tolak
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" name="submit" class="btn btn-primary">Unggah</button>
+    </div>
+</form>
+
                                 </div>
                             </div>
                         </div>

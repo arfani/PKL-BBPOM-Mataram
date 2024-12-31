@@ -467,8 +467,8 @@ if (isset($_GET['message'])) {
                     <img src="Asset/Gambar/logo.png" alt="Hero Image" class="img-fluid" height="290px" width="290px">
                 </div>
                 <div class="col-md-6">
-                    <h1 class="hero-title">Selamat datang di Portal Sapu Jagad PKL</h1>
-                    <p class="hero-description">Balai Besar Pengawas Obat dan Makanan di Mataram</p>
+                    <h1 class="hero-title">Selamat Datang Di Siap Melayani</h1>
+                    <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Informasi</p>
                     <?php $sql2 = "SELECT * FROM pengajuan_pkl WHERE phone = '$no_hp'";
                     $result2 = mysqli_query($conn, $sql2);
                     if ($result2 && mysqli_num_rows($result2) == 0) {?>

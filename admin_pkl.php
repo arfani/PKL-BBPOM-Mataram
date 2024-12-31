@@ -321,7 +321,6 @@ if (isset($_GET['message'])) {
                                     <th scope="col" rowspan="2">Ubah Posisi</th>
                                     <th scope="col" rowspan="2">Sertifikat</th>
                                     <th scope="col" rowspan="2">Absensi</th>
-                                    <th scope="col" rowspan="2">Edit</th>
                                 </tr>
 
                             </thead>
@@ -390,13 +389,7 @@ if (isset($_GET['message'])) {
                                     if ($status == "Ditolak") {
                                         echo "<td>Ditolak</td>";
                                         echo "<td>-</td>";
-                                        echo "<td class='text-nowrap'>
-                                                <form action='function/reset_password.php' method='POST'>
-                                                    <input type='hidden' name='nama' value='{$row['nama']}'>
-                                                    <input type='hidden' name='user_id' value='{$row['id_pengajuan']}'>
-                                                    <button type='submit' class='btn btn-warning btn-sm'>Reset Password</button>
-                                                </form>
-                                            </td>";
+                                        
                                     } else {
                                         echo "<td class='text-nowrap'>{$sertifikat}</td>";
                                         echo "<td class='text-nowrap'>
@@ -407,14 +400,7 @@ if (isset($_GET['message'])) {
                                                     </button>
                                                 </form>
                                             </td>";
-                                        echo "<td class='text-nowrap'>
-                                                <form action='function/reset_password.php' method='POST'>
-                                                    <input type='hidden' name='nama' value='{$row['nama']}'>
-                                                    <input type='hidden' name='user_id' value='{$row['id_pengajuan']}'>
-                                                    <button type='submit' class='btn btn-warning btn-sm'>Reset Password</button>
-                                                </form>
-                                            </td>";
-
+                                        
                                     }
 
                                     echo "</tr>";

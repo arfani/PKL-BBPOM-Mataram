@@ -55,6 +55,8 @@ if (isset($_GET['message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->
@@ -119,9 +121,6 @@ if (isset($_GET['message'])) {
 
                                 // Tombol untuk membuka PDF dan mengunduh file surat_masuk
                                 echo "<td>
-                                        <button class='btn btn-primary btn-open-pdf' data-pdf-path='{$row2['surat_masuk']}'>
-                                            Lihat Surat Masuk
-                                        </button>
                                         <a href='{$row2['surat_masuk']}' download='{$row2['surat_masuk']}' class='btn btn-secondary'>
                                             <i class='fas fa-download'></i>
                                         </a>

@@ -154,27 +154,29 @@ if (!empty($message)) {
         </nav>
     </header>
     
-    <div class="hero-section" style="margin-top:10%">
-    <br><br>
-        <div class="container">
+    <div class="hero-section p-0 mt-5 mb-5">
+        <br><br>
+        <div class="container mt-5">
             <div class="row align-items-center">
                 <div class="col-md-6">
                     
                     <h1 class="hero-title">SIAP MELAYANI</h1>
                     <p class="hero-description">Sistem Aplikasi Manajemen Layanan Publik Informasi</p>
                     <a class="btn btn-primary mb-0" href="login.php">Login</a>
-                    <div class="align-content-center">
-                        <img src="Asset/Gambar/si inges (1).png" alt="Hero Image" class="ms-5 p-0 mt-0 hero-section icon animated w-25 h-auto" >
-                        <img src="Asset/Gambar/si solah.png" alt="Hero Image" class="ms-5 p-0 mt-0 hero-section icon animated w-25 h-auto">
+                    <div class="row align-item-center">
+                    <div></div>
+                        <img src="Asset/Gambar/si inges (1).png" alt="Hero Image" class="ms-5 p-0 mt-0 hero-section icon animated w-25 h-auto" style="background:transparent">
+                        <img src="Asset/Gambar/si solah.png" alt="Hero Image" class="ms-5 p-0 mt-0 hero-section icon animated w-25 h-auto" style="background:transparent">
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
                     <img src="Asset/Gambar/SIAP MELAYANI logo.png" alt="Hero Image" class="hero-section logo animated p-0"
-                    style="width:400px; height:auto;">
+                    style="width:400px; height:auto; background:transparent">
                 </div>
             </div>
             
         </div>
+        <br><br>
     </div>
     
     <section class="fitur-section" id="fitur">
@@ -286,12 +288,12 @@ if (!empty($message)) {
                         $tersedia = $row2['kuota'] - $aktif;
 
                         echo "<tr>";
-                        echo "<td>{$no}</td>";
+                        echo "<td class='text-center align-middle'>{$no}</td>";
                         echo "<td class='text-center align-middle'>{$row2['posisi']}</td>";
                         echo "<td>{$row2['deskripsi']}</td>";
-                        echo "<td>{$row2['jurusan']}</td>";
+                        echo "<td class='align-middle'>{$row2['jurusan']}</td>";
                         
-                        echo "<td class = 'text-center align-middle'>{$tersedia}</td>";
+                        echo "<td class='text-center align-middle'>{$tersedia}</td>";
                         echo "</tr>";
                         $no++;
                     }
@@ -309,13 +311,18 @@ if (!empty($message)) {
                     </div>
                 </div>
                 <div class="w-75 mx-auto p-3 ps-0">
+                    <a href="pencarian_resi.php" class="btn btn-primary ms-2"><i class="fas fa-search"></i> Pencarian</a>
                     <a href="tamu_pengajuan.php" class="btn btn-primary">Buat Permohonan</a>
                 </div>
                 <div class="table-responsive d-flex justify-content-center">
                     <table class="table table-bordered table-striped table-hover w-75">
                         <thead class="table text-center align-middle" style="background-color: skyblue;">
                             <?php                      
-                    $sql = "SELECT * FROM kunjungan";
+                    $sql = "SELECT *, DATE_FORMAT(tanggal, '%d-%m-%Y') AS formatted_tanggal 
+                            FROM kunjungan 
+                            WHERE tanggal >= CURDATE() 
+                            ORDER BY tanggal ASC 
+                            LIMIT 6";
                     $result = mysqli_query($conn, $sql);
 
                     ?>
@@ -335,7 +342,7 @@ if (!empty($message)) {
                         echo "<td>{$no}</td>";
                         echo "<td>{$row3['instansi']}</td>";
                         echo "<td>{$row3['keperluan']}</td>";
-                        echo "<td class='text-center align-middle'>{$row3['tanggal']}</td>";
+                        echo "<td class='text-center align-middle'>{$row3['formatted_tanggal']}</td>";
                         echo "<td class='text-center align-middle'>" . date('H:i', strtotime($row3['jam'])) . "</td>";
                         echo "</tr>";
                         $no++;
@@ -350,7 +357,7 @@ if (!empty($message)) {
     <section class="pengaduan-section" id="pengaduan">
     <div class="contact-section">
         <div class="container">
-            <div class="row mg-4" style="margin-bottom:0">
+            <div class="row mg-4 mb-0" style="margin-bottom:0">
                 <h1>Pengaduan</h1>
                 <div class="col-lg-6">
 

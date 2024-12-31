@@ -1,13 +1,13 @@
 <?php
 include('koneksi.php');
-session_start();
+
 
 $sql_0 = mysqli_query($conn, "SELECT * FROM `tb_seo` WHERE id = 1");
 $s0 = mysqli_fetch_array($sql_0);
 $urlweb = $s0['urlweb'];
 
 if (isset($_POST['kirim'])) {
-    $nama = $_POST['nama'];
+    $nama = $_POST['name'];
     $no_hp = $_POST['phone'];
     $instansi = $_POST['instansi'];
     $keperluan = $_POST['keperluan'];
@@ -31,51 +31,39 @@ if (isset($_POST['kirim'])) {
         VALUES ('$nama',  '$no_hp', '$keperluan', '$instansi', '$jml_peserta', '$sgm_peserta', 
         '$tanggal', '$jam', '$surat_path')");
     if ($insert) {
-
+        if ($keperluan == 'Kunjungan') {
+            $angka_unik = '1';
+        } else if ($keperluan == 'Narasumber') {
+            $angka_unik = '2';
+        } else {
+            $angka_unik = '3';
+        }
+        $last_id = mysqli_insert_id($conn);
+    
+        // Pastikan $last_id terdiri dari 3 digit
+        $last_id = str_pad($last_id, 3, '0', STR_PAD_LEFT);
+    
+        // Ambil digit ke-5, ke-6, dan ke-7 dari nomor HP
+        $digit_hp = substr($no_hp, 4, 3);
+    
+        // Ambil hari (DD) dari tanggal
+        $day = date('d', strtotime($tanggal));
+    
+        // Gabungkan untuk membuat kode unik
+        $kode_unik = $last_id . $digit_hp . $day . $angka_unik;
+    
+        // Update data dengan kode unik
+        $update = mysqli_query($conn, "UPDATE kunjungan SET kode_unik = '$kode_unik' WHERE id = '$last_id'");
+    
+        if ($update) {
+            // Redirect ke landing page dengan kode unik sebagai parameter
+            header("Location: landing_page.php?kode_unik=$kode_unik");
+            exit;
+        } else {
+            echo "<script>alert('Gagal memperbarui kode unik.');</script>";
+        }
         $text = 'Selamat Pengajuan PKL di BPOM Mataram Sukses<br>Mohon menunggu maksimal 2 hari kerja, jika selama 2 hari belum ada balasan, Mohon menghubungi admin';
 
-        $cekFonnte = mysqli_query($conn, "SELECT * FROM `api` WHERE id = 8");
-        $cf = mysqli_fetch_array($cekFonnte);
-        $no_admin = $cf['no_admin'];
-        $no = '087871500533';
-        if ($cf['status'] == 1) {
-            $content = '*Pengajuan PKL BBPOM :*
-                           
-*Nama :* ' . $nama . '
-*Universitas :* ' . $university . '
-*Posisi :* ' . $posisi . '
-*Selama :* ' . $periode;
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.fonnte.com/send",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => array(
-                    'target' => $no_admin,
-                    'message' => $content,
-                    'countryCode' => '62'
-                ),
-                CURLOPT_HTTPHEADER => array(
-                    "Authorization: " . $cf['api_key']
-                ),
-            ));
-
-            $response = curl_exec($curl);
-
-            curl_close($curl);
-
-            sleep(1);
-        }
-
-        header("Location: " . $urlweb . "/pkl.php");
-        exit();
     } else {
         echo "Gagal memasukkan data, silakan cek kembali.";
     }

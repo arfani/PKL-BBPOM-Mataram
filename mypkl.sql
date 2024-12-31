@@ -295,14 +295,15 @@ CREATE TABLE `admin` (
   `email` varchar(50) NOT NULL,
   `no_hp` varchar(20) NOT NULL,
   `password` varchar(50) NOT NULL
+    `reset_pw` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `nama`, `email`, `no_hp`, `password`) VALUES
-(1, 'admin', 'admin@gmail.com', '082145554182', 'admin1234');
+INSERT INTO `admin` (`id`, `nama`, `email`, `no_hp`, `password`, `reset_pw`) VALUES
+(1, 'admin', 'admin@gmail.com', '082145554182', 'admin1234', 'BBPOM1234');
 
 -- --------------------------------------------------------
 
@@ -420,6 +421,7 @@ CREATE TABLE `kunjungan` (
   `surat_masuk` varchar(255) DEFAULT NULL,
   `surat_balasan` varchar(255) DEFAULT NULL,
   `status_kunjungan` varchar(255) DEFAULT NULL
+  `kode_unik` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

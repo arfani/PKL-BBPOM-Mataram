@@ -66,6 +66,21 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
+<style>
+.card:hover {
+        background-color: unset; /* warna biru */
+        transform: unset; /* memperbesar */
+        color: unset; /* Ubah teks menjadi putih */
+        }
+
+        /* Style untuk kartu yang tetap aktif setelah diklik */
+        .card.active {
+        background-color: unset; /* warna biru */
+        transform: unset; /* memperbesar */
+        color: unset; /* Ubah teks menjadi putih */
+        }
+</style>
+
 <?php include 'header_admin.php'; ?>
     
     <div class="container-fluid">
@@ -170,6 +185,42 @@ if (isset($_GET['message'])) {
                                     </form>
                                 </div>
                             </div>
+                            <div class="card mt-2 mb-5">
+                                <div class="card-body">
+                                    <h5>Atur Reset Password</h5>
+                                    <form role="form" action="<?php echo $urlweb; ?>/function/atur_pw.php" method="post" enctype="multipart/form-data" onsubmit="return validatePassword()">
+                                        <!-- Input untuk Password Lama -->
+                                        <?php                                                         
+                                        $sql_1 = mysqli_query($conn, "SELECT * FROM `admin` WHERE id = 1");
+                                        $s1 = mysqli_fetch_array($sql_1);
+                                        $reset_pw = $s1['reset_pw'];
+                                        ?>
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="curr_pw">Password Lama</label>
+                                          <input class="form-control" type="text" name="curr_pw" id="curr_pw" 
+                                          placeholder="<?php echo $reset_pw; ?>" value="<?php echo $reset_pw; ?>" disabled>
+                                        </div>
+
+                                        <!-- Input untuk Password Baru -->
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="new_pw">Password Baru</label>
+                                            <input class="form-control" type="text" name="new_pw" id="new_pw" placeholder="Masukkan password baru" required>
+                                        </div>
+
+                                        <!-- Input untuk Konfirmasi Password Baru -->
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="confirm_pw">Konfirmasi Password Baru</label>
+                                            <input class="form-control" type="text" name="confirm_pw" id="confirm_pw" placeholder="Konfirmasi password baru" required>
+                                        </div>
+
+                                        <!-- Tombol Submit -->
+                                        <div class="d-flex justify-content-between">
+                                            <button type="submit" name="submit" class="btn btn-primary">Ubah Password</button>
+                                            <a href="<?php echo $urlweb; ?>/admin_web.php" class="btn btn-light">Batal</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-8">
                             <!-- Invoice List Table -->
@@ -233,146 +284,21 @@ if (isset($_GET['message'])) {
                 </div>
             </div>
 
-            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-                <div class="container mt-2">
-                    <div class="text-center">
-                        <h3 class="fw-bold">Atur Bidang</h3>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <?php
-                                    error_reporting(0);
-                                    if (!empty($_GET['notif2'])) {
-                                        if ($_GET['notif2'] == 1) {
-                                            echo '
-                              <div class="alert alert-success d-flex align-items-center" role="alert">
-                                <span class="alert-icon text-success me-2">
-                                  <i class="ti ti-check ti-xs"></i>
-                                </span>
-                                <span><strong>Well Done!</strong> Penempatan berhasil diubah!</span>
-                              </div>
-                            ';
-                                        }
-                                        if ($_GET['notif2'] == 2) {
-                                            echo '
-                              <div class="alert alert-warning d-flex align-items-center" role="alert">
-                                <span class="alert-icon text-warning me-2">
-                                  <i class="ti ti-bell ti-xs"></i>
-                                </span>
-                                <span><strong>Warning!</strong> Max Image Size 5MB!</span>
-                              </div>
-                            ';
-                                        }
-                                        if ($_GET['notif2'] == 3) {
-                                            echo '
-                              <div class="alert alert-warning d-flex align-items-center" role="alert">
-                                <span class="alert-icon text-warning me-2">
-                                  <i class="ti ti-bell ti-xs"></i>
-                                </span>
-                                <span><strong>Warning!</strong> Only JPG atau PNG!</span>
-                              </div>
-                            ';
-                                        }
-                                    }
-                                    if (isset($_GET['id'])) {
-                                        $posID = $_GET['id'];
-                                        $sql_3 = mysqli_query($conn, "SELECT * FROM `penempatan_pkl` WHERE id = '$posID'");
-                                        $s3 = mysqli_fetch_array($sql_3);
+            
 
-                                    ?>
-                                        <form role="form" action="<?php echo $urlweb; ?>/function/update_penempatan.php"
-                                            method="post" enctype="multipart/form-data">
-                                            <div class="form-group mb-2">
-                                                <label class="form-label">Upload Image :</label>
-                                                <input type="file" name="image" class="form-control">
-                                                <span>JPG or PNG</span><br>
-                                                <img src="<?php echo $urlweb; ?>/Asset/Gambar/<?php echo $s3['gambar']; ?>"
-                                                    class="img-fluid">
+            <script>
+                // Validasi frontend: pastikan password baru dan konfirmasi cocok
+                function validatePassword() {
+                    const newPassword = document.getElementById('new_pw').value;
+                    const confirmPassword = document.getElementById('confirm_pw').value;
 
-                                            </div>
-                                            <div class="form-group mb-2">
-                                                <label class="form-label">Nama :</label>
-                                                <input class="form-control disabled" type="text" name="nama"
-                                                    value="<?php echo $s3['posisi']; ?>" disabled>
-                                                <input class="form-control" type="hidden" name="nama2"
-                                                    value="<?php echo $s3['posisi']; ?>">
-                                                <input class="form-control" type="hidden" name="posID"
-                                                    value="<?php echo $s3['id']; ?>">
-                                                <small class="form-text text-muted">!!! tidak bisa diubah disini</small>
-                                            </div>
-                                            <div class="form-group mb-2">
-                                                <label class="form-label">Deskripsi :</label>
-                                                <input class="form-control" type="text" name="deskripsi"
-                                                    value="<?php echo $s3['deskripsi']; ?>">
-                                            </div>
-
-                                            <button type="submit" name="submit" class="btn btn-primary">Update</button>
-                                            <a href="<?php echo $urlweb; ?>/admin_web.php" class="btn btn-light">Cancel</a>
-                                        </form>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <!-- Invoice List Table -->
-                            <div class="card">
-                                <div class="card-datatable table-responsive">
-                                    <table id="default-datatable" class="invoice-list-table table border-top">
-                                        <thead>
-                                            <tr class="bg-info">
-                                                <th class="text-center">#</th>
-                                                <th class="text-center">Nama</th>
-                                                <th class="text-center">Gambar</th>
-                                                <th class="text-center">Deskripsi</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $sql_2 = mysqli_query($conn, "SELECT * FROM `penempatan_pkl` ORDER BY id ASC");
-                                            $no2 = 0;
-                                            while ($s2 = mysqli_fetch_array($sql_2)) {
-                                                $no2++;
-                                                $id = $s2['id'];
-                                            ?>
-                                                <tr>
-                                                    <td class="text-center"
-                                                        style="vertical-align: middle; font-size: 14px;"><?php echo $no2; ?>
-                                                    </td>
-                                                    <td class="text-center"
-                                                        style="vertical-align: middle; white-space: normal; font-size: 14px;">
-                                                        <?php echo $s2['posisi']; ?></td>
-                                                    <td class="text-center"
-                                                        style="vertical-align: middle; white-space: normal; font-size: 14px;">
-                                                        <img src="<?php echo $urlweb; ?>/Asset/Gambar/<?php echo $s2['gambar']; ?>"
-                                                            style="display: block; margin: 0 auto; width: 250px; height: auto; max-width: 150px; max-height: 100px;">
-                                                    </td>
-                                                    <td class="text-center"
-                                                        style="vertical-align: middle; white-space: normal; font-size: 14px;">
-                                                        <?php echo $s2['deskripsi']; ?></td>
-
-                                                    <td class="text-center"
-                                                        style="vertical-align: middle; font-size: 14px;">
-                                                        <a href="<?php echo $urlweb; ?>/admin_web.php?id=<?php echo $id; ?>"
-                                                            class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-                                                        <a href="<?php echo $urlweb; ?>/function/del-penempatan.php?id=<?php echo $id; ?>"
-                                                            class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure want remove this data?');"><i
-                                                                class="fa fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                    if (newPassword !== confirmPassword) {
+                        alert("Password baru dan konfirmasi password tidak cocok!");
+                        return false;
+                    }
+                    return true;
+                }
+            </script>
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

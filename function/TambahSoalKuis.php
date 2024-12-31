@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('koneksi.php'); // Pastikan sudah terhubung dengan database
+include('../koneksi.php'); // Pastikan sudah terhubung dengan database
 
 $message = '';
 // Cek apakah form sudah dikirim

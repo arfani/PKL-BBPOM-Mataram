@@ -91,6 +91,7 @@ if (isset($_GET['message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->
@@ -125,17 +126,17 @@ if (isset($_GET['message'])) {
                     <div class="row my-4">
                         <div class="col-md-6" >
                             <div class="card p-2" data-subject="kunjungan">
-                                <div class="card-icon">💊</div>
+                                <div class="card-icon">📢</div>
                                 <h2><?php echo $jml_kunjungan; ?></h2>
-                                <p>Obat</p>
+                                <p>Kunjungan</p>
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="card p-2" data-subject="narasumber">
-                                <div class="card-icon">🍵</div>
+                                <div class="card-icon">🗣️</div>
                                 <h2><?php echo $jml_narasumber; ?></h2>
-                                <p>Obat Bahan Alam</p>
+                                <p>Narasumber</p>
                             </div>
                         </div>
                     </section>

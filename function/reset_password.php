@@ -9,7 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validasi input
     if (!empty($user_id)) {
         // Reset password ke default (contoh: "password123")
-        $new_password = '1234';
+        $sql_1 = mysqli_query($conn, "SELECT * FROM `admin` WHERE id = 1");
+        $s1 = mysqli_fetch_array($sql_1);
+        $new_password = $s1['reset_pw'];
 
         // Update password di database
         $query = "UPDATE users SET password = ? WHERE nama = ?";

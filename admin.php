@@ -15,6 +15,34 @@ if (isset($_SESSION['role'])) {
     header("Location: " . $urlweb);
 }
 
+$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+
+$no = 1;
+// Handle pagination
+$limit = 10; // Entries per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Fetch `pengaduan` data with pagination
+$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+$sql2 = "SELECT * FROM users WHERE 
+        nama LIKE '%$search%' OR 
+        email LIKE '%$search%' OR 
+        universitas LIKE '%$search%' OR 
+        no_hp LIKE '%$search%' LIMIT ?, ?";
+$stmt = $conn->prepare($sql2);
+$stmt->bind_param("ii", $offset, $limit);
+$stmt->execute();
+$result2 = $stmt->get_result();
+
+// Count total rows for pagination
+$total_sql = "SELECT COUNT(*) AS total FROM users";
+$total_result = $conn->query($total_sql);
+$total_row = $total_result->fetch_assoc();
+$total_pages = ceil($total_row['total'] / $limit);
+
+$no = $offset + 1;
+
 $sql = "SELECT SUM(kuota) as jumlah FROM penempatan_pkl";
 $result = mysqli_query($conn, $sql);
 $lowongan = mysqli_fetch_assoc($result)['jumlah'];
@@ -110,6 +138,94 @@ if (isset($_GET['message'])) {
 </head>
 
 <body>
+    <style>
+        .card-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Elemen akan turun ke baris baru jika melebihi batas */
+            gap: 1rem; /* Jarak antar elemen */
+        }
+        .card {
+            flex: 0 0 calc(33.333% - 1rem); /* 33.333% untuk memastikan 3 elemen per baris */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ddd;
+            padding: 1rem;
+            text-align: center;
+        }
+                    
+        /* Style untuk kartu yang tetap aktif setelah diklik */
+        .card.active {
+        background-color: #007bff; /* warna biru */
+        transform: scale(1.15); /* memperbesar */
+        color: #fff; /* Ubah teks menjadi putih */
+        }
+
+        .card h2 {
+        font-size: 2.5rem;
+        margin: 0;
+        color: inherit; /* Agar warna h2 berubah sesuai konteks */
+        }
+
+        .card .card-icon {
+        font-size: 3rem;
+        color: inherit; /* Agar warna ikon berubah sesuai konteks */
+        }
+
+
+        .card .card-icon {
+        font-size: 3rem;
+        color: #777;
+        }
+        .cards {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        }
+        /* Untuk layar dengan lebar maksimum 768px (tablet dan handphone) */
+        @media (max-width: 768px) {
+            .card-wrapper {
+                flex-direction: row; /* Atur elemen dalam kolom */
+                align-items: center;   /* Pusatkan elemen */
+                gap: 1rem;             /* Jarak antar elemen tetap */
+            }
+
+            .card {
+                flex: 0 0 100%;         /* Kartu mengambil lebar penuh */
+                padding: 1rem;         /* Tambahkan ruang di dalam kartu */
+                transform: scale(1);   /* Hindari pembesaran default */
+            }
+
+            .card:hover {
+                transform: scale(1.02); /* Efek hover sedikit untuk layar kecil */
+            }
+
+            .card h2 {
+                font-size: 1.8rem;      /* Ukuran font lebih kecil */
+            }
+
+            .card .card-icon {
+                font-size: 2.5rem;      /* Ukuran ikon lebih kecil */
+            }
+        }
+
+        /* Untuk layar dengan lebar maksimum 480px (handphone kecil) */
+        @media (max-width: 480px) {
+            .card-wrapper {
+                gap: 0.5rem;            /* Kurangi jarak antar elemen */
+            }
+
+            .card {
+                padding: 0.8rem;        /* Kurangi padding di dalam kartu */
+            }
+
+            .card h2 {
+                font-size: 1.5rem;      /* Ukuran font lebih kecil */
+            }
+
+            .card .card-icon {
+                font-size: 2rem;        /* Ukuran ikon lebih kecil */
+            }
+        }
+    </style>
 <?php include 'header_admin.php'; ?>
 
     <div class="container-fluid">
@@ -119,16 +235,71 @@ if (isset($_GET['message'])) {
 
             <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5">
                 <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Overview</h1>
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                 </div>
             </div>
             <div class="col-md-9 ms-sm-auto col-lg-10 ">
                 <div class="container mt-2">
                     <div class="text-center">
-                        <h3 class="fw-bold">Data PKL</h3>
+                        <h3 class="fw-bold">Data Akun Siap Melayani</h3>
                     </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover text-center">
+                            <thead class="table" style="background-color: skyblue;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Nomor HP</th>
+                                    <th>Universitas</th>
+                                    <th>Reset Password</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                                <?php
+                                $no = 1;
+                                while ($row2 = mysqli_fetch_assoc($result2)) {
+                                    echo "<tr>";
+                                    echo "<td>{$no}</td>";
+                                    echo "<td>{$row2['nama']}</td>";
+                                    echo "<td>{$row2['email']}</td>";
+                                    echo "<td>{$row2['no_hp']}</td>";
+                                    echo "<td>{$row2['universitas']}</td>";
+                                    echo "<td>
+                                        <form action='function/reset_password.php' method='POST'>
+                                            <input type='hidden' name='nama' value='{$row2['nama']}'>
+                                            <input type='hidden' name='user_id' value='{$row2['id']}'>
+                                            <button type='submit' class='btn btn-warning btn-sm'>Reset Password</button>
+                                        </form>
+                                    </td>";
+                                    echo "</tr>";
+                                    $no++;
+                                }
+                                $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-end">
+        <?php if ($page > 1): ?>
+            <li class="page-item"><a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a></li>
+        <?php endif; ?>
+        
+        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+            </li>
+        <?php endfor; ?>
+        
+        <?php if ($page < $total_pages): ?>
+            <li class="page-item"><a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a></li>
+        <?php endif; ?>
+    </ul>
+</nav>
+
+                    </div>
+            
                     <!-- Card Section -->
                     <div class="row my-4">
                         <div class="col-md-4" >
@@ -136,7 +307,6 @@ if (isset($_GET['message'])) {
                                 <div class="card-icon">😊</div>
                                 <h2><?php echo $sedang_pkl; ?></h2>
                                 <p class="card-title">PKL</p>
-                                
                             </div>
                         </div>
                         <div class="col-md-4">

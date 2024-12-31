@@ -201,7 +201,6 @@ if (isset($_GET['message'])) {
                                 <div class="card" style="cursor: pointer;" onclick="goToPage('<?php echo $row2['posisi']; ?>')">
                                     <div class="card-icon">📋</div>
                                     <h2><?php echo "{$row2['posisi']}"; ?></h2>
-                                    <p>Lainnya</p>
                                 </div>
                                 
                             <?php
