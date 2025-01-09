@@ -329,7 +329,13 @@ if (isset($_GET['message'])) {
                                 while ($row = mysqli_fetch_assoc($result3)) {
                                     $periode = $row['periode'];
                                     $status = $row['status'];
-                                    $sertifikat = $row['sertifikat'] ? "<a href='{$row['sertifikat']}' class='btn btn-primary btn-sm' download>Download Sertifikat</a>" : "Belum Buat";
+                                    $sertifikat = $row['sertifikat'] ? "<a href='{$row['sertifikat']}' class='btn btn-primary btn-sm' download>Download Sertifikat</a>" : 
+                                        "<form action='function/update_sertifikat.php' method='POST' enctype='multipart/form-data'>
+                                            <input type='file' name='sertifikat' id='sertifikat' required>
+                                            <input type='hidden' name='id_pengajuan' id='id_pengajuan' value='{$row['id_pengajuan']}'>
+                                            <input type='hidden' name='nama' id='nama' value='{$row['nama']}'  >
+                                            <button type='submit' name='submit' class='btn btn-primary'>Unggah</button>
+                                        </form>";
                                     list($start_date, $end_date) = explode(' - ', $periode);
                                     $current_date = new DateTime();
                                     $start_date = new DateTime($start_date);

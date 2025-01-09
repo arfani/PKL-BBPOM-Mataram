@@ -380,7 +380,7 @@ if (isset($_GET['message'])) {
                         <button type="button" class="btn btn-primary"><a href="dashboardpkl.php"
                                 style="text-decoration: none; color: white;">Profile</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="pkl_ResPw.php" class="btn btn-primary">Ubah Password</a>
                     </div>
                 </form>
             </div>

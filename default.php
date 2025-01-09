@@ -170,7 +170,7 @@ if (!empty($message)) {
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="Asset/Gambar/SIAP MELAYANI logo.png" alt="Hero Image" class="hero-section logo animated p-0"
+                    <img src="Asset/Gambar/Siap-Melayani-Logo.png" alt="Hero Image" class="hero-section logo animated p-0"
                     style="width:400px; height:auto; background:transparent">
                 </div>
             </div>

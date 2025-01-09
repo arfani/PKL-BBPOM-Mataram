@@ -44,26 +44,26 @@ $result = mysqli_query($conn, $sql);
     </nav>
     <button type="button" class="btn btn-primary mt-4 ms-4" style="box-shadow: 0 3px 3px black;" onclick="history.back()">Kembali</button>
     <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-9 col-md-6 col-lg-4">
-            <div class="card">
-                <div class="container mt-2 mb-2">
-                    <h2 class="text-center mb-4">Pencarian Kode Unik</h2>
-                    
-                    <!-- Search Form -->
-                    <form method="GET" action="" id="searchForm" class="d-flex">
-                        <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                        aria-label="Search" id="searchInput"
-                        value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                        <button class="btn btn-outline-secondary" type="submit" id="searchButton">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="container mt-2 mb-2">
+                        <h2 class="text-center mb-4">Pencarian Kode Unik</h2>
+                        
+                        <!-- Search Form -->
+                        <form method="GET" action="" id="searchForm" class="d-flex">
+                            <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
+                            aria-label="Search" id="searchInput"
+                            value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                            <button class="btn btn-outline-secondary" type="submit" id="searchButton">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
     

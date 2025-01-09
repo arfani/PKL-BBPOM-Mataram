@@ -294,8 +294,8 @@ CREATE TABLE `admin` (
   `nama` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `no_hp` varchar(20) NOT NULL,
-  `password` varchar(50) NOT NULL
-    `reset_pw` varchar(50) DEFAULT NULL
+  `password` varchar(255) NOT NULL
+  `reset_pw` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -303,7 +303,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `nama`, `email`, `no_hp`, `password`, `reset_pw`) VALUES
-(1, 'admin', 'admin@gmail.com', '082145554182', 'admin1234', 'BBPOM1234');
+(1, 'admin', 'admin@gmail.com', '082145554182', '$2b$12$vWdMHo1ruO99pJOFG0903.LT567aT0N0MevxXVosSrqkzuRGo7N7u', 'BBPOM1234');
 
 -- --------------------------------------------------------
 
@@ -664,7 +664,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `universitas` varchar(255) DEFAULT NULL,
   `no_hp` varchar(20) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   `foto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

@@ -86,7 +86,51 @@ for ($i = 1; $i <= 12; $i++) {
     $pkl_perbulan[$i] = mysqli_fetch_assoc($result)['jumlah'];
 }
 ?>
-
+<?php
+// Periksa apakah parameter 'status' ada di URL
+if (isset($_GET['status'])) {
+    
+    // Simpan nilai parameter 'status' ke dalam variabel
+    $status = $_GET['status'];
+    // Gunakan nilai variabel untuk logika lebih lanjut
+    if ($status === 'success') {
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Reset Password',
+                    text: 'Seluruh Password Berhasil Di-Reset',
+                    showConfirmButton: true
+                });
+            });
+        </script>";
+    } else if ($status === 'berhasil'){
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Reset Password',
+                    text: 'Password Berhasil Diganti',
+                    showConfirmButton: true
+                });
+            });
+        </script>";
+    } else {
+        echo "<script type='text/javascript'>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Reset Password',
+                        text: 'Gagal Mereset Password',
+                        showConfirmButton: true
+                    });
+                });
+            </script>";
+    }
+} else {
+    echo "No status provided in the URL.";
+}
+?>
 
 <?php
 if (isset($_GET['message'])) {
@@ -243,7 +287,13 @@ if (isset($_GET['message'])) {
                     <div class="text-center">
                         <h3 class="fw-bold">Data Akun Siap Melayani</h3>
                     </div>
+                    
                     <div class="table-responsive">
+                        <form method="POST" action="function/reset_all_pw.php">
+                            <button type="kirim" class="btn btn-danger mb-2" name="updatePasswords" onclick="return confirm('Are you sure you want to update all passwords?');">
+                                Reset All Passwords
+                            </button>
+                        </form>
                         <table class="table table-bordered table-striped table-hover text-center">
                             <thead class="table" style="background-color: skyblue;">
                                 <tr>
@@ -273,31 +323,77 @@ if (isset($_GET['message'])) {
                                             <button type='submit' class='btn btn-warning btn-sm'>Reset Password</button>
                                         </form>
                                     </td>";
+                                    echo "
+                                        <td>
+                                            <button 
+                                                type='button' 
+                                                class='btn btn-warning btn-sm btn-upload-pdf' 
+                                                data-bs-toggle='modal' 
+                                                data-bs-target='#unduhSertifikatModal' 
+                                                data-id='{$row2['id']}' 
+                                                data-nama='{$row2['nama']}'>
+                                                Unduh Sertifikat
+                                            </button>
+                                        </td>
+                                    ";
                                     echo "</tr>";
                                     $no++;
                                 }
                                 $conn->close();
                                 ?>
                             </tbody>
+                            <div class="modal fade" id="unduhSertifikatModal" tabindex="-1" aria-labelledby="unduhSertifikatModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="function/unduh_sertif.php" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="unduhSertifikatModalLabel">Konfirmasi Unduh Sertifikat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Input Nama -->
+                    <div class="mb-3">
+                        <label for="modal_nama" class="form-label">Nama</label>
+                        <input type="text" class="form-control" id="modal_nama" name="nama" readonly>
+                    </div>
+
+                    <!-- Input User ID -->
+                    <div class="mb-3">
+                        <label for="modal_id" class="form-label">User ID</label>
+                        <input type="text" class="form-control" id="modal_id" name="user_id" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modal_id" class="form-label">Nomor Surat</label>
+                        <input type="text" class="form-control" id="modal_no_surat" name="no_surat">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Unduh</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
                         </table>
                         <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-end">
-        <?php if ($page > 1): ?>
-            <li class="page-item"><a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a></li>
-        <?php endif; ?>
-        
-        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-            </li>
-        <?php endfor; ?>
-        
-        <?php if ($page < $total_pages): ?>
-            <li class="page-item"><a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a></li>
-        <?php endif; ?>
-    </ul>
-</nav>
-
+                            <ul class="pagination justify-content-end">
+                                <?php if ($page > 1): ?>
+                                    <li class="page-item"><a class="page-link" href="?page=<?php echo $page - 1; ?>">Previous</a></li>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                    </li>
+                                <?php endfor; ?>
+                                
+                                <?php if ($page < $total_pages): ?>
+                                    <li class="page-item"><a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a></li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
                     </div>
             
                     <!-- Card Section -->
@@ -391,7 +487,20 @@ if (isset($_GET['message'])) {
         }
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".btn-upload-pdf").forEach(button => {
+        button.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            const nama = this.getAttribute("data-nama");
+            document.getElementById("modal_id").value = id;
+            document.getElementById("modal_nama").value = nama;
+            document.getElementById("modal_no_surat").value = no_surat;
+        });
+    });
+});
 
+</script>
 
                     
 

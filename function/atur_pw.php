@@ -5,7 +5,6 @@ include '../koneksi.php'; // Sesuaikan dengan path ke file koneksi Anda
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $new_pw = $_POST['new_pw'];
-
     // Query update langsung tanpa bind parameter
     $sql = "UPDATE admin 
             SET reset_pw = '$new_pw'

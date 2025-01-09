@@ -179,6 +179,6 @@ $pdf->Cell(50, 10, '  sakit: ' . $sakit, 0, 1, 'L');
 $ttdValue = $ttdAbsensi ?: 'TTD'; // Gunakan value jika ada, atau "TTD" jika kosong
     $pdf->Cell($widths[10], 10, $ttdValue, 1, 0, 'C');
 
-$pdf->Output('D', 'Rekap_Absensi_' . str_replace(' ', '_', $userName) . '.pdf');
+$pdf->Output('I', 'Rekap_Absensi_' . str_replace(' ', '_', $userName) . '.pdf');
 exit;
 ?>

@@ -15,54 +15,67 @@ if (isset($_SESSION['role'])) {
 
 if (isset($_POST['submit'])) {
     $input = $_POST['email_nohp'];
-    $password = ($_POST['password']);
+    $password = $_POST['password'];
     $role = $_POST['role'];
+
+    // Escape input untuk mencegah SQL Injection
+    $input = mysqli_real_escape_string($conn, $input);
+
+    // Cek apakah input adalah email atau nomor HP
     if (strpos($input, '@') !== false) {
-        $email = $input;
-        if ($role == "admin") {
-            $sql = "SELECT * FROM admin WHERE email='$email' AND password='$password'";
-            $result = mysqli_query($conn, $sql);
-        } else {
-            $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-            $result = mysqli_query($conn, $sql);
-        }
-        if ($result->num_rows > 0) {
-            $row = mysqli_fetch_assoc($result);
+        $field = 'email';
+    } else {
+        $field = 'no_hp';
+    }
+
+    // Tentukan tabel berdasarkan role
+    $table = ($role === "admin") ? "admin" : "users";
+
+    // Query untuk mengambil data berdasarkan email atau no_hp
+    $sql = "SELECT * FROM $table WHERE $field = '$input'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $hashedPassword = $row['password']; // Ambil hashed password dari database
+
+        // Verifikasi password
+        if (password_verify($password, $hashedPassword)) {
+            // Login berhasil
             $_SESSION['id'] = $row['id'];
             $_SESSION['role'] = $role;
+
+            // Redirect ke halaman berdasarkan role
             header("Location: $role.php");
+            exit();
         } else {
-            echo "<script>alert('Woops! Email Atau Password anda Salah.')</script>";
+            // Password salah
+            echo "<script type='text/javascript'>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Login Gagal',
+                            text: 'Email dan Password Tidak Cocok',
+                            showConfirmButton: true
+                        });
+                    });
+                </script>";
         }
     } else {
-        $nohp = $input;
-        if ($role == "admin") {
-            $sql = "SELECT * FROM admin WHERE no_hp='$nohp' AND password='$password'";
-            $result = mysqli_query($conn, $sql);
-        } else {
-            $sql = "SELECT * FROM users WHERE no_hp='$nohp' AND password='$password'";
-            $result = mysqli_query($conn, $sql);
-        }
-        if ($result->num_rows > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION['id'] = $row['id'];
-            $_SESSION['role'] = $role;
-            header("Location: $role.php");
-        } else {
-            
+        // Email atau nomor HP tidak ditemukan
         echo "<script type='text/javascript'>
                 document.addEventListener('DOMContentLoaded', function() {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Login Gagal',
-                        text: 'Email Dan Password Tidak Cocok',
+                        text: 'Email atau Nomor HP Tidak Ditemukan',
                         showConfirmButton: true
                     });
                 });
             </script>";
-        }
     }
 }
+
 
 ?>
 

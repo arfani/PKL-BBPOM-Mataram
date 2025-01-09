@@ -18,6 +18,7 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $no_hp = $_POST['no_hp'];
     $password = $_POST['password'];
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $universitas = $_POST['universitas'];
     $status = $_POST['status'];
 
@@ -26,7 +27,7 @@ if (isset($_POST['submit'])) {
 
     if (!$result->num_rows > 0) {
         $sql = "INSERT INTO users (nama, email, no_hp, password, foto, universitas, status)
-                    VALUES ('$nama', '$email', '$no_hp', '$password', 'Asset/Gambar/profile.png', '$universitas', '$status')";
+                    VALUES ('$nama', '$email', '$no_hp', '$hashedPassword', 'Asset/Gambar/profile.png', '$universitas', '$status')";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {

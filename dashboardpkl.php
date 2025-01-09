@@ -265,7 +265,7 @@ if (isset($_GET['message'])) {
                         <button type="button" class="btn btn-primary"><a href="dashboardpkl.php"
                                 style="text-decoration: none; color: white;">Profile</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="pkl_ResPw.php" class="btn btn-primary">Ubah Password</a>
                     </div>
                 </form>
             </div>
@@ -360,7 +360,7 @@ if (isset($_GET['message'])) {
                         </a>
                             <?php } ?>
                     </div>
-                </div>
+                </div>  
 
             </div>
         </div>
@@ -410,11 +410,11 @@ if (isset($_GET['message'])) {
                 <a href="Asset/Document/PAKTA INTEGRITAS MAHASISWA PKL.docx" download
                     style="background-color: #007bff;">Download</a>
             </div>
-            <?php if (!empty($surat_balasan)) : ?>
+            <?php if (!empty($sertifikat)) : ?>
             <div class="download-box" style="border-color: #28a745;">
-                <i class='bx bxs-envelope bx-lg' style="color: #28a745;"></i>
-                <h3>Surat Balasan</h3>
-                <a href="<?php echo $surat_balasan ?>" download style="background-color: #28a745;">Download</a>
+                <i class='bx bxs-certification bx-lg' style="color: #28a745;"></i>
+                <h3>Sertifikat</h3>
+                <a href="<?php echo $sertifikat ?>" download style="background-color: #28a745;">Download</a>
             </div>
             <?php endif; ?>
             <?php if ($laporanAkhir != null) {

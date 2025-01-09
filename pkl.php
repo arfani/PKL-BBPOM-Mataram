@@ -172,7 +172,6 @@ if (isset($_GET['message'])) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="vendor\fontawesome\css\all.min.css">
     <title>pkl</title>
-    <link rel="stylesheet" href="CSS/style.css">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- SweetAlert2 JS -->
@@ -403,12 +402,13 @@ if (isset($_GET['message'])) {
                             <input type="tel" class="form-control" id="profilePhone" name="profilePhone"
                                 value="<?php echo $no_hp; ?>">
                         </div>
+                        
                     </div>
                     <div class="modal-footer d-flex justify-content-around">
                         <button type="button" class="btn btn-primary"><a href="dashboardpkl.php"
                                 style="text-decoration: none; color: white;">Profile</a></button>
                         <input type="submit" class="btn btn-primary" value="Save">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="pkl_ResPw.php" class="btn btn-primary">Ubah Password</a>
                     </div>
                 </form>
             </div>
