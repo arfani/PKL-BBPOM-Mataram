@@ -14,7 +14,39 @@ if (isset($_SESSION['role'])) {
     header("Location: " . $urlweb);
 }
 ?>
-
+<?php
+if (isset($_GET['status'])) {
+    
+    // Simpan nilai parameter 'status' ke dalam variabel
+    $status = $_GET['status'];
+    // Gunakan nilai variabel untuk logika lebih lanjut
+    if ($status === 'success') {
+        echo "<script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'File Berhasil Diunggah',
+                    showConfirmButton: true
+                });
+            });
+        </script>";
+    } else {
+        echo "<script type='text/javascript'>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Reset Password',
+                        text: 'Gagal Mereset Password',
+                        showConfirmButton: true
+                    });
+                });
+            </script>";
+    }
+} else {
+    echo "No status provided in the URL.";
+}
+?>
 
 <?php
 if (isset($_GET['message'])) {

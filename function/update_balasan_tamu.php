@@ -1,5 +1,5 @@
 <?php
-include('koneksi.php');
+include('../koneksi.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fileExtension = strtolower(end($fileNameCmps));
         $newFileName = 'surat_balasan_' . $nama . '.' . $fileExtension;
         $processedFileName = str_replace(' ', '_', $newFileName);
-        $uploadFileDir = './Asset/Document/kunjungan/';
+        $uploadFileDir = '../Asset/Document/Tamu/';
         $dest_path = $uploadFileDir . $processedFileName;
 
         // Periksa apakah direktori upload ada
@@ -44,21 +44,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param('si', $dest_path, $id);
 
             if ($stmt->execute()) {
-                $message = 'File berhasil diunggah dan database berhasil diperbarui.';
+                
+                header('location: ../admin_tamu.php?status=success');
             } else {
-                $message = 'Terjadi kesalahan saat memperbarui database: ' . $conn->error;
+                header('location: ../admin_tamu.php?status=fail');
             }
 
             $stmt->close();
         } else {
-            $message = 'Terjadi kesalahan saat memindahkan file ke direktori upload.';
+            header('location: ../admin_tamu.php?status=fail');
         }
     } else {
-        $message = 'File tidak valid atau terjadi kesalahan dalam pengunggahan. Silakan periksa file dan coba lagi.';
+        header('location: ../admin_tamu.php?status=fail');
     }
 } else {
-    $message = 'Metode permintaan tidak valid.';
+    header('location: ../admin_tamu.php?status=fail');
 }
 
-echo $message; // Digunakan untuk debugging, ganti dengan redirect jika sudah selesai debugging
+exit; // Digunakan untuk debugging, ganti dengan redirect jika sudah selesai debugging
 ?>

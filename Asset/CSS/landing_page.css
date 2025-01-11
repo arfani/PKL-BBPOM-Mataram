@@ -1,0 +1,45 @@
+body{
+    background: url(Asset/Gambar/landing-page2.jpg)
+    no-repeat center center fixed;
+    margin:0;
+    padding:0;
+}
+.card{
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.btn-radio {
+    display: inline-block;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 15px; /* Ukuran padding lebih kecil */
+    font-size: 14px; /* Ukuran font lebih kecil */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: calc(50% - 20px); /* Kurangi lebar untuk menyertakan margin */
+    margin: 10px; /* Margin 10px dari setiap sisi */
+}
+
+.btn-radio:hover {
+    background-color: #f1f1f1;
+}
+
+.btn-radio.active {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+}
+
+input[type="radio"] {
+    display: none; /* Sembunyikan radio button asli */
+}
+@media (max-width: 768px) {
+    .btn-radio {
+        width: calc(100% - 20px); /* Tombol penuh dengan margin */
+        font-size: 16px; /* Ukuran font lebih besar agar nyaman dilihat */
+        padding: 12px 15px; /* Padding lebih besar untuk layar kecil */
+    }
+}

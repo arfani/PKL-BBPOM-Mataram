@@ -47,16 +47,16 @@ if (isset($_POST['submit'])) {
     $pesan = $_POST['pesan'];
     $tanggal = date('Y-m-d');
     $jam = $_POST['jam'];
+    $no_hp = $_POST['no_hp'];
+    
+    
     $foto_pengaduan = $_FILES['foto_pengaduan'];
     $foto_identitas = $_FILES['foto_identitas'];
-    $no_hp = $_POST['no_hp'];
     $foto_pengaduan_nama = NULL;
     $foto_identitas_nama = NULL;
-
-    
     // Check jika ada file foto_pengaduan yang diunggah
     if (!empty($foto_pengaduan['name'])) {
-        $target_dir = "Asset/Gambar/";
+        $target_dir = "Asset/Document/Pengaduan/Foto-Pendukung/";
         $foto_pengaduan_nama = basename($foto_pengaduan["name"]);
         $target_file_pengaduan = $target_dir . $foto_pengaduan_nama;
         move_uploaded_file($foto_pengaduan["tmp_name"], $target_file_pengaduan);
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
     // Check jika ada file foto_identitas yang diunggah
     if (!empty($foto_identitas['name'])) {
-        $target_dir = "Asset/Gambar/";
+        $target_dir = "Asset/Document/Pengaduan/Foto-Identitas/";
         $foto_identitas_nama = basename($foto_identitas["name"]);
         $target_file_identitas = $target_dir . $foto_identitas_nama;
         move_uploaded_file($foto_identitas["tmp_name"], $target_file_identitas);
@@ -79,7 +79,41 @@ if (isset($_POST['submit'])) {
     $result = $stmt->execute();
 
     if ($result) {
-        echo "<script>alert('Pengaduan telah berhasil dikirim.');</script>";
+        if ($subject == 'Obat') {
+            $angka_unik = '1';
+        } else if ($subject == 'Obat Bahan Alam') {
+            $angka_unik = '2';
+        } else if ($subject == 'Pangan Olahan') {
+            $angka_unik = '3';
+        } else if ($subject == 'Kosmetik') {
+            $angka_unik = '4';
+        } else if ($subject == 'Suplemen Kesehatan') {
+            $angka_unik = '5';
+        } else if ($subject == 'Lainnya') {
+            $angka_unik = '6';
+        } 
+        $last_id = mysqli_insert_id($conn);
+    
+        // Pastikan $last_id terdiri dari 3 digit
+        $last_id = str_pad($last_id, 3, '0', STR_PAD_LEFT);
+    
+        // Ambil digit ke-5, ke-6, dan ke-7 dari nomor HP
+        $digit_hp = substr($no_hp, 4, 3);
+    
+        // Ambil hari (DD) dari tanggal
+        $day = date('d', strtotime($tanggal));
+    
+        // Gabungkan untuk membuat kode unik
+        $kode_unik = $last_id . $digit_hp . $day . $angka_unik;
+    
+        // Update data dengan kode unik
+        $update = mysqli_query($conn, "UPDATE pengaduan SET kode_unik = '$kode_unik' WHERE id = '$last_id'");
+        if($update){
+            header("Location: landing_page.php?kode_unik=$kode_unik&jenis=pengaduan");
+            exit;
+        } else {
+            echo "<script>alert('Gagal memperbarui kode unik.');</script>";
+        }
     } else {
         echo "<script>alert('Woops! Ada kesalahan saat menyimpan: " . $conn->error . "');</script>";
     }
@@ -419,12 +453,12 @@ if (!empty($message)) {
                         <div class="col-md-6">
                             <select class="form-control" id="subject" name="subject" required>
                                 <option value="" disabled selected hidden>Pilih Kategori</option>
-                                <option value="obat">Obat</option>
-                                <option value="obat bahan alam">Obat Bahan Alam</option>
-                                <option value="pangan olahan">Pangan Olahan</option>
-                                <option value="kosmetik">Kosmetik</option>
+                                <option value="Obat">Obat</option>
+                                <option value="Obat Bahan Alam">Obat Bahan Alam</option>
+                                <option value="Pangan Olahan">Pangan Olahan</option>
+                                <option value="Kosmetik">Kosmetik</option>
                                 <option value="Suplemen Kesehatan">Suplemen kesehatan</option>
-                                <option value="lainnya">Lainnya</option>
+                                <option value="Lainnya">Lainnya</option>
                             </select>
                         </div>
 

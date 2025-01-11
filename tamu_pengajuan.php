@@ -57,7 +57,7 @@ if (isset($_POST['kirim'])) {
     
         if ($update) {
             // Redirect ke landing page dengan kode unik sebagai parameter
-            header("Location: landing_page.php?kode_unik=$kode_unik");
+            header("Location: landing_page.php?kode_unik=$kode_unik&jenis=kunjungan");
             exit;
         } else {
             echo "<script>alert('Gagal memperbarui kode unik.');</script>";

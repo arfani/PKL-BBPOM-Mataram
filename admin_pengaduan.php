@@ -157,83 +157,30 @@ if (isset($_GET['message'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="Asset/CSS/custom2.css">
+    <style>
+        /* Styling untuk tombol hapus */
+.delete-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333; /* Warna merah lebih gelap saat hover */
+    color: #fff;
+}
+
+/* Pastikan kontainer data-item memiliki posisi relatif untuk tombol */
+.data-item {
+    position: relative;
+}
+
+    </style>
 </head>
 
 <body>
-    <header class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand" href="#">
-            <img src="Asset/Gambar/logo.png" alt="#" width="30px" height="30px"
-                style="margin-left: 15px; margin-right: 10px">
-            BBPOM MATARAM
-        </a>
-        <!-- Search and Sign Out for larger screens (md and above) -->
-        <div class="d-none d-md-flex order-1 flex-grow-1">
-            <form method="GET" action="" id="searchForm" class="d-flex me-auto">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInput"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButton">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <a class="nav-link signout text-nowrap" style="color: white; padding-top: 20px; padding-left: 10px;"
-                href="logout.php">Sign out</a>
-        </div>
-
-        <!-- Toggle button for mobile -->
-        <button class="navbar-toggler d-md-none collapsed me-1" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Navbar for mobile (sm and below) -->
-        <div class="collapse navbar-collapse ms-3 d-md-none" id="navbarMenu">
-            <form method="GET" action="" id="searchFormMobile" class="d-flex mb-2">
-                <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
-                    aria-label="Search" id="searchInputMobile"
-                    value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                <button class="btn btn-outline-secondary" type="submit" id="searchButtonMobile">
-                    <i class="bx bx-search"></i> <!-- Ikon pencarian dari Boxicons -->
-                </button>
-            </form>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="admin.php">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_posisi.php">Posisi Penempatan PKL</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="admin_pkl.php">
-                        PKL
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_tamu.php">Kunjungan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="admin_pengaduan.php">
-                        Pengaduan
-                        <a class="nav-link" href="admin_pengaduan_statistik.php">
-                            Statistik
-                        </a>
-                    </a>
-                    
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="admin_web.php">Setting Website</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color: white; text-shadow: 
-        -1px -1px 0 #000,  
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000; " href="logout.php">Sign out</a>
-                </li>
-            </ul>
-        </div>
-    </header>
+<?php include 'header_admin.php'; ?>
 
     <div class="container-fluid">
         <div class="row">
@@ -260,11 +207,13 @@ if (isset($_GET['message'])) {
                                     <th>Informasi Pengaduan</th>
                                     <th>Foto Identitas</th>
                                     <th>Foto Tambahan</th>
+                                    <th>History</th>
                                     <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php while ($row = mysqli_fetch_assoc($result2)) : ?>
+                                    
                                     <tr>
                                         <td><?php echo $no++; ?></td>
                                         <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
@@ -277,7 +226,7 @@ if (isset($_GET['message'])) {
                                         <td>
                                             <?php if (!empty($row['foto_ktp'])) : ?>
                                                 <button class="btn btn-primary btn-view-photo" 
-                                                        data-photo-src="Asset/Gambar/<?php echo htmlspecialchars($row['foto_ktp']); ?>" 
+                                                        data-photo-src="Asset/Document/Pengaduan/Foto-Identitas/<?php echo htmlspecialchars($row['foto_ktp']); ?>" 
                                                         data-user-name="<?php echo htmlspecialchars($row['nama']); ?>">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
@@ -291,7 +240,7 @@ if (isset($_GET['message'])) {
                                         <td>
                                             <?php if (!empty($row['foto_pengaduan'])) : ?>
                                                 <button class="btn btn-primary btn-view-photo" 
-                                                        data-photo-src="Asset/Gambar/<?php echo htmlspecialchars($row['foto_pengaduan']); ?>" 
+                                                        data-photo-src="Asset/Document/Pengaduan/Foto-Pendukung/<?php echo htmlspecialchars($row['foto_pengaduan']); ?>" 
                                                         data-user-name="<?php echo htmlspecialchars($row['nama']); ?>">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
@@ -300,9 +249,28 @@ if (isset($_GET['message'])) {
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                                <button class='btn btn-primary btn-open-pdf' data-bs-toggle='modal' data-bs-target='#uploadModal'>
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </button>
+                                            <button class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#historyModal"
+                                            data-kode_unik="<?php echo "{$row['kode_unik']}"; ?>"
+                                            data-nama="<?php echo "{$row['nama']}"; ?>"
+                                            data-subject="<?php echo "{$row['subject']}"; ?>"
+                                            data-no_hp="<?php echo "{$row['no_hp']}"; ?>">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        </td>
+                                        <td>
+                                                <button 
+                                                type="submit"
+                                                class="btn btn-primary btn-sm" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#editModal"
+                                                data-id="<?php echo "{$row['id']}"; ?>"  
+                                                data-keperluan="<?php echo "{$row['subject']}"; ?>"
+                                                data-kode_unik="<?php echo "{$row['kode_unik']}"; ?>">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        
                                         </td>
                                         
                                     </tr>
@@ -345,70 +313,91 @@ if (isset($_GET['message'])) {
                             </div>
                         </div>
                         
-                        <!-- Modal Pengisian Keterangan -->
-                        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                        <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="uploadModalLabel">Masukkan Keterangan</h5>
-                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <h5 class="modal-title" id="exampleModalLabel">History</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    
-                                    <form action="" method="POST">
-    <div class="modal-body">
-        <!-- Input Hidden untuk ID -->
-        <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-
-        <!-- Input Hidden untuk Tanggal Saat Ini -->
-        <input type="hidden" name="tanggal" value="<?php echo date('Y-m-d H:i:s'); ?>">
-
-        <!-- Label Keterangan -->
-        <label for="keterangan" class="form-label">Keterangan</label>
-        <textarea name="keterangan" id="keterangan" rows="5" class="form-control" placeholder="Masukkan keterangan Anda di sini..."></textarea>
-
-        <!-- Radio Buttons -->
-        <div class="mt-3">
-            <label class="form-label">Pilih Status:</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="status" id="terima" value="Terima">
-                <label class="form-check-label text-success fw-bold" for="terima" style="color: #28a745;">
-                    &#x2713; Terima
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="status" id="tindaklanjuti" value="Tindaklanjuti">
-                <label class="form-check-label text-info fw-bold" for="tindaklanjuti" style="color: #17a2b8;">
-                    &#x1F6A7; Tindaklanjuti
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="status" id="selesai" value="Selesai">
-                <label class="form-check-label text-primary fw-bold" for="selesai" style="color: #007bff;">
-                    &#x2714; Selesai
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="status" id="tolak" value="Tolak">
-                <label class="form-check-label text-danger fw-bold" for="tolak" style="color: #dc3545;">
-                    &#x274C; Tolak
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Footer -->
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="submit" name="submit" class="btn btn-primary">Unggah</button>
-    </div>
-</form>
-
+                                    <div class="modal-body">
+                <!-- Data yang diambil dari button -->
+                                        <p><strong>Kode Unik:</strong> <span id="modal-kode_unik"></span></p>
+                                        <p><strong>Nama:</strong> <span id="modal-nama"></span></p>
+                                        <p><strong>Subject:</strong> <span id="modal-subject"></span></p>
+                                        <p><strong>No HP:</strong> <span id="modal-no_hp"></span></p>
+                                        <h5>Riwayat</h5>
+                                        <div id="modal-data-list">
+                                            <!-- Data tambahan akan dimasukkan di sini -->
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Modal Pengisian Keterangan -->
+                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm" action="function/tambah_history.php" method="POST">
+                    <!-- Input Hidden untuk ID -->
+                    <input type="hidden" name="id" id="hidden-id">
+
+                    <!-- Input Hidden untuk Keperluan -->
+                    <input type="hidden" name="keperluan" id="hidden-keperluan">
+                    <input type="hidden" name="kode_unik" id="hidden-kode_unik">
+
+                    <!-- Tampilkan Keperluan -->
+                    <div class="mb-3">
+                        <label for="display-keperluan" class="form-label">Subject</label>
+                        <input id="display-keperluan" class="form-control" rows="3" disabled></input>
                     </div>
+                    <div class="mb-3">
+                        <label for="display-kode_unik" class="form-label">Kode Unik</label>
+                        <input id="display-kode_unik" class="form-control" rows="3" disabled></input>
+                    </div>
+                    <!-- Input untuk Keterangan -->
+                    <div class="mb-3">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <textarea name="keterangan" id="keterangan" rows="5" class="form-control" placeholder="Masukkan keterangan Anda di sini..."></textarea>
+                    </div>
+
+                    <!-- Radio Buttons -->
+                    <div class="mt-3">
+                        <label class="form-label">Pilih Status:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="terima" value="Terima">
+                            <label class="form-check-label" for="terima">Terima</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="tolak" value="Tolak">
+                            <label class="form-check-label" for="tolak">Tolak</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="tindaklanjuti" value="Tindaklanjuti">
+                            <label class="form-check-label" for="tolak">Tindaklanjuti</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="selesai" value="Selesai">
+                            <label class="form-check-label" for="tolak">Selesai</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="submitModal">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>
@@ -417,6 +406,149 @@ if (isset($_GET['message'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script>
+        // Saat modal ditampilkan
+    var exampleModal = document.getElementById('editModal');
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Button yang memicu modal
+        var button = event.relatedTarget;
+
+        // Ambil data-id dan data-keperluan dari button
+        var id = button.getAttribute('data-id');
+        var keperluan = button.getAttribute('data-keperluan');
+        var kodeUnik = button.getAttribute('data-kode_unik');
+
+        // Masukkan data-id dan data-keperluan ke input hidden di modal
+        document.getElementById('hidden-id').value = id;
+        document.getElementById('hidden-keperluan').value = keperluan;
+        document.getElementById('hidden-kode_unik').value = kodeUnik;
+
+        // Tampilkan keperluan di textarea yang tidak dapat diedit
+        document.getElementById('display-keperluan').value = keperluan;
+        document.getElementById('display-kode_unik').value = kodeUnik;
+    });
+
+    // Tombol Simpan di modal
+    document.getElementById('submitModal').addEventListener('click', function () {
+        var form = document.getElementById('modalForm');
+        var formData = new FormData(form);
+        fetch('function/tambah_history.php', {
+        method: 'POST',
+        body: formData,
+        })
+        .then(response => response.text())
+        .then(result => {
+            alert(result); // Tampilkan hasil dari PHP
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        // Tampilkan data untuk debugging
+        console.log('ID:', formData.get('id'));
+        console.log('Keperluan:', formData.get('keperluan'));
+        console.log('Keterangan:', formData.get('keterangan'));
+        
+        console.log('Kode_unik:', formData.get('kode_unik'));
+        console.log('Status:', formData.get('status'));
+
+        // Tambahkan logika pengiriman data ke server (AJAX atau form submit)
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('[data-bs-target="#historyModal"]');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Ambil data dari atribut tombol
+                const kodeUnik = button.getAttribute('data-kode_unik');
+                const nama = button.getAttribute('data-nama');
+                const subject = button.getAttribute('data-subject');
+                const noHp = button.getAttribute('data-no_hp');
+
+                // Masukkan data dari tombol ke elemen modal
+                document.getElementById('modal-kode_unik').textContent = kodeUnik;
+                document.getElementById('modal-nama').textContent = nama;
+                document.getElementById('modal-subject').textContent = subject;
+                document.getElementById('modal-no_hp').textContent = noHp;
+
+                // AJAX untuk mengambil data tambahan dari server
+                fetch('function/ambil_history.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `kode_unik=${kodeUnik}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const dataContainer = document.getElementById('modal-data-list');
+                    dataContainer.innerHTML = ''; // Kosongkan kontainer sebelumnya
+
+                    if (data.success) {
+                        // Jika data ditemukan, tampilkan semua data
+                        data.data.forEach(item => {
+                            const itemHTML = `
+                                <div class="border p-2 mb-2 position-relative rounded">
+                                    <p><strong>Tanggal   : </strong> ${item.tanggal}</p>
+                                    <p><strong>Status    : </strong> ${item.status}</p>
+                                    <p><strong>Keterangan: </strong> ${item.keterangan}</p>
+                                    <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 delete-btn" 
+                                        data-kode_unik="${item.kode_unik}" 
+                                        data-status="${item.status}">
+                                        Hapus
+                                    </button>
+                                </div>
+                            `;
+                            
+                            dataContainer.innerHTML += itemHTML;
+                        });
+                    } else {
+                        // Jika tidak ada data
+                        dataContainer.innerHTML = '<p>Data tidak ditemukan</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
+    document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('delete-btn')) {
+        // Ambil kode unik dan status dari atribut tombol
+        const kodeUnik = e.target.getAttribute('data-kode_unik');
+        const status = e.target.getAttribute('data-status');
+
+        // Konfirmasi penghapusan
+        if (confirm(`Apakah Anda yakin ingin menghapus data dengan Kode Unik: ${kodeUnik} dan Status: ${status}?`)) {
+            // Kirim permintaan ke server untuk menghapus data
+            fetch('function/delete_history.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `kode_unik=${kodeUnik}&status=${status}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Hapus elemen dari DOM jika berhasil
+                        e.target.closest('.data-item').remove();
+                        alert('Data berhasil dihapus!');
+                    } else {
+                        alert('Gagal menghapus data: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menghapus data.');
+                });
+        }
+    }
+});
     </script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {

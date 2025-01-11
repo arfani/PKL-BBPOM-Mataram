@@ -364,6 +364,14 @@ INSERT INTO `hasil_kuis` (`id`, `nama`, `jenis_pertanyaan`, `question_text`, `se
 (76, 'epson l3110', 'pilihan_ganda', 'Berikut ini yang bukan termasuk tugas BPOM adalah:', 'A', 1, '2024-12-16 07:27:59'),
 (77, 'epson l3110', 'pilihan_ganda', 'Dalam pengawasan BPOM, istilah \"produk illegal\" merujuk pada:', 'D', 1, '2024-12-16 07:27:59');
 
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL,
+  `kode_unik` varchar(50) NOT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `tanggal` date NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `keterangan` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 --
@@ -731,6 +739,12 @@ ALTER TABLE `hasil_kuis`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `kuis`
 --
 ALTER TABLE `kuis`
@@ -818,6 +832,12 @@ ALTER TABLE `api`
 --
 ALTER TABLE `hasil_kuis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `kuis`
