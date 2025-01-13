@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 23, 2024 at 01:09 AM
+-- Generation Time: Jan 13, 2025 at 03:23 AM
 -- Server version: 10.11.7-MariaDB-1:10.11.7+maria~ubu2204
 -- PHP Version: 8.0.30
 
@@ -281,7 +281,65 @@ INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal
 (249, 22, 'Paskalis Laruh Djoeang', 'hadir', 'Masuk', '2024-12-23', '17349143273621258694862606496655.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:39:04', NULL, NULL, NULL),
 (250, 19, 'Ageng pranata', 'hadir', 'Masuk', '2024-12-23', '17349144070207424227150826502527.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:40:16', NULL, NULL, NULL),
 (251, 21, 'sintia rahma tania', 'hadir', 'Masuk', '2024-12-23', '17349144653518098832107591240982.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:41:36', NULL, NULL, NULL),
-(252, 18, 'Fathin Furaidah', 'hadir', 'Masuk', '2024-12-23', '17349147303518137060368035296443.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:45:46', NULL, NULL, NULL);
+(252, 18, 'Fathin Furaidah', 'hadir', 'Masuk', '2024-12-23', '17349147303518137060368035296443.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:45:46', NULL, NULL, NULL),
+(253, 12, 'Ida Yanti', 'hadir', 'Masuk', '2024-12-24', 'Screenshot_2024-12-24-07-52-36-44_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'IMG_20240923_152611_914.webp', -8.60300000, -8.58800000, 116.13800000, 116.11600000, '09:33:33', '16:45:02', '07:11:29', 'Waktu Kerja Kurang 1 jam 18 Menit'),
+(254, 16, 'Nurul ramadanniah ', 'hadir', 'Masuk', '2024-12-24', '17350049639053097820642999579.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '09:49:43', NULL, NULL, NULL),
+(255, 17, 'Dela febrianti', 'hadir', 'Masuk', '2024-12-24', 'IMG-20241224-WA0002.jpg', '17350291274624117753954910593864.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:51:55', '16:32:20', '06:40:25', 'Waktu Kerja Kurang 1 jam 49 Menit'),
+(256, 11, 'Hendon Pratiwi ', 'hadir', 'Masuk', '2024-12-24', '1000212792.jpg', '1000212792.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:45:17', '16:45:34', '00:00:17', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(257, 17, 'Dela febrianti', 'hadir', 'Masuk', '2024-12-26', '17352560769457400695079831539959.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:35:21', NULL, NULL, NULL),
+(258, 14, 'Anisha Rizkia fitri ', 'hadir', 'Masuk', '2024-12-26', 'image.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:57:45', NULL, NULL, NULL),
+(259, 11, 'Hendon Pratiwi ', 'hadir', 'Masuk', '2024-12-27', '1000213810.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:03:12', NULL, NULL, NULL),
+(260, 19, 'Ageng pranata', 'hadir', 'Masuk', '2024-12-27', '1735257924940.jpg', '17352865625276230603068270133791.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:05:48', '16:02:51', '07:57:03', 'Waktu Kerja Kurang 32 Menit');
+INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal`, `foto`, `foto_keluar`, `latitude`, `latitude_keluar`, `longitude`, `longitude_keluar`, `waktu_masuk`, `waktu_keluar`, `durasi`, `kesimpulan`) VALUES
+(261, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2024-12-27', 'IMG_8792.jpeg', 'IMG_8795.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:12:33', '16:17:40', '08:05:07', 'Waktu Kerja Kurang 24 Menit'),
+(262, 12, 'Ida Yanti', 'hadir', 'Masuk', '2024-12-27', '1000213820.jpg', 'IMG-20241227-WA0018.jpeg', -8.58800000, -8.59200000, 116.11600000, 116.12000000, '08:20:23', '16:50:37', '08:30:14', 'Waktu Kerja Sudah cukup'),
+(263, 13, 'RATMINI ', 'hadir', 'Masuk', '2024-12-27', 'IMG_20241227_090115_524.jpg', '17352894606579206352145391871382.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:01:35', '16:51:16', '07:49:41', 'Waktu Kerja Kurang 40 Menit'),
+(264, 21, 'sintia rahma tania', 'hadir', 'Masuk', '2024-12-27', '17352613575752487157294135393142.jpg', '17352897584114437946743390941375.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:02:53', '16:56:25', '07:53:32', 'Waktu Kerja Kurang 36 Menit'),
+(265, 18, 'Fathin Furaidah', 'hadir', 'Masuk', '2024-12-27', '1735261469157428855524502486320.jpg', '17352895188378016928593433073220.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:04:46', '16:52:27', '07:47:41', 'Waktu Kerja Kurang 42 Menit'),
+(266, 16, 'Nurul ramadanniah ', 'hadir', 'Masuk', '2024-12-27', '1735265380654845833439954115202.jpg', '17352894140888435561440795376259.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '10:09:50', '16:50:30', '06:40:40', 'Waktu Kerja Kurang 1 jam 49 Menit'),
+(267, 17, 'Dela febrianti', 'hadir', 'Masuk', '2024-12-29', '173551655945852052266420267347.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:56:27', NULL, NULL, NULL),
+(268, 16, 'Nurul ramadanniah ', 'hadir', 'Masuk', '2024-12-30', '17355168468935970434457731868196.jpg', 'IMG_20241230_163300_842.jpg', -8.56000000, -8.58800000, 116.13600000, 116.11600000, '08:01:03', '16:35:58', '08:34:55', 'Waktu Kerja Sudah cukup'),
+(269, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2024-12-30', 'IMG_8837.jpeg', 'IMG_8840.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:27', '16:52:10', '08:48:43', 'Waktu Kerja Sudah cukup'),
+(270, 22, 'Paskalis Laruh Djoeang', 'hadir', 'Masuk', '2024-12-30', '17355169744621309807899818469184.jpg', '17355477108904144802140661118458.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:07', '16:35:32', '08:32:25', 'Waktu Kerja Sudah cukup'),
+(271, 21, 'sintia rahma tania', 'hadir', 'Masuk', '2024-12-30', '17355170851642450184901563883328.jpg', '17355482217418868986998010844680.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:04:55', '16:43:54', '08:38:59', 'Waktu Kerja Sudah cukup'),
+(272, 11, 'Hendon Pratiwi ', 'hadir', 'Masuk', '2024-12-30', '1000212329.png', '1000212329.png', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:06:09', '16:33:37', '08:27:28', 'Waktu Kerja Kurang 2 Menit'),
+(273, 14, 'Anisha Rizkia fitri ', 'hadir', 'Masuk', '2024-12-30', 'image.jpg', 'image.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:08:15', '16:32:30', '08:24:15', 'Waktu Kerja Kurang 5 Menit'),
+(274, 12, 'Ida Yanti', 'hadir', 'Masuk', '2024-12-30', 'IMG_20240923_152611_914.webp', '1000216124.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:07:46', '16:32:38', '08:24:52', 'Waktu Kerja Kurang 5 Menit'),
+(275, 13, 'RATMINI ', 'hadir', 'Masuk', '2024-12-30', 'IMG_20241230_080910_415.jpg', 'IMG_20241230_080910_415.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:09:36', '16:32:50', '08:23:14', 'Waktu Kerja Kurang 6 Menit'),
+(276, 18, 'Fathin Furaidah', 'hadir', 'Masuk', '2024-12-30', '17355174431535925659254493683391.jpg', '17355480789484180424365318729979.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:11:19', '16:41:29', '08:30:10', 'Waktu Kerja Sudah cukup'),
+(277, 19, 'Ageng pranata', 'hadir', 'Masuk', '2024-12-30', '1000215730.jpg', '17355477479301117970071073170211.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:15:42', '16:36:08', '08:20:26', 'Waktu Kerja Kurang 9 Menit'),
+(278, 16, 'Nurul ramadanniah ', 'hadir', 'Masuk', '2024-12-31', '1735603416697668979421014761361.jpg', '17356347899317689957955705851456.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:48', '16:46:42', '08:42:54', 'Waktu Kerja Sudah cukup'),
+(279, 11, 'Hendon Pratiwi ', 'hadir', 'Masuk', '2024-12-31', '1000216441.jpg', '1000216441.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:05:33', '16:36:17', '08:30:44', 'Waktu Kerja Sudah cukup'),
+(280, 13, 'RATMINI ', 'hadir', 'Masuk', '2024-12-31', 'IMG_20241231_080528_836.jpg', 'IMG_20241231_080528_836.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:06:00', '16:36:03', '08:30:03', 'Waktu Kerja Sudah cukup'),
+(281, 19, 'Ageng pranata', 'hadir', 'Masuk', '2024-12-31', '1000216442.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:07:00', NULL, NULL, NULL),
+(282, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2024-12-31', 'IMG_8846.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:07:28', NULL, NULL, NULL),
+(283, 14, 'Anisha Rizkia fitri ', 'hadir', 'Masuk', '2024-12-31', 'image.jpg', 'image.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:14:08', '16:35:53', '08:21:45', 'Waktu Kerja Kurang 8 Menit'),
+(284, 22, 'Paskalis Laruh Djoeang', 'hadir', 'Masuk', '2024-12-31', '1735604251212467337110906264038.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:17:49', NULL, NULL, NULL),
+(285, 12, 'Ida Yanti', 'hadir', 'Masuk', '2024-12-31', 'IMG_20241108_155011_080.webp', 'IMG_20241108_154638_119.webp', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:27:23', '16:42:37', '08:15:14', 'Waktu Kerja Kurang 14 Menit'),
+(286, 13, 'RATMINI ', 'hadir', 'Masuk', '2025-01-02', 'IMG_20250102_080152_288.jpg', 'IMG_20250102_080152_288.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:14', '16:35:31', '08:33:17', 'Waktu Kerja Sudah cukup'),
+(287, 11, 'Hendon Pratiwi ', 'hadir', 'Masuk', '2025-01-02', '1000216441.jpg', '1000217994.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:05:13', '16:35:45', '08:30:32', 'Waktu Kerja Sudah cukup'),
+(288, 19, 'Ageng pranata', 'hadir', 'Masuk', '2025-01-02', 'IMG_20250102_080527_716.jpg', '1000217997.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:05:41', '16:35:00', '08:29:19', 'Waktu Kerja Kurang 0 Menit'),
+(289, 16, 'Nurul ramadanniah ', 'hadir', 'Masuk', '2025-01-02', '17357766523311822233172968443075.jpg', '17358073935877136463411770264736.jpg', -8.56100000, -8.58800000, 116.14000000, 116.11600000, '08:11:21', '16:43:30', '08:32:09', 'Waktu Kerja Sudah cukup'),
+(290, 21, 'sintia rahma tania', 'hadir', 'Masuk', '2025-01-02', '17357766764965381150973734013303.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:11:35', NULL, NULL, NULL),
+(291, 18, 'Fathin Furaidah', 'hadir', 'Masuk', '2025-01-02', '17357767712562023153610666197371.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:13:29', NULL, NULL, NULL),
+(292, 17, 'Dela febrianti', 'hadir', 'Masuk', '2025-01-02', '17357768114311121167181705673926.jpg', '17358070675414463447735097768367.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:13:52', '16:38:15', '08:24:23', 'Waktu Kerja Kurang 5 Menit'),
+(293, 12, 'Ida Yanti', 'hadir', 'Masuk', '2025-01-02', 'Screenshot_2025-01-02-08-18-58-92_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'IMG_20241108_155011_080.webp', -8.60300000, -8.58800000, 116.13800000, 116.11600000, '08:20:13', '16:44:13', '08:24:00', 'Waktu Kerja Kurang 6 Menit'),
+(294, 14, 'Anisha Rizkia fitri ', 'hadir', 'Masuk', '2025-01-02', 'image.jpg', 'image.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:57:08', '16:35:53', '07:38:45', 'Waktu Kerja Kurang 51 Menit'),
+(295, 22, 'Paskalis Laruh Djoeang', 'hadir', 'Masuk', '2025-01-02', '17357794803701174889975155838564.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:58:08', NULL, NULL, NULL),
+(296, 12, 'Ida Yanti', 'hadir', 'Masuk', '2025-01-03', 'Screenshot_2025-01-03-09-03-56-04_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'IMG_20241108_155011_080.webp', -8.60300000, -8.58800000, 116.13800000, 116.11600000, '09:05:35', '16:34:36', '07:29:01', 'Waktu Kerja Kurang 1 jam 0 Menit'),
+(297, 16, 'Nurul ramadanniah ', 'hadir', 'Masuk', '2025-01-03', '17358697573134540129079625899763.jpg', '17358919748791237620517877500979.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '10:03:00', '16:13:26', '06:10:26', 'Waktu Kerja Kurang 2 jam 19 Menit'),
+(298, 17, 'Dela febrianti', 'hadir', 'Masuk', '2025-01-03', '17358698876378142036640184332397.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '10:05:07', NULL, NULL, NULL),
+(299, 17, 'Dela febrianti', 'hadir', 'Masuk', '2025-01-05', '17361213650186857549744890768135.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:56:24', NULL, NULL, NULL),
+(300, 14, 'Anisha Rizkia fitri ', 'hadir', 'Masuk', '2025-01-06', 'image.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:09:53', NULL, NULL, NULL),
+(301, 12, 'Ida Yanti', 'hadir', 'Masuk', '2025-01-06', 'Screenshot_2025-01-06-08-08-12-30_6012fa4d4ddec268fc5c7112cbb265e7.jpg', 'Screenshot_2025-01-06-08-08-12-30_6012fa4d4ddec268fc5c7112cbb265e7.jpg', -8.60900000, -8.60700000, 116.14400000, 116.14400000, '08:09:52', '16:38:22', '08:28:30', 'Waktu Kerja Kurang 1 Menit'),
+(302, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-06', 'IMG_9006.jpeg', 'IMG_9006.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:17:31', '07:55:27', '00:22:04', 'Waktu Kerja Kurang 8 jam 7 Menit'),
+(303, 13, 'RATMINI ', 'hadir', 'Masuk', '2025-01-06', 'IMG_20250102_080152_288.jpg', 'IMG_20250102_080152_288.jpg', -8.62300000, -8.60900000, 116.16800000, 116.14400000, '08:48:11', '16:38:05', '07:49:54', 'Waktu Kerja Kurang 40 Menit'),
+(304, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-07', 'IMG_9020.jpeg', 'IMG_9025.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:12:32', '16:33:29', '08:20:57', 'Waktu Kerja Kurang 9 Menit'),
+(305, 12, 'Ida Yanti', 'hadir', 'Masuk', '2025-01-07', 'IMG_20241108_154638_119.webp', NULL, -8.58800000, NULL, 116.11600000, NULL, '09:33:54', NULL, NULL, NULL),
+(306, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-08', 'IMG_9038.jpeg', 'IMG_9045.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:45:45', '16:37:36', '07:51:51', 'Waktu Kerja Kurang 38 Menit'),
+(307, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-09', 'IMG_9049.jpeg', 'IMG_9053.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:09:00', '16:43:21', '08:34:21', 'Waktu Kerja Sudah cukup'),
+(308, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-10', 'IMG_9056.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:44:22', NULL, NULL, NULL),
+(309, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-13', 'IMG_9123.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:11:04', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -294,16 +352,15 @@ CREATE TABLE `admin` (
   `nama` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `no_hp` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL
-  `reset_pw` varchar(255) DEFAULT NULL
+  `password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `nama`, `email`, `no_hp`, `password`, `reset_pw`) VALUES
-(1, 'admin', 'admin@gmail.com', '082145554182', '$2b$12$vWdMHo1ruO99pJOFG0903.LT567aT0N0MevxXVosSrqkzuRGo7N7u', 'BBPOM1234');
+INSERT INTO `admin` (`id`, `nama`, `email`, `no_hp`, `password`) VALUES
+(1, 'admin', 'admin@gmail.com', '082145554182', '$2y$10$sf6l7C5oFRmA4bQLGQ9jD.1QU1Y.iDUa0.vrP/.EnwzAqC47SmMHy');
 
 -- --------------------------------------------------------
 
@@ -364,6 +421,11 @@ INSERT INTO `hasil_kuis` (`id`, `nama`, `jenis_pertanyaan`, `question_text`, `se
 (76, 'epson l3110', 'pilihan_ganda', 'Berikut ini yang bukan termasuk tugas BPOM adalah:', 'A', 1, '2024-12-16 07:27:59'),
 (77, 'epson l3110', 'pilihan_ganda', 'Dalam pengawasan BPOM, istilah \"produk illegal\" merujuk pada:', 'D', 1, '2024-12-16 07:27:59');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `history`
+--
 CREATE TABLE `history` (
   `id` int(11) NOT NULL,
   `kode_unik` varchar(50) NOT NULL,
@@ -429,7 +491,6 @@ CREATE TABLE `kunjungan` (
   `surat_masuk` varchar(255) DEFAULT NULL,
   `surat_balasan` varchar(255) DEFAULT NULL,
   `status_kunjungan` varchar(255) DEFAULT NULL
-  `kode_unik` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -527,7 +588,7 @@ CREATE TABLE `penempatan_pkl` (
 --
 
 INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`, `gambar`) VALUES
-(3, 'Kimia Obat', 'Membantu Pekerjaan di Lab Kimia Obat', 'Farmasi, Kimia', 2, 'image_Kimia Obat.jpg'),
+(3, 'Kimia Obat', 'Membantu Pekerjaan di Lab Kimia Obat', 'Farmasi, Kimia', 2, 'image_Kimia Obat.php'),
 (4, 'Kimia Kosmetik', 'Membantu Pekerjaan di Lab Kimia Kosmetik', 'Farmasi, Kimia', 4, 'image_Kimia Kosmetik.jpg'),
 (5, 'Kimia OTSK', 'Membantu Pekerjaan di Lab Kimia OTSK', 'Farmasi, Kimia', 2, 'image_Kimia OTSK.jpg');
 
@@ -547,7 +608,7 @@ CREATE TABLE `pengaduan` (
   `pesan` text NOT NULL,
   `foto_ktp` text DEFAULT NULL,
   `foto_pengaduan` text DEFAULT NULL,
-  `jam` time NOT NULL
+  `jam` time NOT NULL,
   `status` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -555,19 +616,19 @@ CREATE TABLE `pengaduan` (
 -- Dumping data for table `pengaduan`
 --
 
-INSERT INTO `pengaduan` (`id`, `tanggal`, `nama`, `alamat`, `no_hp`, `subject`, `pesan`, `foto_ktp`, `foto_pengaduan`, `jam`) VALUES
-(1, '2024-11-15', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'ini untuk coba', 'si inges (2).png', 'si solah (1).png', '15:16:25'),
-(2, '2024-11-18', 'Bagas Adinata', 'Karang Baru Selatan', '087750292514', 'kosmetik', 'Ini untuk uji coba', 'si inges-1.png', NULL, '07:46:27'),
-(3, '2024-11-19', 'Rifa Ratna Savitri', 'BTN Gelang, Sukamulia, Lombok Timur, Nusa Tenggara Barat', '085942851918', 'lainnya', 'Saya sebentar lagi akan berakhir masa magangnya huhu sedih', 'IMG_8526.heic', 'CV ATS [Rifa Ratna Savitri].docx', '08:01:32'),
-(4, '2024-11-19', 'Nurul ramadanniah ', 'Dusun boal bawa ', '081999630575', 'pangan olahan', '-', 'IMG_20241118_185730_731~2.jpg', NULL, '08:02:39'),
-(5, '2024-11-19', 'Ageng Pranata', 'Dusun Medain', '085333923469', 'pangan olahan', 'PKL bulan Desember selesai', '17319743684631496088500530631380.jpg', NULL, '08:02:52'),
-(6, '2024-11-19', 'Nurullayyinah', 'Jalan Catur Warga No. 13', '085339098803', 'lainnya', 'Tidak ada', 'image.jpg', NULL, '08:05:32'),
-(7, '2024-11-19', 'Hendon Pratiwi ', 'Otak dese Ampenan ', '087859973454', 'pangan olahan', '-', '17319750178408051311062727422804.jpg', NULL, '08:12:00'),
-(8, '2024-11-19', 'Ratmini', 'Sekotong ', '081236262948', 'pangan olahan', '_', '17319750372791256906732788071730.jpg', NULL, '08:12:13'),
-(9, '2024-11-19', 'Fathin Furaidah', 'Sumbawa', '085339040671', 'pangan olahan', 'Terkait masih banyak yang menjual kerupuk mengandung boraks dan jajanan yang mengandung formalin', 'IMG_20241119_083354.jpg', NULL, '08:38:34'),
-(10, '2024-11-19', 'Sintia Rahma Tania', 'Sumbawa', '082247144426', 'pangan olahan', 'mie boraks', '17319784521172089602409147349976.jpg', NULL, '09:08:32'),
-(11, '2024-11-22', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'bahan uji coba', 'si solah (1).png', NULL, '13:56:07'),
-(12, '2024-12-18', 'Dian Lestari', 'Kel. Brang Biji RT 003 / RW 002', '081336332589', 'kosmetik', 'Produk MK Glow yang masuk public warning dan izin edar BPOMnya ditarik masih beredar di Lombok melalui reseller. Mohon ditindaklanjuti.', 'WhatsApp Image 2024-12-18 at 8.49.36 AM (1).jpeg', 'WhatsApp Image 2024-12-17 at 8.21.07 PM.jpeg', '09:27:24');
+INSERT INTO `pengaduan` (`id`, `tanggal`, `nama`, `alamat`, `no_hp`, `subject`, `pesan`, `foto_ktp`, `foto_pengaduan`, `jam`, `status`) VALUES
+(1, '2024-11-15', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'ini untuk coba', 'si inges (2).png', 'si solah (1).png', '15:16:25', NULL),
+(2, '2024-11-18', 'Bagas Adinata', 'Karang Baru Selatan', '087750292514', 'kosmetik', 'Ini untuk uji coba', 'si inges-1.png', NULL, '07:46:27', NULL),
+(3, '2024-11-19', 'Rifa Ratna Savitri', 'BTN Gelang, Sukamulia, Lombok Timur, Nusa Tenggara Barat', '085942851918', 'lainnya', 'Saya sebentar lagi akan berakhir masa magangnya huhu sedih', 'IMG_8526.heic', 'CV ATS [Rifa Ratna Savitri].docx', '08:01:32', NULL),
+(4, '2024-11-19', 'Nurul ramadanniah ', 'Dusun boal bawa ', '081999630575', 'pangan olahan', '-', 'IMG_20241118_185730_731~2.jpg', NULL, '08:02:39', NULL),
+(5, '2024-11-19', 'Ageng Pranata', 'Dusun Medain', '085333923469', 'pangan olahan', 'PKL bulan Desember selesai', '17319743684631496088500530631380.jpg', NULL, '08:02:52', NULL),
+(6, '2024-11-19', 'Nurullayyinah', 'Jalan Catur Warga No. 13', '085339098803', 'lainnya', 'Tidak ada', 'image.jpg', NULL, '08:05:32', NULL),
+(7, '2024-11-19', 'Hendon Pratiwi ', 'Otak dese Ampenan ', '087859973454', 'pangan olahan', '-', '17319750178408051311062727422804.jpg', NULL, '08:12:00', NULL),
+(8, '2024-11-19', 'Ratmini', 'Sekotong ', '081236262948', 'pangan olahan', '_', '17319750372791256906732788071730.jpg', NULL, '08:12:13', NULL),
+(9, '2024-11-19', 'Fathin Furaidah', 'Sumbawa', '085339040671', 'pangan olahan', 'Terkait masih banyak yang menjual kerupuk mengandung boraks dan jajanan yang mengandung formalin', 'IMG_20241119_083354.jpg', NULL, '08:38:34', NULL),
+(10, '2024-11-19', 'Sintia Rahma Tania', 'Sumbawa', '082247144426', 'pangan olahan', 'mie boraks', '17319784521172089602409147349976.jpg', NULL, '09:08:32', NULL),
+(11, '2024-11-22', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'bahan uji coba', 'si solah (1).png', NULL, '13:56:07', NULL),
+(12, '2024-12-18', 'Dian Lestari', 'Kel. Brang Biji RT 003 / RW 002', '081336332589', 'kosmetik', 'Produk MK Glow yang masuk public warning dan izin edar BPOMnya ditarik masih beredar di Lombok melalui reseller. Mohon ditindaklanjuti.', 'WhatsApp Image 2024-12-18 at 8.49.36 AM (1).jpeg', 'WhatsApp Image 2024-12-17 at 8.21.07 PM.jpeg', '09:27:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -657,7 +718,7 @@ CREATE TABLE `tb_slide` (
 
 INSERT INTO `tb_slide` (`id`, `image`, `deskripsi`, `sort`, `user`, `status`) VALUES
 (31, 'slide_20240822014840.jpg', 'olahraga', 4, '', 1),
-(29, 'slide_20240822013710.jpg', 'dragon store', 1, '', 1),
+(29, 'slide_20250105152642.jpg', 'HACKED BY RUSHID', 1, '', 1),
 (30, 'slide_20240822014811.jpg', 'hhhhhhhh', 2, '', 1);
 
 -- --------------------------------------------------------
@@ -672,7 +733,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `universitas` varchar(255) DEFAULT NULL,
   `no_hp` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` text NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   `foto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -682,32 +743,32 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nama`, `email`, `universitas`, `no_hp`, `password`, `status`, `foto`) VALUES
-(1, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', NULL, '082145554182', '231221', 'done', 'Asset/Gambar/profile_Mukhlis Wardin Juaini.png'),
-(2, 'Ayu Ningsih', 'wardin@gmail.com', NULL, '085338108858', '231221', 'done', 'Asset/Gambar/profile.png'),
-(3, 'Ardha', 'ardha@gmail.com', NULL, '08555555554', '231221', 'done', 'Asset/Gambar/profile.png'),
-(4, 'mukhlis wj', 'mukhliswardinjuaini@gmail.com', NULL, '082145554185', '231221', '', 'Asset/Gambar/profile.png'),
-(5, 'Ayu Ningsih', 'ayu@gmail.com', NULL, '08214554182', '231221', 'active', 'Asset/Gambar/20240316_103510.png'),
-(6, 'arda', 'arda@gmail.com', NULL, '0888888', '231221', 'active', 'Asset/Gambar/profile.png'),
-(8, 'nama', 'email@gmail.com', NULL, '12345678', '231221', '', ''),
-(9, 'Bagas Adinata', 'bagas@gmail.com', 'Universitas Mataram', '087750292514', '1234', 'active', 'Asset/Gambar/profile.png'),
-(10, 'bagas adinata', 'bagasadinata321@gmail.com', 'Universitas Mataram', '1234', '1234', 'active', 'Asset/Gambar/profile.png'),
-(11, 'Hendon Pratiwi ', 'hindunpratiwi14@gmail.com', 'Universitas Nahdlatul Wathan ', '087859973454', 'kenahagiaan', 'active', 'Asset/Gambar/profile.png'),
-(12, 'Ida Yanti', 'idayanti1717@gmail.com', 'Universitas Islam Al Azhar ', '083129382025', '170901', 'active', 'Asset/Gambar/profile.png'),
-(13, 'RATMINI ', 'ieymim41@gmail.com', 'Universitas Islam Al Azhar ', '081236262948', 'Ratmini1234?', 'active', 'Asset/Gambar/profile.png'),
-(14, 'Anisha Rizkia fitri ', 'anisarizkia81@gmail.com', 'Universitas teknologi sumbawa', '081918409267', '280903', 'active', 'Asset/Gambar/profile.png'),
-(15, 'Rifa Ratna Savitri ', 'savitririfa@gmail.com', 'Universitas Muhammadiyah Malang', '085942851918 ', 'rifarifa10', 'active', 'Asset/Gambar/profile.png'),
-(16, 'Nurul ramadanniah ', 'ullosulo@gmail.com', 'Universitas teknologi Sumbawa ', '081999630575', 'Nrl26112002', 'active', 'Asset/Gambar/profile.png'),
-(17, 'Dela febrianti', 'dellafebrianti746@gmail.com', 'Universitas Teknologi Sumbawa', '082340095643', 'Della010203', 'active', 'Asset/Gambar/profile.png'),
-(18, 'Fathin Furaidah', 'fathinfuraidah@gmail.com', 'Universitas Teknologi Sumbawa', '085339040671', 'atin61203', 'active', 'Asset/Gambar/profile.png'),
-(19, 'Ageng pranata', 'agengpranata116@gmail.com', 'UNW Mataram', '085333923469', '4444', 'active', 'Asset/Gambar/profile.png'),
-(20, 'Sara Paulina Baransano', 'saraapaulin4@gmail.com', 'Universitas Mataram', '081247923884', 'pklbpom121', 'active', 'Asset/Gambar/profile.png'),
-(21, 'sintia rahma tania', 'rahmataniasintia@gmail.com', 'universitas teknologi sumbawa', '082247144426', '061003', 'active', 'Asset/Gambar/profile.png'),
-(22, 'Paskalis Laruh Djoeang', 'paskaldjoeang@gmail.com', 'Universitas Teknologi Sumbawa', '087779429217', 'BQ6728DK', 'active', 'Asset/Gambar/profile.png'),
-(23, 'Nurullayyinah', 'nurullayyinahjauhar@gmail.com', 'Universitas Muhammadiyah Malang', '085339098803', 'Iyanjhn06', 'active', 'Asset/Gambar/profile.png'),
-(24, 'asdf', 'asdsff@asdf', 'asdf', '123423423', 'asdf', 'active', 'Asset/Gambar/profile.png'),
-(25, 'test-infokom', 'infokom.bbpommataram@gmail.com', 'BPOM', '081393719995', '1500533', 'active', 'Asset/Gambar/profile.png'),
-(26, 'epson l3110', 'epson@epson.com', 'BPOM', '080989999', '1500533', 'active', 'Asset/Gambar/profile.png'),
-(27, 'Ni Putu Ayu Nila Anggreni ', 'niputuayunilaanggreni2004@mail.ugm.ac.id', 'Universitas Gadjah Mada', '087811472653', 'J4nganlupa', 'active', 'Asset/Gambar/profile.png');
+(1, 'Mukhlis Wardin Juaini', 'mukhliswj@gmail.com', NULL, '082145554182', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'done', 'Asset/Gambar/profile_Mukhlis Wardin Juaini.png'),
+(2, 'Ayu Ningsih', 'wardin@gmail.com', NULL, '085338108858', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'done', 'Asset/Gambar/profile.png'),
+(3, 'Ardha', 'ardha@gmail.com', NULL, '08555555554', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'done', 'Asset/Gambar/profile.png'),
+(4, 'mukhlis wj', 'mukhliswardinjuaini@gmail.com', NULL, '082145554185', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', '', 'Asset/Gambar/profile.png'),
+(5, 'Ayu Ningsih', 'ayu@gmail.com', NULL, '08214554182', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/20240316_103510.png'),
+(6, 'arda', 'arda@gmail.com', NULL, '0888888', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(8, 'nama', 'email@gmail.com', NULL, '12345678', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', '', ''),
+(9, 'Bagas Adinata', 'bagas@gmail.com', 'Universitas Mataram', '087750292514', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(10, 'bagas adinata', 'bagasadinata321@gmail.com', 'Universitas Mataram', '1234', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(11, 'Hendon Pratiwi ', 'hindunpratiwi14@gmail.com', 'Universitas Nahdlatul Wathan ', '087859973454', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(12, 'Ida Yanti', 'idayanti1717@gmail.com', 'Universitas Islam Al Azhar ', '083129382025', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(13, 'RATMINI ', 'ieymim41@gmail.com', 'Universitas Islam Al Azhar ', '081236262948', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(14, 'Anisha Rizkia fitri ', 'anisarizkia81@gmail.com', 'Universitas teknologi sumbawa', '081918409267', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(15, 'Rifa Ratna Savitri ', 'savitririfa@gmail.com', 'Universitas Muhammadiyah Malang', '085942851918 ', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(16, 'Nurul ramadanniah ', 'ullosulo@gmail.com', 'Universitas teknologi Sumbawa ', '081999630575', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(17, 'Dela febrianti', 'dellafebrianti746@gmail.com', 'Universitas Teknologi Sumbawa', '082340095643', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(18, 'Fathin Furaidah', 'fathinfuraidah@gmail.com', 'Universitas Teknologi Sumbawa', '085339040671', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(19, 'Ageng pranata', 'agengpranata116@gmail.com', 'UNW Mataram', '085333923469', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(20, 'Sara Paulina Baransano', 'saraapaulin4@gmail.com', 'Universitas Mataram', '081247923884', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(21, 'sintia rahma tania', 'rahmataniasintia@gmail.com', 'universitas teknologi sumbawa', '082247144426', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(22, 'Paskalis Laruh Djoeang', 'paskaldjoeang@gmail.com', 'Universitas Teknologi Sumbawa', '087779429217', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(23, 'Nurullayyinah', 'nurullayyinahjauhar@gmail.com', 'Universitas Muhammadiyah Malang', '085339098803', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(24, 'asdf', 'asdsff@asdf', 'asdf', '123423423', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(25, 'test-infokom', 'infokom.bbpommataram@gmail.com', 'BPOM', '081393719995', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(26, 'epson l3110', 'epson@epson.com', 'BPOM', '080989999', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(27, 'Ni Putu Ayu Nila Anggreni ', 'niputuayunilaanggreni2004@mail.ugm.ac.id', 'Universitas Gadjah Mada', '087811472653', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png');
 
 --
 -- Indexes for dumped tables
@@ -771,12 +832,6 @@ ALTER TABLE `penempatan_pkl`
   ADD KEY `posisi` (`posisi`);
 
 --
--- Indexes for table `pengaduan`
---
-ALTER TABLE `pengaduan`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `pengajuan_pkl`
 --
 ALTER TABLE `pengajuan_pkl`
@@ -813,7 +868,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -832,7 +887,6 @@ ALTER TABLE `api`
 --
 ALTER TABLE `hasil_kuis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
-
 --
 -- AUTO_INCREMENT for table `history`
 --
@@ -844,77 +898,6 @@ ALTER TABLE `history`
 --
 ALTER TABLE `kuis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
---
--- AUTO_INCREMENT for table `kunjungan`
---
-ALTER TABLE `kunjungan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `notifikasi`
---
-ALTER TABLE `notifikasi`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
-
---
--- AUTO_INCREMENT for table `penempatan_pkl`
---
-ALTER TABLE `penempatan_pkl`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `pengaduan`
---
-ALTER TABLE `pengaduan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `pengajuan_pkl`
---
-ALTER TABLE `pengajuan_pkl`
-  MODIFY `id_pengajuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT for table `tb_seo`
---
-ALTER TABLE `tb_seo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `tb_slide`
---
-ALTER TABLE `tb_slide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `absensi`
---
-ALTER TABLE `absensi`
-  ADD CONSTRAINT `absensi_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `kunjungan`
---
-ALTER TABLE `kunjungan`
-  ADD CONSTRAINT `kunjungan_ibfk_1` FOREIGN KEY (`no_hp`) REFERENCES `users` (`no_hp`) ON DELETE SET NULL;
-
---
--- Constraints for table `pengajuan_pkl`
---
-ALTER TABLE `pengajuan_pkl`
-  ADD CONSTRAINT `pengajuan_pkl_ibfk_1` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `pengajuan_pkl_ibfk_2` FOREIGN KEY (`phone`) REFERENCES `users` (`no_hp`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
