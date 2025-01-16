@@ -48,13 +48,11 @@ if (isset($_POST['submit'])) {
     $tanggal = date('Y-m-d');
     $jam = $_POST['jam'];
     $no_hp = $_POST['no_hp'];
-    
-    
     $foto_pengaduan = $_FILES['foto_pengaduan'];
     $foto_identitas = $_FILES['foto_identitas'];
     $foto_pengaduan_nama = NULL;
     $foto_identitas_nama = NULL;
-    // Check jika ada file foto_pengaduan yang diunggah
+
     if (!empty($foto_pengaduan['name'])) {
         $target_dir = "Asset/Document/Pengaduan/Foto-Pendukung/";
         $foto_pengaduan_nama = basename($foto_pengaduan["name"]);
@@ -62,7 +60,6 @@ if (isset($_POST['submit'])) {
         move_uploaded_file($foto_pengaduan["tmp_name"], $target_file_pengaduan);
     }
 
-    // Check jika ada file foto_identitas yang diunggah
     if (!empty($foto_identitas['name'])) {
         $target_dir = "Asset/Document/Pengaduan/Foto-Identitas/";
         $foto_identitas_nama = basename($foto_identitas["name"]);
@@ -70,7 +67,6 @@ if (isset($_POST['submit'])) {
         move_uploaded_file($foto_identitas["tmp_name"], $target_file_identitas);
     }
 
-    // Query untuk menyimpan data, termasuk foto_pengaduan dan foto_identitas jika ada
     $sql = "INSERT INTO pengaduan (tanggal, nama, alamat, no_hp, subject, pesan,  foto_ktp, foto_pengaduan, jam) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -94,19 +90,14 @@ if (isset($_POST['submit'])) {
         } 
         $last_id = mysqli_insert_id($conn);
     
-        // Pastikan $last_id terdiri dari 3 digit
         $last_id = str_pad($last_id, 3, '0', STR_PAD_LEFT);
     
-        // Ambil digit ke-5, ke-6, dan ke-7 dari nomor HP
         $digit_hp = substr($no_hp, 4, 3);
     
-        // Ambil hari (DD) dari tanggal
         $day = date('d', strtotime($tanggal));
     
-        // Gabungkan untuk membuat kode unik
         $kode_unik = $last_id . $digit_hp . $day . $angka_unik;
     
-        // Update data dengan kode unik
         $update = mysqli_query($conn, "UPDATE pengaduan SET kode_unik = '$kode_unik' WHERE id = '$last_id'");
         if($update){
             header("Location: landing_page.php?kode_unik=$kode_unik&jenis=pengaduan");
@@ -479,11 +470,8 @@ if (!empty($message)) {
                         </div>
                     </div>
                 </form>
-
                 </div>
-
             </div>
-
         </div>
     </div>
     

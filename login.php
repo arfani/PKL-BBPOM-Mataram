@@ -1,5 +1,4 @@
 <?php
-
 include('koneksi.php');
 session_start();
 error_reporting(0);
@@ -18,34 +17,27 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    // Escape input untuk mencegah SQL Injection
     $input = mysqli_real_escape_string($conn, $input);
 
-    // Cek apakah input adalah email atau nomor HP
     if (strpos($input, '@') !== false) {
         $field = 'email';
     } else {
         $field = 'no_hp';
     }
 
-    // Tentukan tabel berdasarkan role
     $table = ($role === "admin") ? "admin" : "users";
 
-    // Query untuk mengambil data berdasarkan email atau no_hp
     $sql = "SELECT * FROM $table WHERE $field = '$input'";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $hashedPassword = $row['password']; // Ambil hashed password dari database
+        $hashedPassword = $row['password']; 
 
-        // Verifikasi password
         if (password_verify($password, $hashedPassword)) {
-            // Login berhasil
             $_SESSION['id'] = $row['id'];
             $_SESSION['role'] = $role;
 
-            // Redirect ke halaman berdasarkan role
             header("Location: $role.php");
             exit();
         } else {

@@ -9,8 +9,8 @@ $urlweb = $s0['urlweb'];
     $jenis = isset($_GET['jenis']) ? mysqli_real_escape_string($conn, $_GET['jenis']) : '';
     $sql = "SELECT * FROM $jenis WHERE 
             kode_unik LIKE '%$search%'";
-    
     $result = mysqli_query($conn, $sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,18 +102,16 @@ input[type="radio"] {
                             <input class="form-control w-100 me-2" type="text" name="search" placeholder="Search"
                             aria-label="Search" id="searchInput"
                             value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                            
                             <button class="btn btn-outline-secondary" type="submit" id="searchButton">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
+                        <p class="text-center">Pilih Jenis Layanan</p>
                         <div class="d-flex justify-content-between">
-
                             <label class="btn-radio" for="permohonan">
                                 <input type="radio" name="jenis" id="permohonan" value="kunjungan" required>
                                 Permohonan
                             </label>
-                            <!-- Opsi Pengaduan -->
                             <label class="btn-radio" for="pengaduan">
                                 <input type="radio" name="jenis" id="pengaduan" value="pengaduan" required>
                                 Pengaduan

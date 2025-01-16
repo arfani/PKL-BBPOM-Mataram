@@ -491,6 +491,7 @@ CREATE TABLE `kunjungan` (
   `surat_masuk` varchar(255) DEFAULT NULL,
   `surat_balasan` varchar(255) DEFAULT NULL,
   `status_kunjungan` varchar(255) DEFAULT NULL
+  `kode_unik` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -610,6 +611,7 @@ CREATE TABLE `pengaduan` (
   `foto_pengaduan` text DEFAULT NULL,
   `jam` time NOT NULL,
   `status` varchar(25) DEFAULT NULL
+  `kode_unik` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -881,6 +883,12 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `api`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `absensi`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
 
 --
 -- AUTO_INCREMENT for table `hasil_kuis`

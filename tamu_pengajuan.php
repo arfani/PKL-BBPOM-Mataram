@@ -40,23 +40,17 @@ if (isset($_POST['kirim'])) {
         }
         $last_id = mysqli_insert_id($conn);
     
-        // Pastikan $last_id terdiri dari 3 digit
         $last_id = str_pad($last_id, 3, '0', STR_PAD_LEFT);
     
-        // Ambil digit ke-5, ke-6, dan ke-7 dari nomor HP
         $digit_hp = substr($no_hp, 4, 3);
     
-        // Ambil hari (DD) dari tanggal
         $day = date('d', strtotime($tanggal));
     
-        // Gabungkan untuk membuat kode unik
         $kode_unik = $last_id . $digit_hp . $day . $angka_unik;
     
-        // Update data dengan kode unik
         $update = mysqli_query($conn, "UPDATE kunjungan SET kode_unik = '$kode_unik' WHERE id = '$last_id'");
     
         if ($update) {
-            // Redirect ke landing page dengan kode unik sebagai parameter
             header("Location: landing_page.php?kode_unik=$kode_unik&jenis=kunjungan");
             exit;
         } else {
@@ -140,7 +134,7 @@ if (isset($_GET['message'])) {
     <div class="container mb-3">
         <div class="form-container">
             <h2 class="form-header text-center">Form Pengajuan Kunjungan / Narasumber BBPOM</h2>
-            <form method="post" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama Lengkap :</label>
                     <input type="text" class="form-control" id="name" name="name"
@@ -154,21 +148,18 @@ if (isset($_GET['message'])) {
                 <div class="mb-3">
                     <label for="keperluan" class="form-label">Keperluan:</label>
                     <div class="d-flex gap-3">
-                        <!-- Opsi Kunjungan -->
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="keperluan" id="keperluan-kunjungan" value="Kunjungan" required>
                             <label class="form-check-label" for="keperluan-kunjungan">
                                 Kunjungan
                             </label>
                         </div>
-                        <!-- Opsi Narasumber -->
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="keperluan" id="keperluan-narasumber" value="Narasumber">
                             <label class="form-check-label" for="keperluan-narasumber">
                                 Narasumber
                             </label>
                         </div>
-                        <!-- Opsi Lainnya -->
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="keperluan" id="keperluan-lainnya" value="Lainnya">
                             <label class="form-check-label" for="keperluan-lainnya">
@@ -177,8 +168,6 @@ if (isset($_GET['message'])) {
                         </div>
                     </div>
                 </div>
-
-
                 <div class="mb-3">
                     <label for="instansi" class="form-label">Instansi :</label>
                     <input type="text" class="form-control" id="instansi" name="instansi"

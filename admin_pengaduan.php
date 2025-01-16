@@ -363,6 +363,10 @@ if (isset($_GET['message'])) {
                         <label for="display-kode_unik" class="form-label">Kode Unik</label>
                         <input id="display-kode_unik" class="form-control" rows="3" disabled></input>
                     </div>
+                    <div class="mb-3">
+                        <label for="display-kode_unik" class="form-label">Nama Petugas</label>
+                        <input id="display-kode_unik" class="form-control" rows="3"></input>
+                    </div>
                     <!-- Input untuk Keterangan -->
                     <div class="mb-3">
                         <label for="keterangan" class="form-label">Keterangan</label>

@@ -1,103 +1,141 @@
-body {
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
     margin: 0;
-    background-color: #f8f9fa;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
-
-.calendar-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.calendar-header {
+/* Styling dasar untuk navbar */
+.navbar {
+    background-color: #2B547E; /* Warna latar belakang navbar */
+    padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background: #007bff;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling untuk brand/logo */
+.navbar .navbar-brand {
+    color: #ffffff; /* Warna teks brand */
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Styling untuk list */
+.navbar .navbar-list {
+    list-style: none; /* Menghilangkan bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Membuat item dalam list sejajar secara horizontal */
+}
+
+/* Styling untuk setiap item list */
+.navbar .navbar-list li {
+    margin: 0 15px; /* Memberikan jarak antar item */
+}
+
+/* Styling untuk tautan dalam list */
+.navbar .navbar-list li a {
+    text-decoration: none; /* Menghilangkan garis bawah pada tautan */
+    color: #ffffff; /* Warna teks */
+    font-size: 18px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect untuk tautan */
+.navbar .navbar-list li a:hover {
+    color: #088F8F; /* Warna teks saat hover */
+}
+
+.hero-section {
+    background: linear-gradient(to bottom right, rgba(77, 208, 225, 1), rgba(0, 150, 136, 0.5));
+    height: 610px;
+    width: 100%;
+}
+
+.hero-section .text-content {
+    margin-top: 150px;
+}
+
+.hero-section h1 {
+    font-size: 60px;
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.hero-section p {
+    margin-top: 10px;
     color: #fff;
 }
 
-.calendar-header h2 {
-    margin: 0;
-    font-size: 24px;
+.hero-section button {
+    margin-top: 20px;
+    border-radius: 30px;
+    background-color: #ffffff;
+    height: 50px;
+    width: 170px;
 }
 
-.calendar-header .controls {
-    display: flex;
-    gap: 10px;
+.hero-section button:hover {
+    border: 1px solid #FFA500;
+    background: #2B547E;
 }
 
-.calendar-header button {
-    background: #fff;
-    color: #007bff;
+.hero-section button a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo img {
+    height: 400px;
+    width: auto;
+    background: transparent;
+}
+.hero-section .icon img {
+    height: 200px;
+    width: auto;
+}
+.hero-section .animated img{
+    animation: up-down 2s ease-in-out infinite alternate-reverse both;
+}
+/* Media Query untuk layar kecil */
+@media (max-width: 768px) {
+    .navbar .navbar-list {
+        flex-direction: column; /* Mengatur item list secara vertikal */
+        align-items: center;
+        display: none; /* Sembunyikan menu secara default */
+    }
+
+    .navbar .navbar-list.active {
+        display: flex; /* Tampilkan menu ketika aktif */
+    }
+
+    .navbar .navbar-toggler {
+        display: block; /* Tampilkan tombol toggler untuk layar kecil */
+    }
+}
+
+/* Styling untuk toggler */
+.navbar .navbar-toggler {
+    display: none;
+    background-color: #ffffff;
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    padding: 5px 10px;
-    font-size: 16px;
     cursor: pointer;
 }
-
-.calendar-header button:hover {
-    background: #e6e6e6;
-}
-
-.calendar-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    background: #f1f1f1;
-    text-align: center;
-    font-weight: bold;
-    padding: 10px 0;
-    color: #555;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-auto-rows: 100px;
-    border-top: 1px solid #ddd;
-}
-
-.calendar-cell {
-    border: 1px solid #ddd;
-    position: relative;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.calendar-cell:hover {
-    background: #f0f8ff;
-}
-
-.calendar-cell .date {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 12px;
-    color: #555;
-}
-
-.today {
-    background: #e6f7ff;
-    border: 2px solid #007bff;
-}
-
-.event {
-    margin-top: 20px;
-    padding: 5px;
-    background: #007bff;
-    color: #fff;
-    border-radius: 4px;
-    font-size: 12px;
-    text-align: center;
-}
-
-.event:hover {
-    opacity: 0.8;
+@media (max-width: 568px){
+    .logo img {
+        height: 200px;
+        width: auto;
+    }
 }
