@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fileExtension = strtolower(end($fileNameCmps));
         $newFileName = 'surat_balasan_' . $nama . '.' . $fileExtension;
         $processedFileName = str_replace(' ', '_', $newFileName);
-        $uploadFileDir = '../Asset/Document/Tamu/';
+        $uploadFileDir = 'Asset/Document/Tamu/';
         $dest_path = $uploadFileDir . $processedFileName;
 
         // Periksa apakah direktori upload ada

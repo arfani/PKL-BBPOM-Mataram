@@ -103,7 +103,6 @@ $result6 = mysqli_query($conn, $sql);
                 </button>
             </div>
             <p class="card-text">Permohonan <?php echo "{$row['keperluan']}"; ?> anda berhasil dibuat, silahkan menghubungi Admin Dibawah ini, kode di atas merupakan kode unik yang digunakan untuk melihat perkembangan Permohonan anda</p>
-            <a href="cs.php" class="btn btn-success">WA Admin</a>
             <a href="pencarian_resi_kunjungan.php" class="btn btn-primary">Pencarian Resi</a>
         </div>
     </div>

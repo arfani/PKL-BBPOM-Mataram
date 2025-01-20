@@ -1,627 +1,815 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+body{
+    margin: 0px;
+    cursor: default;
+    padding: 0px;
     font-family: 'Poppins', sans-serif;
 }
 
-
-/* navbar section  */
-.logo-bpom {
-    width: 100px;
-    border-radius: 10px;
-    background-color: #ffffff;
-}
-.navbar {
-    padding: 10px;
-    background: #2B547E;
-    position:fixed;
-    width:100%;
-    z-index: 100;
+#intro {
+    position: fixed;
     top: 0;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.navbar .navbar-toggler {
-    color: #fff !important;
-    background: #fff;
-    border-radius: 50%;
-    padding: 15px;
-    outline: none;
-    border: none;
-}
-
-.navbar #navbarNav {
-    text-align: center;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: #fff; /* Background warna gelap */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  #logo {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+    animation: fadeInZoomOut 3s ease-in-out forwards;
+  }
+  
+  @keyframes fadeInZoomOut {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+.navbar{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: blue;
+    margin: 0px;
+    padding: 0px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+.navbar .logo{
+    width: 60px;
+    height: auto;
+    justify-content: start;
+    margin-left: 10px;
+}
+nav .nav-item{
+    color: white;  
+    text-decoration: none;
+    width: 100%;
+}
+.navbar ul {
+    position: relative;
+    height: 70px;
+    margin-left: 600px;
+    gap: 10px;
+}
+.navbar li {
+    display: inline-block;
+    margin-left: 10px;
+    height: 40px;
+    margin-top: 25px;
+    font-weight: bold;
+    list-style: none;
+    text-align: center;
+    text-transform: uppercase;
+}
+a {
+    color: white;
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    transition: 0.5s;
+}
+ a:hover {
+    background-color: #a581ff5b;
+    color: turquoise;
+}
+.garis{
+    width: 80%;
+    height: 2px;
+    background-color: rgba(200, 200, 255, 1);
+    margin:auto
+}
+#home-section{
+    border: none;
+    border-radius: 200px 0px 0px 0px;
+    background: linear-gradient(to bottom,  rgba(77, 208, 225, 1), rgba(255, 255, 255, 1) );
+    height: 620px;
+    justify-content: center;
+    align-items: center;
+}
+.main-home{
+    background: transparent;
+    display: flex;
+    width: 90%;
+    height: 450px;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+}
+.row1{
+    margin-top: 100px ;
+    width: 500px;
+    height: 350px;
+    color: navy;
+    justify-content: center;
+}
+.row1 h1{
+    font-size: 4rem;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+}
+.row1 p{
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 1.5rem;
+}
+.row1 button{
+    width: 100px;
+    height: 50px;
+    background: navy;
+    font-size: 1.5rem; 
+    border: none;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 20px;
+    color: white;
+}
+.row1 button:hover{
+    background: white;
+    transition: 0.5s;
+    color: black;
+}
+.row1 .icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 50px;
+}
+.row1 .icon img{
+    width: 100px;
+    height: auto;
+}
+.row2{
+    margin-top: 120px ;
+    background: transparent;
+    width: 400px;
+    height: 400px;
+}
+.row2 img {
+    width: 100%;
+    height: auto;
+}
+
+.isi-fitur{
+    background: #ffff;
+    width: 100%;
+    display: flex;
+    align-items: top;
+    justify-content: center; 
+}
+.fitur-title{
+    text-align: center ;
+    width: 100%;
+    justify-content: center;
+}
+.fitur-title h1 {
+    font-size: 3rem;
+    margin-bottom: 0;
+    color: navy;
+}
+.fitur-title p{
+    max-width: 70%;
+    margin-top: 0 ;
+    margin: auto;
+    font-size: 1.2rem;
+}
+.kartu-grup{
+    display: flex;
+    gap:25px;
+    margin-top: 20px;
+    
+}
+.kartu{
+    width:300px;
+    height:300px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    transition:0.3s;
+    cursor: default;
+}
+.kartu img{
+    width: 100%;
+    height:100%;
+    object-fit: cover;
+    pointer-events: none;
+    transition: 0.5s;
+}
+.kartu .layer{
+    background: linear-gradient(to top, rgba(0,0,0,1),rgba(0,0,0,0.4));
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: 0.3s;
+}
+.kartu .info{
+    position: absolute;
+    bottom: -50%;
+    padding: 15px;
+    opacity: 0;
+    transition: 0.5s bottom, 1.75s opacity;
+    color: white;
+}
+.info p{
+    font-size: 14px;
+    margin-top: 3px;
+}
+.info button{
+    background: #490CCC;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: bold;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: 0.7s;
+}
+.info button:hover{
+    transition: 0.7s;
+    background: white;
+    color: black;
+}
+.kartu:hover,
+.kartu:hover img,
+.kartu:hover .layer{
+    transform: scale(1.1);
+}
+.kartu:hover > .layer{
+    opacity: 1;
+}
+.kartu:hover > .info{
+    bottom: 0;
+    opacity: 1;
+}
+.kartu-grup:hover > .kartu:not(:hover){
+    filter: blur(5px);
+}
+.card-group{
+    cursor:default;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3%;
+    color: rgba(41, 40, 40);
+    flex-wrap: wrap; /* Menambahkan wrap agar card bisa turun ke baris berikutnya */    
+}
+.card {
+    width: 150px;
+    height: 150px;
+    background: white ;
+    border: 2px solid grey;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 2px 6px 20px 2px rgba(0, 0, 0, 0.19);
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+.card:hover{
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+.card h2{
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 0px;
     margin-top: 10px;
 }
-
-.navbar .navbar-brand {
-    color: #f1f1f1;
-    font-size: 30px;
-    margin-left: 0px;
-    font-weight: 600;
+.card h1{
+    font-size: 2rem;
+    text-align: center;
+    margin: 0px;
 }
-
-.navbar .navbar-brand i {
-    font-size: 25px;
-    background: #088F8F;
-    border-radius: 50%;
-    padding: 10px 15px;
+.card p {
+    margin: 0px ;
+    text-align: center;
 }
-
-.navbar .collapse {
-    background: #2B547E;
-}
-
-.navbar .dropdown-menu{
-    width: 12px;
-}
-
-.navbar .dropdown-menu li a{
-    color: #1c456d;
-    font-size: 15px;
-}
-
-.navbar ul li .bi{
-    background: #fff;
-    color: #1c456d;
+.btn-daftar{
+    border: none;
+    border-radius: 4px;
+    width: 120px;
+    height: 40px;
+    background:navy;
+    color: white;
     font-weight: bold;
-    padding: 10px 15px;
-    border-radius: 50%;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+.btn-daftar:hover{
+    color: navy;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+}
+.table-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+  
+  /* Heading di atas tabel */
+.table-container h1 {
+    font-size: 2rem;    
+    color: #333;
+    margin-bottom: 20px;
+}
+  
+  /* Tabel styling */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+    text-align: left;
+    overflow: hidden;
+    border-radius: 10px;
+}
+  
+  /* Header tabel */
+.styled-table thead tr {
+    background-color: #242eb9;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+  
+  /* Isi tabel */
+.styled-table tbody tr {
+    text-align: center;
+    border-bottom: 2px solid #dddddd;
+}
+  
+  /* Efek hover pada baris tabel */
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+}
+  
+  /* Padding sel tabel */
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+}
+  
+  /* Baris genap dengan warna berbeda */
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+  
+  /* Border bawah terakhir */
+.styled-table tbody tr:last-of-type {
+    border-bottom: 1px solid #242eb9;
 }
 
-.navbar ul li a {
-    color: #f1f1f1;
-    text-decoration: none;
-    text-transform: capitalize;
-    font-size: 18px;
-    margin-right: 40px;
+/* Kontainer utama kalender */
+.calendar-container {
+    max-width: 500px;
+    margin: 50px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-.navbar ul li a:hover {
-    color: #fff;
+  
+  /* Heading bulan dan tahun */
+#month-year {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
 }
-.nav-link {
-    display: inline-block;
+  
+  /* Tabel kalender */
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+  
+  /* Header tabel (hari) */
+.calendar thead th {
+    background-color: navy;
+    color: white;
+    padding: 10px;
+    text-transform: uppercase;
+}
+  
+  /* Sel tabel (tanggal) */
+.calendar tbody td {
+    width: 14.28%; /* Bagian per hari (7 hari) */
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    position: relative; /* Untuk posisi tooltip */
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+  
+  /* Bubble tooltip */
+.calendar tbody td .tooltip {
+    position: absolute;
+    bottom: 120%; /* Posisi tooltip di atas */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+}
+  
+  /* Segitiga pada tooltip */
+.calendar tbody td .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent;
+}
+  
+  /* Tampilkan tooltip saat hover */
+  .calendar tbody td:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Efek hover pada tanggal */
+  .calendar tbody td:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Tanggal kosong */
+  .calendar tbody td.empty {
+    background-color: #f9f9f9;
+    cursor: default;
+  }
+   /* Tambahkan gaya untuk menandai jadwal */
+.calendar tbody td.scheduled {
+    border: 2px solid yellow; /* Garis kuning */
     position: relative;
   }
   
-  .nav-link::after {
-    content: '';
+  /* Tooltip yang muncul saat hover */
+.calendar tbody td.scheduled .tooltip {
     position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 4px;
-    bottom: 0;
-    left: 0;
-    background-color: #ffffff;
-    transition: transform 0.15s ease-out;
-  }
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+}
   
-  .nav-link:hover::after {
-    transform: scaleX(1);
-  }
-  
-  .nav-link::after {
-    transform-origin: bottom right;
-  }
-  
-  .nav-link:hover::after {
-    transform-origin: bottom left;
-  }
-  
-
-
-.name{
-    font-size: 30px;
-    background-color: #2B547E;
-    color: #FFA500;
-    padding: 50px;
+  /* Tampilkan tooltip saat di-hover */
+.calendar tbody td.scheduled:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
 }
-
-/* hero section  */
-
-.hero-section {
-    
-    background: linear-gradient(to bottom right, rgba(77, 208, 225, 1), rgba(0, 150, 136, 0.5));
-    
+.kegiatan-container{
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
 }
-
-.hero-section .text-content {
-    margin-top: 150px;
-}
-
-.hero-section h1 {
-    font-size: 60px;
-    color: #fff;
-    text-transform: capitalize;
-    font-weight: bold;
-}
-
-.hero-section p {
-    margin-top: 30px;
-    color: #d1d1d1;
-}
-
-.hero-section button {
-    margin-top: 20px;
-    border-radius: 30px;
-    background-color: #ffffff;
-    height: 50px;
-    width: 170px;
-}
-
-.hero-section button:hover {
-    border: 1px solid #FFA500;
-    background: #2B547E;
-}
-
-.hero-section button a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.hero-section .logo img {
-    height: 500px;
-    width: auto;
-}
-.hero-section .icon img {
-    height: 200px;
-    width: auto;
-}
-.hero-section .animated img{
-    animation: up-down 2s ease-in-out infinite alternate-reverse both;
-}
-
-
-
-/* services section  */
-
-.services-section {
-    padding: 100px;
-    background-color: #fbfbfb;
-}
-
-
-
-.services-section .services .row1 {
-    margin-bottom: 40px;
-}
-
-.services-section .services .card {
+.kegiatan-container button{
+    min-width: 40px;
+    height: 30px;
+    background: navy;
     border: none;
-    border-radius: 15px;
-    width: 280px;
-    height: 320px;
-    padding: 10px;
-    cursor: pointer;
-    background: transparent;
-    box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    box-shadow: none ;
+    color: white;
+    transition: 0.5s;
 }
-
-.services-section .services .card img {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    padding: 10px;
-    margin-left: 30px;
-    margin-top: 30px;
-    background: #f0f0f0;
-}
-
-
-.services-section .services .card:hover {
-    background-color: #2B547E;
-    color: #fff;
+.kegiatan-container button:hover{
+    transition: 0.5s;
     transform: scale(1.1);
 }
-
-.services-section .services .card:hover h4 {
-    color: #fff;
+.kegiatan-container button:hover > .kegiatan-container button:not(:hover){
+    transition: 0.5s;
+    transform: scale(0.8);
 }
-
-.services-section .services .card:hover p {
-    color: #d1d1d1;
-}
-
-.services-section .services .card h4 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #555;
-    margin-top: 25px;
-}
-
-.services-section .services .card p {
-    font-size: 15px;
-    color: #777;
-    margin-top: 20px;
-}
-
-.services-section .text-content {
-    margin-top: 80px;
-}
-
-.services-section .text-content hr {
-    height: 5px;
-    background-color: #333;
-    border: none;
-}
-
-.services-section .text-content h3 {
-    font-size: 20px;
-    text-transform: capitalize;
-    color: #FFA500;
-    font-weight: 600;
-    margin-left: 30px;
-}
-
-.services-section .text-content h1 {
-    font-size: 50px;
-    margin-top: 20px;
-    font-weight: bold;
-    margin-left: 30px;
-    color: #1c456d;
-}
-
-.services-section .text-content p {
-    font-size: 17px;
-    margin-top: 50px;
-    margin-left: 30px;
-    color: #555;
-}
-
-.services-section .text-content button {
-    margin-top: 20px;
-    margin-left: 30px;
-    margin-top: 20px;
-    border-radius: 30px;
-    color: #fff;
-    background-color: #2B547E;
-    height: 50px;
-    width: 170px;
-}
-
-.services-section .text-content button:hover {
-    background-color: #fff;
-    border: 2px solid #2B547E;
-    color: #2B547E;
-}
-
-/* about section  */
-
-.about-section {
-    padding: 100px;
-}
-
-.about-section img {
-    height: 450px;
-    width: 600px;
-    margin-top: 60px;
-    border-radius: 40px;
-}
-
-.about-section img:hover {
-    transform: scale(0.9);
-    cursor: pointer;
-}
-
-.about-section .text-content h3 {
-    font-size: 20px;
-    text-transform: capitalize;
-    color: #FFA500;
-    font-weight: 600;
-    margin-left: 30px;
-    margin-top: 20px;
-}
-
-.about-section .text-content h1 {
-    font-size: 50px;
-    margin-top: 20px;
-    font-weight: bold;
-    margin-left: 30px;
-    color: #1c456d;
-}
-
-.about-section .text-content p {
-    font-size: 17px;
-    margin-top: 50px;
-    margin-left: 30px;
-    color: #555;
-}
-
-.about-section .text-content button {
-    margin-top: 20px;
-    margin-left: 30px;
-    margin-top: 20px;
-    border-radius: 30px;
-    color: #fff;
-    border: none;
-    background-color: #2B547E;
-    height: 50px;
-    width: 170px;
-    text-transform: capitalize;
-}
-
-.about-section .text-content button:hover {
-    background-color: #fff;
-    border: 2px solid #2B547E;
-    color: #2B547E;
-}
-
-/* project section  */
-
-.project-section {
-    background-color: #088F8F;
-    padding: 90px;
-    /* height: 100vh; */
-}
-
-.project-section .text h3 {
-    font-size: 20px;
-    text-transform: capitalize;
-    color: #FFA500;
-    font-weight: 600;
-}
-
-.project-section .text h1 {
-    font-size: 50px;
-    font-weight: bold;
-    color: #fff;
-    text-transform: capitalize;
-}
-
-.project-section hr {
-    height: 2px;
-    background-color: #f1f1f1;
-    border: none;
-}
-
-.project-section .text p {
-    font-size: 18px;
-    color: #d1d1d1;
-}
-
-.project-section .project .card {
-    height: 400px;
-    margin-top: 40px;
-    border-radius: 20px;
-    border: none;
-    margin-left: 30px;
-    box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.project-section .project .card:hover {
-    transform: scale(1.2);
-}
-
-.project-section .project .card h4 {
-    font-size: 20px;
-    color: #1c456d;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.project-section .project .card p {
-    font-size: 15px;
-    color: #555;
-    margin-left: 0;
-    margin-top: 10px;
-}
-
-.project-section .project .card button {
-    margin-top: 10px;
-    border-radius: 30px;
-    color: #fff;
-    border: none;
-    background-color: #088F8F;
-    height: 40px;
-    width: 120px;
-    text-transform: capitalize;
-}
-
-.project-section .project .card button:hover {
-    background-color: #fff;
-    border: 2px solid #088F8F;
-    color: #088F8F;
-}
-
-/* contact section  */
-
-.contact-section {
-    background: #fbfbfb;
-    padding: 100px;
-}
-
-.contact-section h1 {
-    margin-top: 50px;
-    text-align: center;
-    text-transform: capitalize;
-    font-size: 50px;
-    font-weight: bold;
-    color: #1c456d;
-    margin-bottom: 100px;
-}
-
-.contact-section .info-box {
-    background-color: transparent;
-    border: none;
-    height: 200px;
-    width: 230px;
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-}
-
-.contact-section .info-box .bi {
-    background: #1c456d;
-    border-radius: 55%;
-    padding: 15px 18px;
-    color: #fff;
-    font-size: 25px;
-    text-align: center;
-}
-
-.contact-section .info-box h3 {
-    font-size: 25px;
+.pengaduan {
+    width: 100%;
+    height:fit-content;
+    justify-content: center;
+    align-items: top;
+    gap: 3%;
+    display: flex;
+    margin-bottom: 50px;
+}  
+.pengaduan .pengaduan-row1 {
+    width: 45%;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    align-items: center;
+    gap: 5%;
     margin-top: 30px;
-    font-weight: 600;
 }
-
-.contact-section .info-box p {
-    font-size: 15px;
-    color: #777;
+.pengaduan .pengaduan-row1 .card {
+    margin: 0;
+    height: 280px;
+    border: none;
+    background: white;
+    width: 240px;
+    justify-content: center;
+    transition: 0.5s;
 }
-
-.contact-section .info-box:hover {
-    background: #1c456d;
-    color: #fff;
-    transform: scale(0.9);
-}
-
-.contact-section .info-box:hover p {
-    color: #f1f1f1;
-}
-
-.contact-section .info-box:hover .bi {
-    background: #fff;
-    color: #1c456d;
-    font-size: 25px;
+.pengaduan .pengaduan-row1 .card h2{
+    margin-bottom: 0;
+    font-size: 50px;
     text-align: center;
 }
-
-.contact-section .form {
-    margin-top: 50px;
-}
-
-.contact-section form input,
-.contact-section form textarea {
-    margin-top: 10px;
-    border: none;
-    background: #f1f1f1;
-    color: #1c456d;
-    padding: 15px;
-    border-radius: 10px;
-}
-.contact-section form select {
-    margin-top: 10px;
-    border: none;
-    background: #f1f1f1;
-    color: #1c456d;
-    padding: 15px;
-    border-radius: 10px;
-    appearance: none; /* Menghapus panah default pada beberapa browser */
-    -webkit-appearance: none; /* Menghapus panah default pada Safari */
-}
-.contact-section form button {
-    margin-top: 20px;
-    border-radius: 30px;
-    color: #fff;
-    border: none;
-    background-color: #1c456d;
-    height: 50px;
-    width: 170px;
-    text-transform: capitalize;
-}
-
-.contact-section form button:hover {
-    background-color: #fff;
-    border: 2px solid #088F8F;
-    color: #088F8F;
-}
-
-/* footer section  */
-
-footer {
-    padding: 40px;
-    background: #1c456d;
-}
-
-footer .logo {
+.pengaduan .pengaduan-row1 .card h3{
     font-size: 30px;
-    color: #fff;
-    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+.pengaduan .pengaduan-row1 .card:hover{
+    transition: 0.5s;
+    transform: scale(0.95);
+    background-color: navy;
+    color: white;
+}
+.pengaduan .pengaduan-row2 {
+    width: 45%;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: top;
+    background: teal;
+}
+/* Reset default */
+
+/* Wrapper untuk form */
+.form-wrapper {
+    width: 45%;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-footer .logo i {
-    font-size: 25px;
-    background: #088F8F;
-    border-radius: 50%;
-    padding: 10px 15px;
+/* Judul form */
+.custom-form h1 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
 }
 
-footer ul li {
-    list-style: none;
-    margin-top: 20px;
+/* Grup Form */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
-footer ul li a {
-    text-decoration: none;
-    color: #d1d1d1;
-    margin-left: 30px;
-    font-size: 15px;
-    text-transform: capitalize;
-    font-weight: 500;
+/* Label */
+.form-group label {
+    font-size: 0.9rem;
+    color: #666666;
+    margin-bottom: 5px;
 }
 
-footer ul li a:hover {
-    color: #FFA500;
+/* Input, textarea, select styling */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 95%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+}
+.form-group input #nama,
+.form-group input #alamat {
+    max-width: 40%;
+}
+.form-group label {
+    color: navy;
+    font-size: 1.1rem;
+}
+/* Fokus pada input, textarea, select */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #5b8df6;
+    background: #ffffff;
+    box-shadow: 0 0 5px rgba(91, 141, 246, 0.5);
 }
 
-footer p {
-    color: #fff;
-    margin-top: 20px;
-    font-size: 15px;
-    margin-left: 30px;
+/* Tombol Kirim */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background: #5b8df6;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.back-to-top {
-    background: #088F8F;
-    height: 50px;
-    width: 50px;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 50px;
+/* Hover pada tombol kirim */
+.submit-btn:hover {
+    background: #497edc;
+    box-shadow: 0 5px 10px rgba(91, 141, 246, 0.3);
 }
 
-@media (max-width:700px) {
+/* Placeholder styling */
+input::placeholder,
+textarea::placeholder {
+    color: #cccccc;
+}
 
-    .hero-section img {
-        height: 350px;
-        margin-top: 50px;
-    }
+/* Tambahkan jarak antar elemen */
+textarea {
+    resize: none;
+}
 
-    .services-section .services .card {
-        margin-bottom: 50px;
-    }
-
-    .services-section .services .row1 {
-        margin-bottom: 0px;
-    }
-
-    .about-section{
-        padding: 50px 30px;
-    }
-    .about-section img {
+@media(max-width: 568px){
+    .styled-table th, .styled-table td {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+      .table-container h1 {
+        font-size: 1.5rem;
+      }
+    .kartu{
+        width: 100px;
         height: 300px;
     }
-
-    .contact-section{
-        padding: 50px;
+    .info p{
+        font-size: 12px;
+    }
+    .info h1{
+        font-size: 14px;
+    }
+    .kartu:hover{
+        width: 200px;
+    }    
+    .kartu-grup:hover > .kartu:not(:hover){
+        filter: blur(5px);
+        width: 50px;
+    }
+    .kartu:hover,
+    .kartu:hover img,
+    .kartu:hover .layer{
+        transform: scale(1.1);
+    }
+    .fitur-title h1{
+        font-size: 1.5rem;
+    }
+    .fitur-title p{
+        font-size: 0.8rem;
+    }
+    .row1 h1{
+        margin-left: 50px;
+    }
+    .row1 p{
+        margin-left: 50px;
+    }
+    .row1 button{
+        margin-left: 50px;
+    }
+}
+@media screen and (max-width: 768px) {
+    /* Mengatur ukuran font untuk tabel pada layar kecil */
+    .styled-table th, .styled-table td {
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+  
+    .table-container {
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 100%;
+    }
+  
+    /* Menyesuaikan ukuran heading */
+    .table-container h1 {
+      font-size: 1.5rem;
+    }
+  
+    /* Tabel di layar kecil */
+    .styled-table {
+      font-size: 0.9rem;
+    }
+    .card-group {
+        flex-direction: column;  /* Menampilkan card dalam dua kolom (atas dan bawah) */
+        align-items: flex-start;  /* Menyesuaikan posisi card */
     }
 
-    footer ul li a {
-        margin-left: 5px;
-        letter-spacing: 0;
+    .card {
+        width: 45%; /* Card akan mengisi 45% dari lebar kontainer (agar ada jarak antar card) */
+        margin-bottom: 20px; /* Memberi jarak antar card vertikal */
     }
-    hr.solid {
-        border-top: 8px solid #1c456d;
-        border-radius: 5px;
-      }
+  }
+  
+  /* Responsif untuk perangkat sangat kecil (mobile phone) */
+  @media screen and (max-width: 480px) {
+    body{
+        padding: 0;
+        margin: 0;
+    }
+    .row2{
+        margin-top: 120px ;
+        background: transparent;
+        max-width: 200px;
+        height: 200px;
+    }
+    /* Mengatur ukuran font untuk sel tabel */
+    .styled-table th, .styled-table td {
+      padding: 8px 10px;
+      font-size: 0.8rem;
+    }
+  
+    /* Menyesuaikan heading pada perangkat kecil */
+    .table-container h1 {
+      font-size: 1.3rem;
+    }
+  
+    /* Tabel di layar lebih kecil */
+    .styled-table {
+      font-size: 0.8rem;
+    }
+  
+    /* Menurunkan margin dan padding untuk responsivitas lebih baik */
+    .table-container {
+      padding: 0px;
+      margin: 0px;
+      max-width: 100%;
+    }
+    .card-group {
+        flex-direction: column;  /* Mengatur card dalam satu kolom untuk perangkat lebih kecil */
+        align-items: center;     /* Meratakan card ke tengah */
+    }
+
+    .card {
+        width: 90%; /* Card mengisi hampir seluruh lebar layar */
+        margin-bottom: 20px; /* Memberi jarak antar card */
+    }
+  }
+  @media screen and (max-width: 768px) {
+    
+}
+
+/* Responsif untuk perangkat dengan lebar maksimal 480px */
+@media screen and (max-width: 480px) {
+    
 }

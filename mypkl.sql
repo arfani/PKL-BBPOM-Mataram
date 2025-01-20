@@ -339,7 +339,22 @@ INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal
 (306, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-08', 'IMG_9038.jpeg', 'IMG_9045.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:45:45', '16:37:36', '07:51:51', 'Waktu Kerja Kurang 38 Menit'),
 (307, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-09', 'IMG_9049.jpeg', 'IMG_9053.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:09:00', '16:43:21', '08:34:21', 'Waktu Kerja Sudah cukup'),
 (308, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-10', 'IMG_9056.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:44:22', NULL, NULL, NULL),
-(309, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-13', 'IMG_9123.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:11:04', NULL, NULL, NULL);
+(309, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-13', 'IMG_9123.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:11:04', NULL, NULL, NULL),
+(310, 311, 'Muhammad Rafi', 'hadir', 'Masuk', '2025-01-16', 'IMG_20250103_112518.jpg', 'TimePhoto_20250116_163626.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:13:49', '16:36:59', '00:23:10', 'Waktu Kerja Kurang 8 jam 6 Menit'),
+(311, 312, 'Budurunnafis Ulul Azmi', 'hadir', 'Masuk', '2025-01-16', 'WIN_20250116_15_23_04_Pro.jpg', 'WIN_20250116_15_32_11_Pro.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '15:23:51', '15:32:29', '00:08:38', 'Waktu Kerja Kurang 8 jam 21 Menit'),
+(312, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-01-16', 'IMG_7898.png', 'IMG_7908.png', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:26:36', '07:44:12', '08:42:24', 'Waktu Kerja Sudah cukup'),
+(313, 313, 'Baiq Rizkia Amalia ', 'hadir', 'Masuk', '2025-01-16', '17370168850016772301888576786850.jpg', '17370703784034057343260109255462.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:41:30', '07:33:07', '09:08:23', 'Waktu Kerja Sudah cukup'),
+(314, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-17', 'IMG_9289.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '10:50:58', NULL, NULL, NULL),
+(315, 311, 'Muhammad Rafi', 'hadir', 'Masuk', '2025-01-19', 'TimePhoto_20250120_074845.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:50:29', NULL, NULL, NULL),
+(316, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-20', 'IMG_9420.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:03:36', NULL, NULL, NULL),
+(317, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-01-20', 'IMG_8030.png', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:04:40', NULL, NULL, NULL),
+(318, 313, 'Baiq Rizkia Amalia ', 'hadir', 'Masuk', '2025-01-20', '17373315358593363605522114282972.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:05:43', NULL, NULL, NULL),
+(319, 312, 'Budurunnafis Ulul Azmi', 'hadir', 'Masuk', '2025-01-20', '17373324575991367535619186091799.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:21:09', NULL, NULL, NULL),
+(320, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-01-20', '17373329105284943390753929313622.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:28:47', NULL, NULL, NULL),
+(321, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-01-20', '17373335990416104478560172816239.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:40:12', NULL, NULL, NULL),
+(322, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-01-20', '17373335983442020681051838454672.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:40:14', NULL, NULL, NULL),
+(323, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-01-20', '1000810793.heic', NULL, -8.59500000, NULL, 116.11500000, NULL, '07:40:40', NULL, NULL, NULL),
+(324, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-01-20', '17373339771429217673519028623036.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:46:32', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -770,7 +785,16 @@ INSERT INTO `users` (`id`, `nama`, `email`, `universitas`, `no_hp`, `password`, 
 (24, 'asdf', 'asdsff@asdf', 'asdf', '123423423', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
 (25, 'test-infokom', 'infokom.bbpommataram@gmail.com', 'BPOM', '081393719995', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
 (26, 'epson l3110', 'epson@epson.com', 'BPOM', '080989999', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
-(27, 'Ni Putu Ayu Nila Anggreni ', 'niputuayunilaanggreni2004@mail.ugm.ac.id', 'Universitas Gadjah Mada', '087811472653', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png');
+(27, 'Ni Putu Ayu Nila Anggreni ', 'niputuayunilaanggreni2004@mail.ugm.ac.id', 'Universitas Gadjah Mada', '087811472653', '$2y$10$MvpFvvvE0gnQKfJGzT6ssO/Rra3IAcaWfbyz2UYuNcDI1he6NBlLW', 'active', 'Asset/Gambar/profile.png'),
+(310, 'Anindita Ghina Putri', 'aninditaghina@student.ub.ac.id', 'Universitas Brawijaya', '085887796450', '$2y$10$5V9JbA/v2un./NqzVzWp4egAMVgHpFcf.kWim4/uTJeTEJwOKAEge', 'active', 'Asset/Gambar/profile.png'),
+(311, 'Muhammad Rafi', 'rraaffii2408@gmail.com', 'Universitas Mataram', '085337477083', '$2y$10$/sWTRwHQzARjKlOWnHIHZ.9qULO8XvQnr80VVsrJDv4EPLOPwYPNK', 'active', 'Asset/Gambar/profile.png'),
+(312, 'Budurunnafis Ulul Azmi', 'budurunnafis@student.ub.ac.id', 'Universitas Brawijaya ', '081239774128', '$2y$10$Wk4YlCin6HBwzVKngEYHuOrgZ5FwgSW8PPsm.T6qC/UW6qqRGpI..', 'active', 'Asset/Gambar/profile.png'),
+(313, 'Baiq Rizkia Amalia ', 'baiqrizkiamalia@student.ub.ac.id', 'Universitas Brawijaya ', '087819450684', '$2y$10$IQnyE8BQa3qsaPC5j7iIVOGboqAXVnKv5YpZapHxyV6KXe8FTI2iu', 'active', 'Asset/Gambar/profile.png'),
+(314, 'Ashri Rizki Hidayati', 'hidayati.2208511002@unud.ac.id', 'Universitas Udayana', '085930181686', '$2y$10$.NkIvWClzK.Xh86oBSZmeO9IlXrj9juxClYOaE9rbHM/dcJPdgScO', 'active', 'Asset/Gambar/profile.png'),
+(315, 'Ni Putu Wulan Kusuma Dewi', 'wulankusuma2004@gmail.com', 'Universitas Udayana', '087855783298', '$2y$10$5D5B57f6.eLYB7CJkveqEuDgM/hqjLgZ.475uY5rkF8NpBWHvp.4K', 'active', 'Asset/Gambar/profile.png'),
+(316, 'Widiya Nasa Sapitri', 'widiyanasa20@gmail.com', 'Universitas Udayana', '081931555688', '$2y$10$WQmB.50ftstjP48bquh2zuTOpkJRvzT9PTGvWxvZujMRegAqXgiBK', 'active', 'Asset/Gambar/profile.png'),
+(317, 'Ni Wayan Ari Kurnia Dewi', 'arikurniadewi04@gmail.com', 'Universitas Udayana', '088219357525', '$2y$10$y6SbuamBAg7OX1if.TwdSOYqwnhdAKo7p717duDhO0Fvk9S6d2.KS', 'active', 'Asset/Gambar/profile.png'),
+(318, 'Irbah dzakiyatus sholehah', 'irbahdzakiya@gmail.com', 'Universitas Airlangga', '085239038804', '$2y$10$SYcm/DjCFfMAUih.yt3kee5gN2xzqn0jbkReTuJ4yDQQezZa1xeUW', 'active', 'Asset/Gambar/profile.png');
 
 --
 -- Indexes for dumped tables
@@ -843,6 +867,12 @@ ALTER TABLE `pengajuan_pkl`
   ADD KEY `phone` (`phone`);
 
 --
+-- Indexes for table `kunjungan`
+--
+ALTER TABLE `pengaduan`
+  ADD PRIMARY KEY (`id`),
+
+--
 -- Indexes for table `tb_seo`
 --
 ALTER TABLE `tb_seo`
@@ -879,10 +909,22 @@ ALTER TABLE `admin`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `penempatan_pkl`
+--
+ALTER TABLE `penempatan_pkl`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `api`
 --
 ALTER TABLE `api`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `absensi`
@@ -895,6 +937,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `hasil_kuis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT for table `hasil_kuis`
+--
+ALTER TABLE `pengaduan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  
 --
 -- AUTO_INCREMENT for table `history`
 --

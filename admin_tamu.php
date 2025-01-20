@@ -118,7 +118,6 @@ if (isset($_GET['message'])) {
                                     <th scope="col">No</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Nomor HP</th>
-                                   
                                     <th scope="col">Instansi</th>
                                     <th scope="col">Keperluan</th>
                                     <th scope="col">Jumlah Peserta</th>
@@ -131,7 +130,7 @@ if (isset($_GET['message'])) {
                             </thead>
                             <tbody>
                             <?php
-                            $sql2 = "SELECT * FROM kunjungan";
+                            $sql2 = "SELECT * FROM kunjungan ";
                             $result2 = mysqli_query($conn, $sql2);
                             $no = 1;
                             while ($row2 = mysqli_fetch_assoc($result2)) {
@@ -172,12 +171,11 @@ if (isset($_GET['message'])) {
                                     } else {
                                         // Tombol untuk menampilkan file jika sudah ada file
                                         echo "
-                                            <button class='btn btn-primary btn-open-pdf' data-bs-toggle='modal' data-bs-target='#viewModal' data-pdf-path='{$row2['surat_balasan']}'>
-                                                Lihat Surat Balasan
-                                            </button>
                                             <a href='{$row2['surat_balasan']}' download='{$row2['surat_balasan']}' class='btn btn-secondary'>
-                                                <i class='fas fa-download'></i>
-                                            </a>";
+                                            <i class='fas fa-download'></i>
+                                        </a>
+                                                
+                                            ";
                                     }
                                     echo "</td>";
 
