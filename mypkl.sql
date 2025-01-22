@@ -505,7 +505,7 @@ CREATE TABLE `kunjungan` (
   `jam` time NOT NULL,
   `surat_masuk` varchar(255) DEFAULT NULL,
   `surat_balasan` varchar(255) DEFAULT NULL,
-  `status_kunjungan` varchar(255) DEFAULT NULL
+  `status_kunjungan` varchar(255) DEFAULT NULL,
   `kode_unik` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -625,7 +625,7 @@ CREATE TABLE `pengaduan` (
   `foto_ktp` text DEFAULT NULL,
   `foto_pengaduan` text DEFAULT NULL,
   `jam` time NOT NULL,
-  `status` varchar(25) DEFAULT NULL
+  `status` varchar(25) DEFAULT NULL,
   `kode_unik` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -870,7 +870,7 @@ ALTER TABLE `pengajuan_pkl`
 -- Indexes for table `kunjungan`
 --
 ALTER TABLE `pengaduan`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tb_seo`
