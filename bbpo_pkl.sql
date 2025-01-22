@@ -2,9 +2,9 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 13, 2025 at 03:23 AM
--- Server version: 10.11.7-MariaDB-1:10.11.7+maria~ubu2204
+-- Host: 127.0.0.1
+-- Generation Time: Jan 22, 2025 at 08:00 AM
+-- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -441,6 +441,7 @@ INSERT INTO `hasil_kuis` (`id`, `nama`, `jenis_pertanyaan`, `question_text`, `se
 --
 -- Table structure for table `history`
 --
+
 CREATE TABLE `history` (
   `id` int(11) NOT NULL,
   `kode_unik` varchar(50) NOT NULL,
@@ -449,6 +450,7 @@ CREATE TABLE `history` (
   `status` varchar(20) NOT NULL,
   `keterangan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -513,10 +515,10 @@ CREATE TABLE `kunjungan` (
 -- Dumping data for table `kunjungan`
 --
 
-INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`) VALUES
-(5, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', NULL, ''),
-(6, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, ''),
-(7, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '');
+INSERT INTO `kunjungan` (`id`, `nama`, `no_hp`, `instansi`, `keperluan`, `jumlah_peserta`, `segmen_peserta`, `tanggal`, `jam`, `surat_masuk`, `surat_balasan`, `status_kunjungan`, `kode_unik`) VALUES
+(5, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 24, 'Mahasiswa', '2024-11-11', '11:00:00', './Asset/Document/', NULL, '', NULL),
+(6, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 26, 'Mahasiswa', '2024-11-12', '11:00:00', './Asset/Document/surat_pengajuan_kunjungan bagas adinata.pdf', NULL, '', NULL),
+(7, 'bagas adinata', '087750292514', 'jaghajangangagas', 'Universitas Mataram', 28, 'Mahasiswa', '2024-11-12', '12:00:00', './Asset/Document/surat_pengajuan_kunjungan+bagas+adinata.pdf', NULL, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -595,18 +597,18 @@ CREATE TABLE `penempatan_pkl` (
   `posisi` varchar(50) NOT NULL,
   `deskripsi` varchar(70) NOT NULL,
   `jurusan` text NOT NULL,
-  `kuota` int(5) NOT NULL,
-  `gambar` text NOT NULL
+  `kuota` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `penempatan_pkl`
 --
 
-INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`, `gambar`) VALUES
-(3, 'Kimia Obat', 'Membantu Pekerjaan di Lab Kimia Obat', 'Farmasi, Kimia', 2, 'image_Kimia Obat.php'),
-(4, 'Kimia Kosmetik', 'Membantu Pekerjaan di Lab Kimia Kosmetik', 'Farmasi, Kimia', 4, 'image_Kimia Kosmetik.jpg'),
-(5, 'Kimia OTSK', 'Membantu Pekerjaan di Lab Kimia OTSK', 'Farmasi, Kimia', 2, 'image_Kimia OTSK.jpg');
+INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`) VALUES
+(3, 'Kimia Obat', 'Membantu Pekerjaan di Lab Kimia Obat', 'Farmasi, Kimia', 2),
+(4, 'Kimia Kosmetik', 'Membantu Pekerjaan di Lab Kimia Kosmetik', 'Farmasi, Kimia', 4),
+(5, 'Kimia OTSK', 'Membantu Pekerjaan di Lab Kimia OTSK', 'Farmasi, Kimia', 2),
+(6, 'sertifikasi', 'apapun', 'Informatika', 2);
 
 -- --------------------------------------------------------
 
@@ -633,19 +635,19 @@ CREATE TABLE `pengaduan` (
 -- Dumping data for table `pengaduan`
 --
 
-INSERT INTO `pengaduan` (`id`, `tanggal`, `nama`, `alamat`, `no_hp`, `subject`, `pesan`, `foto_ktp`, `foto_pengaduan`, `jam`, `status`) VALUES
-(1, '2024-11-15', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'ini untuk coba', 'si inges (2).png', 'si solah (1).png', '15:16:25', NULL),
-(2, '2024-11-18', 'Bagas Adinata', 'Karang Baru Selatan', '087750292514', 'kosmetik', 'Ini untuk uji coba', 'si inges-1.png', NULL, '07:46:27', NULL),
-(3, '2024-11-19', 'Rifa Ratna Savitri', 'BTN Gelang, Sukamulia, Lombok Timur, Nusa Tenggara Barat', '085942851918', 'lainnya', 'Saya sebentar lagi akan berakhir masa magangnya huhu sedih', 'IMG_8526.heic', 'CV ATS [Rifa Ratna Savitri].docx', '08:01:32', NULL),
-(4, '2024-11-19', 'Nurul ramadanniah ', 'Dusun boal bawa ', '081999630575', 'pangan olahan', '-', 'IMG_20241118_185730_731~2.jpg', NULL, '08:02:39', NULL),
-(5, '2024-11-19', 'Ageng Pranata', 'Dusun Medain', '085333923469', 'pangan olahan', 'PKL bulan Desember selesai', '17319743684631496088500530631380.jpg', NULL, '08:02:52', NULL),
-(6, '2024-11-19', 'Nurullayyinah', 'Jalan Catur Warga No. 13', '085339098803', 'lainnya', 'Tidak ada', 'image.jpg', NULL, '08:05:32', NULL),
-(7, '2024-11-19', 'Hendon Pratiwi ', 'Otak dese Ampenan ', '087859973454', 'pangan olahan', '-', '17319750178408051311062727422804.jpg', NULL, '08:12:00', NULL),
-(8, '2024-11-19', 'Ratmini', 'Sekotong ', '081236262948', 'pangan olahan', '_', '17319750372791256906732788071730.jpg', NULL, '08:12:13', NULL),
-(9, '2024-11-19', 'Fathin Furaidah', 'Sumbawa', '085339040671', 'pangan olahan', 'Terkait masih banyak yang menjual kerupuk mengandung boraks dan jajanan yang mengandung formalin', 'IMG_20241119_083354.jpg', NULL, '08:38:34', NULL),
-(10, '2024-11-19', 'Sintia Rahma Tania', 'Sumbawa', '082247144426', 'pangan olahan', 'mie boraks', '17319784521172089602409147349976.jpg', NULL, '09:08:32', NULL),
-(11, '2024-11-22', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'bahan uji coba', 'si solah (1).png', NULL, '13:56:07', NULL),
-(12, '2024-12-18', 'Dian Lestari', 'Kel. Brang Biji RT 003 / RW 002', '081336332589', 'kosmetik', 'Produk MK Glow yang masuk public warning dan izin edar BPOMnya ditarik masih beredar di Lombok melalui reseller. Mohon ditindaklanjuti.', 'WhatsApp Image 2024-12-18 at 8.49.36 AM (1).jpeg', 'WhatsApp Image 2024-12-17 at 8.21.07 PM.jpeg', '09:27:24', NULL);
+INSERT INTO `pengaduan` (`id`, `tanggal`, `nama`, `alamat`, `no_hp`, `subject`, `pesan`, `foto_ktp`, `foto_pengaduan`, `jam`, `status`, `kode_unik`) VALUES
+(1, '2024-11-15', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'ini untuk coba', 'si inges (2).png', 'si solah (1).png', '15:16:25', NULL, NULL),
+(2, '2024-11-18', 'Bagas Adinata', 'Karang Baru Selatan', '087750292514', 'kosmetik', 'Ini untuk uji coba', 'si inges-1.png', NULL, '07:46:27', NULL, NULL),
+(3, '2024-11-19', 'Rifa Ratna Savitri', 'BTN Gelang, Sukamulia, Lombok Timur, Nusa Tenggara Barat', '085942851918', 'lainnya', 'Saya sebentar lagi akan berakhir masa magangnya huhu sedih', 'IMG_8526.heic', 'CV ATS [Rifa Ratna Savitri].docx', '08:01:32', NULL, NULL),
+(4, '2024-11-19', 'Nurul ramadanniah ', 'Dusun boal bawa ', '081999630575', 'pangan olahan', '-', 'IMG_20241118_185730_731~2.jpg', NULL, '08:02:39', NULL, NULL),
+(5, '2024-11-19', 'Ageng Pranata', 'Dusun Medain', '085333923469', 'pangan olahan', 'PKL bulan Desember selesai', '17319743684631496088500530631380.jpg', NULL, '08:02:52', NULL, NULL),
+(6, '2024-11-19', 'Nurullayyinah', 'Jalan Catur Warga No. 13', '085339098803', 'lainnya', 'Tidak ada', 'image.jpg', NULL, '08:05:32', NULL, NULL),
+(7, '2024-11-19', 'Hendon Pratiwi ', 'Otak dese Ampenan ', '087859973454', 'pangan olahan', '-', '17319750178408051311062727422804.jpg', NULL, '08:12:00', NULL, NULL),
+(8, '2024-11-19', 'Ratmini', 'Sekotong ', '081236262948', 'pangan olahan', '_', '17319750372791256906732788071730.jpg', NULL, '08:12:13', NULL, NULL),
+(9, '2024-11-19', 'Fathin Furaidah', 'Sumbawa', '085339040671', 'pangan olahan', 'Terkait masih banyak yang menjual kerupuk mengandung boraks dan jajanan yang mengandung formalin', 'IMG_20241119_083354.jpg', NULL, '08:38:34', NULL, NULL),
+(10, '2024-11-19', 'Sintia Rahma Tania', 'Sumbawa', '082247144426', 'pangan olahan', 'mie boraks', '17319784521172089602409147349976.jpg', NULL, '09:08:32', NULL, NULL),
+(11, '2024-11-22', 'bagas adinata', 'jalanpendidikan', '087750292514', 'suplemen kesehatan', 'bahan uji coba', 'si solah (1).png', NULL, '13:56:07', NULL, NULL),
+(12, '2024-12-18', 'Dian Lestari', 'Kel. Brang Biji RT 003 / RW 002', '081336332589', 'kosmetik', 'Produk MK Glow yang masuk public warning dan izin edar BPOMnya ditarik masih beredar di Lombok melalui reseller. Mohon ditindaklanjuti.', 'WhatsApp Image 2024-12-18 at 8.49.36 AM (1).jpeg', 'WhatsApp Image 2024-12-17 at 8.21.07 PM.jpeg', '09:27:24', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -858,6 +860,12 @@ ALTER TABLE `penempatan_pkl`
   ADD KEY `posisi` (`posisi`);
 
 --
+-- Indexes for table `pengaduan`
+--
+ALTER TABLE `pengaduan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pengajuan_pkl`
 --
 ALTER TABLE `pengajuan_pkl`
@@ -865,12 +873,6 @@ ALTER TABLE `pengajuan_pkl`
   ADD KEY `nama` (`nama`),
   ADD KEY `email` (`email`),
   ADD KEY `phone` (`phone`);
-
---
--- Indexes for table `kunjungan`
---
-ALTER TABLE `pengaduan`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tb_seo`
@@ -900,7 +902,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -909,28 +911,10 @@ ALTER TABLE `admin`
   MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `penempatan_pkl`
---
-ALTER TABLE `penempatan_pkl`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `api`
 --
 ALTER TABLE `api`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `kunjungan`
---
-ALTER TABLE `kunjungan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `absensi`
---
-ALTER TABLE `users`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
 
 --
 -- AUTO_INCREMENT for table `hasil_kuis`
@@ -938,12 +922,6 @@ ALTER TABLE `users`
 ALTER TABLE `hasil_kuis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
---
--- AUTO_INCREMENT for table `hasil_kuis`
---
-ALTER TABLE `pengaduan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
-  
 --
 -- AUTO_INCREMENT for table `history`
 --
@@ -955,6 +933,30 @@ ALTER TABLE `history`
 --
 ALTER TABLE `kuis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `kunjungan`
+--
+ALTER TABLE `kunjungan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `penempatan_pkl`
+--
+ALTER TABLE `penempatan_pkl`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `pengaduan`
+--
+ALTER TABLE `pengaduan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=319;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

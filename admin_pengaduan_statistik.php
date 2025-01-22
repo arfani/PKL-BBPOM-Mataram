@@ -314,11 +314,7 @@ if (isset($_GET['message'])) {
                                 datasets: [{
                                     label: 'Jumlah Pengaduan',
                                     data: [
-                                        <?php
-                                        foreach ($pengaduan_perbulan as $jumlah) {
-                                            echo $jumlah . ', ';
-                                        }
-                                        ?>
+                                        1,2,3,4,5,6,
                                     ],
                                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                     borderColor: 'rgba(54, 162, 235, 1)',

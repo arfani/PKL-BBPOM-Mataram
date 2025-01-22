@@ -130,7 +130,7 @@ if (!empty($message)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SIap Melayani</title>
     <link rel="stylesheet" href="Asset/CSS/uji_coba.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>

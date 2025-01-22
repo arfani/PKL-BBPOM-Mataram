@@ -5,6 +5,7 @@ body{
     cursor: default;
     padding: 0px;
     font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
 }
 
 #intro {

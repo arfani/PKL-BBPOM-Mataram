@@ -174,48 +174,48 @@ if (!empty($message)) {
         </div>
         
         <div class="isi-fitur">
-        <div class="kartu-grup">
-            <div class="kartu">
-                <img src="Asset/Gambar/Fitur-PKL.jpeg" alt="PKL">
-                <div class="layer"></div>
-                <div class="info">
-                <h1>Pendaftaran Dan Monitoring PKL</h1>
-                <p>
-                    Pengelolaan PKL meliputi proses permohonan, penerimaan 
-                    peserta, serta monitoring jalannya PKL, baik reguler 
-                    maupun MBKM, guna memastikan kelancaran dan transparansi 
-                    pelaksanaan program.
-                </p>
-                <a href="register.php"><button>Daftar</button></a>
+            `<div class="kartu-grup">
+                <div class="kartu">
+                    <img src="Asset/Gambar/Fitur-PKL.jpeg" alt="PKL">
+                    <div class="layer"></div>
+                    <div class="info">
+                    <h1>Pendaftaran Dan Monitoring PKL</h1>
+                    <p>
+                        Pengelolaan PKL meliputi proses permohonan, penerimaan 
+                        peserta, serta monitoring jalannya PKL, baik reguler 
+                        maupun MBKM, guna memastikan kelancaran dan transparansi 
+                        pelaksanaan program.
+                    </p>
+                    <a href="register.php"><button>Daftar</button></a>
+                    </div>
                 </div>
-            </div>
-            <div class="kartu">
-                <img src="Asset/Gambar/Fitur-Kunjungan.jpeg" alt="Kunjungan">
-                <div class="layer"></div>
-                <div class="info">
-                <h1>Permohonan Kunjungan</h1>
-                <p>
-                    Pengajuan permohonan kunjungan ke BBPOM Mataram dapat 
-                    dipantau status permohonan, jadwal tersedia, dan konfirmasi 
-                    penerimaan melalui sistem yang disediakan untuk kemudahan akses.
-                </p>
-                <a href="tamu_pengajuan.php"><button>Buat Permohonan</button></a>
+                <div class="kartu">
+                    <img src="Asset/Gambar/Fitur-Kunjungan.jpeg" alt="Kunjungan">
+                    <div class="layer"></div>
+                    <div class="info">
+                    <h1>Permohonan Kunjungan</h1>
+                    <p>
+                        Pengajuan permohonan kunjungan ke BBPOM Mataram dapat 
+                        dipantau status permohonan, jadwal tersedia, dan konfirmasi 
+                        penerimaan melalui sistem yang disediakan untuk kemudahan akses.
+                    </p>
+                    <a href="tamu_pengajuan.php"><button>Buat Permohonan</button></a>
+                    </div>
                 </div>
-            </div>
-            <div class="kartu">
-                <img src="Asset/Gambar/Fitur_Narasumber.jpeg" alt="Narasumber">
-                <div class="layer"></div>
-                <div class="info">
-                <h1>Permohonan Narasumber</h1>
-                <p>
-                    Permohonan narasumber untuk kegiatan di tempat pemohon dapat 
-                    diajukan dan dipantau statusnya, termasuk informasi siapa 
-                    narasumber yang akan dihadirkan dan jadwal kegiatan.
-                </p>
-                <a href="tamu_pengajuan.php"><button>Buat Permohonan</button></a>
-             </div>
-            </div>
-        </div>
+                <div class="kartu">
+                    <img src="Asset/Gambar/Fitur_Narasumber.jpeg" alt="Narasumber">
+                    <div class="layer"></div>
+                    <div class="info">
+                    <h1>Permohonan Narasumber</h1>
+                    <p>
+                        Permohonan narasumber untuk kegiatan di tempat pemohon dapat 
+                        diajukan dan dipantau statusnya, termasuk informasi siapa 
+                        narasumber yang akan dihadirkan dan jadwal kegiatan.
+                    </p>
+                    <a href="tamu_pengajuan.php"><button>Buat Permohonan</button></a>
+                </div>
+                </div>
+            </div>`
         </div>
     </section>
     <section id="PKL">
