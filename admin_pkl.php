@@ -184,7 +184,7 @@ if (isset($_GET['message'])) {
                                     $laporanAkhir = $row['laporan_akhir'] ? "<a href='{$row['laporan_akhir']}' class='btn btn-primary btn-sm' download>Download Laporan</a>" : "Belum upload";
                                     $proposal = $row['proposal'] ? "<a href='{$row['proposal']}' class='btn btn-primary btn-sm' download>Download Proposal</a>" : "Belum upload";
                                     
-                                    $status = $row['status'] ? $row['status'] == 'Pending': "
+                                    $status = $row['status'] ? $row['status'] == 'Pending' ||$row['status'] = NULL  : "
 <button type='button' class='btn btn-success btn-sm accept-btn' data-id='{$row['id_pengajuan']}'>Terima</button>
 <button type='button' class='btn btn-danger btn-sm reject-btn' data-id='{$row['id_pengajuan']}'>Tolak</button>
 ";

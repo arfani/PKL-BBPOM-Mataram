@@ -26,7 +26,7 @@ $result = mysqli_query($conn, $sql);
 $pkl_batal = mysqli_fetch_assoc($result)['jumlah'];
 
 // Menghitung jumlah PKL sedang
-$sql = "SELECT COUNT(*) as jumlah FROM users WHERE status = 'active'";
+$sql = "SELECT COUNT(*) as jumlah FROM pengajuan_pkl WHERE status = 'active'";
 $result = mysqli_query($conn, $sql);
 $sedang_pkl = mysqli_fetch_assoc($result)['jumlah'];
 

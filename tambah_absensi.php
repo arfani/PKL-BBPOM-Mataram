@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
 
                 if ($result) {
                     $message = "Absensi Telah Disimpan.";
-                    header("Location: absensi_pkl.php");
+                    header("Location: pkl_absensi.php");
                 } else {
                     $message = "Woops! Ada Kesalahan saat menyimpan: " . $conn->error;
                 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 22, 2025 at 08:00 AM
+-- Generation Time: Feb 12, 2025 at 08:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -354,7 +354,118 @@ INSERT INTO `absensi` (`id`, `user_id`, `nama`, `status`, `keterangan`, `tanggal
 (321, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-01-20', '17373335990416104478560172816239.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:40:12', NULL, NULL, NULL),
 (322, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-01-20', '17373335983442020681051838454672.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:40:14', NULL, NULL, NULL),
 (323, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-01-20', '1000810793.heic', NULL, -8.59500000, NULL, 116.11500000, NULL, '07:40:40', NULL, NULL, NULL),
-(324, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-01-20', '17373339771429217673519028623036.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:46:32', NULL, NULL, NULL);
+(324, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-01-20', '17373339771429217673519028623036.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:46:32', NULL, NULL, NULL),
+(325, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-01-22', 'IMG_20250122_124807_843.webp', '1737521668147.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:49:11', '16:49:58', '00:00:47', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(326, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-01-22', '17375357657267709209759419119687.jpg', '17375357657267709209759419119687.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:49:43', '16:49:58', '00:00:15', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(327, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-01-22', '17375359108574369082713630068440.jpg', '17375359430937516504973310461230.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:52:01', '16:52:31', '00:00:30', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(328, 311, 'Muhammad Rafi', 'hadir', 'Masuk', '2025-01-22', 'TimePhoto_20250123_073837.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:39:29', NULL, NULL, NULL),
+(329, 313, 'Baiq Rizkia Amalia ', 'hadir', 'Masuk', '2025-01-22', '17375896122526847829510063498638.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:47:13', NULL, NULL, NULL),
+(330, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-01-22', 'IMG_8089.png', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:50:18', NULL, NULL, NULL),
+(331, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-01-23', '17375904180389136415344169955499.jpg', '17376228833606436901606364939490.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:00:45', '17:01:41', '09:00:56', 'Waktu Kerja Sudah cukup'),
+(332, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-01-23', '17375904280259180854887234075843.jpg', '17376226191732965197536160496847.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:00:45', '16:57:09', '08:56:24', 'Waktu Kerja Sudah cukup'),
+(333, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-01-23', '17375904746721344574445402722121.jpg', '17376229046971432001246228693412.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:52', '17:02:02', '09:00:10', 'Waktu Kerja Sudah cukup'),
+(334, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-01-23', '17375905003874926084351086737105.jpg', '17376227971846063100087883638984.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:56', '17:00:18', '08:58:22', 'Waktu Kerja Sudah cukup'),
+(335, 312, 'Budurunnafis Ulul Azmi', 'hadir', 'Masuk', '2025-01-23', '17375906186494925199946022733705.jpg', 'IMG_20250123_090744.jpg', -8.58800000, -8.60600000, 116.11600000, 116.09700000, '08:04:06', '21:36:59', '13:32:53', 'Waktu Kerja Sudah cukup'),
+(336, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-01-23', '1000813889.heic', '1000814484.heic', -8.59500000, -8.57700000, 116.11500000, 116.12700000, '08:11:05', '16:43:09', '08:32:04', 'Waktu Kerja Sudah cukup'),
+(337, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-23', 'IMG_9511.jpeg', NULL, -8.59500000, NULL, 116.10800000, NULL, '08:25:23', NULL, NULL, NULL),
+(338, 313, 'Baiq Rizkia Amalia ', 'hadir', 'Masuk', '2025-01-23', '1737676200496958515216341633756.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:50:04', NULL, NULL, NULL),
+(339, 311, 'Muhammad Rafi', 'hadir', 'Masuk', '2025-01-23', 'TimePhoto_20250124_075138.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:52:14', NULL, NULL, NULL),
+(340, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-01-23', 'IMG_8178.png', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:52:24', NULL, NULL, NULL),
+(341, 312, 'Budurunnafis Ulul Azmi', 'hadir', 'Masuk', '2025-01-24', '17376791841733128419133114716651.jpg', '1737710187006336778161306109303.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:39:59', '17:16:43', '08:36:44', 'Waktu Kerja Sudah cukup'),
+(342, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-01-24', '1000815031.heic', '1000815505.heic', -8.59500000, -8.59500000, 116.11500000, 116.11500000, '08:52:54', '16:12:30', '07:19:36', 'Waktu Kerja Kurang 1 jam 10 Menit'),
+(343, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-01-24', '17376809436584693509220863547832.jpg', '1737708144132258166115078070841.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:09:16', '16:42:55', '07:33:39', 'Waktu Kerja Kurang 56 Menit'),
+(344, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-01-24', '17376809737092102521978261417487.jpg', '17377081137801111059876351787841.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:09:50', '16:42:04', '07:32:14', 'Waktu Kerja Kurang 57 Menit'),
+(345, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-24', 'IMG_9639.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '09:12:08', NULL, NULL, NULL),
+(346, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-01-24', '17377075275376904187892664822122.jpg', '17377075910867720694819810792218.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:32:20', '16:33:27', '00:01:07', 'Waktu Kerja Kurang 8 jam 28 Menit'),
+(347, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-01-24', '17377079534187547170458848364673.jpg', '17377080435238447967956419373126.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '16:39:24', '16:41:01', '00:01:37', 'Waktu Kerja Kurang 8 jam 28 Menit'),
+(348, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-01-30', '17381952236367381887470928851740.jpg', '17382269196407958553473894126344.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:00:38', '16:49:14', '08:48:36', 'Waktu Kerja Sudah cukup'),
+(349, 312, 'Budurunnafis Ulul Azmi', 'hadir', 'Masuk', '2025-01-30', '17381952412926301899970036938231.jpg', '17382259949895309391960750391876.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:03', '16:33:41', '08:32:38', 'Waktu Kerja Sudah cukup'),
+(350, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-01-30', 'IMG_8530.png', 'IMG_8535.png', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:46', '17:17:53', '09:16:07', 'Waktu Kerja Sudah cukup'),
+(351, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-01-30', '1738195293559264387201557830199.jpg', '17382261361113299926587912445162.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:45', '16:35:57', '08:34:12', 'Waktu Kerja Sudah cukup'),
+(352, 313, 'Baiq Rizkia Amalia ', 'hadir', 'Masuk', '2025-01-30', '17381953529855777731764100434674.jpg', '17382262111508341137551513281396.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:40', '16:36:56', '08:34:16', 'Waktu Kerja Sudah cukup'),
+(353, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-30', 'IMG_9739.jpeg', 'IMG_9749.jpeg', -8.58800000, -8.58700000, 116.11600000, 116.12200000, '08:03:42', '17:32:58', '09:29:16', 'Waktu Kerja Sudah cukup'),
+(354, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-01-30', '17381954536841283622430476415355.jpg', '17382269615478976845722799718869.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:04:28', '16:49:31', '08:45:03', 'Waktu Kerja Sudah cukup'),
+(355, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-01-30', '17381955194999132160637707861995.jpg', '17382269830713635116461237814096.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:05:35', '16:49:55', '08:44:20', 'Waktu Kerja Sudah cukup'),
+(356, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-01-30', 'WIN_20250130_08_05_06_Pro.jpg', 'IMG_20250130_163636.jpg', -8.59300000, -8.58800000, 116.12700000, 116.11600000, '08:06:40', '16:37:05', '08:30:25', 'Waktu Kerja Sudah cukup'),
+(357, 311, 'Muhammad Rafi', 'hadir', 'Masuk', '2025-01-30', 'TimePhoto_20250130_072238.jpg', 'TimePhoto_20250130_163314.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:22:12', '16:36:00', '07:13:48', 'Waktu Kerja Kurang 1 jam 16 Menit'),
+(358, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-01-31', 'IMG_9763.jpeg', 'IMG_9789.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:06:05', '16:30:26', '08:24:21', 'Waktu Kerja Kurang 5 Menit'),
+(359, 312, 'Budurunnafis Ulul Azmi', 'hadir', 'Masuk', '2025-01-31', 'IMG_20250131_081221.jpg', '17383131700594716770688362667404.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:12:36', '16:46:16', '08:33:40', 'Waktu Kerja Sudah cukup'),
+(360, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-01-31', 'IMG_8542.png', 'IMG_8559.png', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:12:48', '16:59:59', '08:47:11', 'Waktu Kerja Sudah cukup'),
+(361, 313, 'Baiq Rizkia Amalia ', 'hadir', 'Masuk', '2025-01-31', '17382823953848386329957353894430.jpg', '17383120831445111450412816489487.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:13:22', '16:28:11', '08:14:49', 'Waktu Kerja Kurang 15 Menit'),
+(362, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-01-31', '1000822333.heic', '1000822677.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:24:56', '16:18:21', '07:53:25', 'Waktu Kerja Kurang 36 Menit'),
+(363, 311, 'Muhammad Rafi', 'hadir', 'Masuk', '2025-01-31', 'TimePhoto_20250131_085014.jpg', 'TimePhoto_20250131_162358.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:51:31', '16:25:04', '07:33:33', 'Waktu Kerja Kurang 56 Menit'),
+(364, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-01-31', '17382846854313283284557269765640.jpg', '17383121049383213014138061586483.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:51:33', '16:28:41', '07:37:08', 'Waktu Kerja Kurang 52 Menit'),
+(365, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-01-31', '17382847215061190616030239034511.jpg', '17383121087446702276608879891338.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:52:12', '16:28:38', '07:36:26', 'Waktu Kerja Kurang 53 Menit'),
+(366, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-01-31', '17382848180485145333267435105066.jpg', '17383121902461901284447952063589.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:53:51', '16:30:04', '07:36:13', 'Waktu Kerja Kurang 53 Menit'),
+(367, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-01-31', '17382848291044498805215162530427.jpg', '17383121472422540269250878268288.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:53:58', '16:29:17', '07:35:19', 'Waktu Kerja Kurang 54 Menit'),
+(368, 321, 'Shhshs', 'hadir', 'Masuk', '2025-01-31', 'cenah.php55', NULL, -6.22900000, NULL, 106.80700000, NULL, '13:40:41', NULL, NULL, NULL),
+(369, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-02-02', 'IMG_9936.jpeg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:45:51', NULL, NULL, NULL),
+(370, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-02-02', 'IMG_8623.png', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:46:36', NULL, NULL, NULL),
+(371, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-02-03', '17385408619232880297168991503096.jpg', '17385729719775528758270010809692.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:15', '16:56:43', '08:55:28', 'Waktu Kerja Sudah cukup'),
+(372, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-03', '1738540841887505393982739882131.jpg', '17385730647141428706413872944797.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:25', '16:59:20', '08:57:55', 'Waktu Kerja Sudah cukup'),
+(373, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-02-03', '17385409739932748910339407605177.jpg', '17385731680964936121308635033766.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:03', '16:59:46', '08:56:43', 'Waktu Kerja Sudah cukup'),
+(374, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-03', '1000825588.jpg', '1000826067.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:20', '16:39:02', '08:35:42', 'Waktu Kerja Sudah cukup'),
+(375, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-03', '17385409876817576858885516573135.jpg', '17385730870545527212519498200411.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:19', '16:58:47', '08:55:28', 'Waktu Kerja Sudah cukup'),
+(376, 312, 'Budurunnafis Ulul Azmi', 'hadir', 'Masuk', '2025-02-03', '17385410146126044443651201685562.jpg', '17385719465163553476261957496931.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:43', '16:39:15', '08:35:32', 'Waktu Kerja Sudah cukup'),
+(377, 313, 'Baiq Rizkia Amalia ', 'hadir', 'Masuk', '2025-02-03', '17385419429057708738123920062117.jpg', '17385727787365042989356469189528.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:19:07', '16:53:14', '08:34:07', 'Waktu Kerja Sudah cukup'),
+(378, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-03', '1000454551.jpg', '1000454700.jpg', -8.58800000, -8.57400000, 116.11700000, 116.11000000, '13:14:11', '16:49:32', '03:35:21', 'Waktu Kerja Kurang 4 jam 54 Menit'),
+(379, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-02-03', 'IMG_9936.jpeg', NULL, -8.60700000, NULL, 116.11300000, NULL, '07:48:45', NULL, NULL, NULL),
+(380, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-04', '1000455248.jpg', '1000455456.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:00:38', '16:43:15', '08:42:37', 'Waktu Kerja Sudah cukup'),
+(381, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-04', '17386273059314840142947938984569.jpg', '17386582697973268505241246337395.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:06', '16:38:35', '08:36:29', 'Waktu Kerja Sudah cukup'),
+(382, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-04', '1738627358577606808171905286611.jpg', '17386584090316340596991056120096.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:52', '16:40:58', '08:38:06', 'Waktu Kerja Sudah cukup'),
+(383, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-02-04', '17386274077981539621358180440580.jpg', '17386583037613898932527156510351.jpg', -8.61700000, -8.58800000, 116.11500000, 116.11600000, '08:03:48', '16:38:47', '08:34:59', 'Waktu Kerja Sudah cukup'),
+(384, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-02-04', 'IMG_8636.png', 'IMG_8668.png', -8.58800000, -8.58800000, 116.11600000, 116.12400000, '08:09:18', '17:28:42', '09:19:24', 'Waktu Kerja Sudah cukup'),
+(385, 316, 'Widiya Nasa Sapitri', 'sakit', NULL, '2025-02-04', '17386277449185955760917790630566.jpg', NULL, NULL, NULL, NULL, NULL, '08:09:16', NULL, NULL, 'Izin sakit karena asam lambung, untuk surat dokternya blum dikasi karena ke rs-nya tengah malm dan pas pulang katanya bakalan di kasi hari ini'),
+(386, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-04', '1000826553.heic', '1000826899.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:13:51', '16:36:29', '08:22:38', 'Waktu Kerja Kurang 7 Menit'),
+(387, 323, 'Baiq Yessi Rahmah', 'hadir', 'Masuk', '2025-02-04', 'IMG-20250204-WA0006.jpg', 'IMG-20250204-WA0023.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:14:47', '16:43:39', '08:28:52', 'Waktu Kerja Kurang 1 Menit'),
+(388, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-02-04', 'IMG_9976.jpeg', 'IMG_9976.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '17:08:54', '17:09:33', '00:00:39', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(389, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-05', '1000456247.jpg', '1000456509.jpg', -8.58800000, -8.55800000, 116.11600000, 116.11000000, '08:00:52', '16:51:31', '08:50:39', 'Waktu Kerja Sudah cukup'),
+(390, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-02-05', 'IMG_8673.png', 'IMG_8684.png', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:02', '16:36:00', '08:33:58', 'Waktu Kerja Sudah cukup'),
+(391, 323, 'Baiq Yessi Rahmah', 'hadir', 'Masuk', '2025-02-05', 'IMG-20250205-WA0007.jpg', 'IMG-20250205-WA0026.jpg', -8.58800000, -8.57800000, 116.11600000, 116.09300000, '08:02:28', '17:49:15', '09:46:47', 'Waktu Kerja Sudah cukup'),
+(392, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-05', '17387137343957689377703336166453.jpg', '17387448508135995775612031693096.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:49', '16:41:13', '08:38:24', 'Waktu Kerja Sudah cukup'),
+(393, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-05', '1000828762.heic', '1000829226.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:06:43', '16:39:04', '08:32:21', 'Waktu Kerja Sudah cukup'),
+(394, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-02-05', '17387142714297513161723931760055.jpg', '17387448502464426773134431183914.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:11:24', '16:41:05', '08:29:41', 'Waktu Kerja Kurang 0 Menit'),
+(395, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-05', '17387143790584228712719765816194.jpg', '17387449531934132103385594173.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:13:21', '16:42:54', '08:29:33', 'Waktu Kerja Kurang 0 Menit'),
+(396, 316, 'Widiya Nasa Sapitri', 'sakit', NULL, '2025-02-05', '1738714907239611343945428420917.jpg', NULL, NULL, NULL, NULL, NULL, '08:21:59', NULL, NULL, 'Untuk surat sakitnya ngga jadi diminta, soalnya ga smpt ngambil balik lagi ke rs'),
+(397, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-02-05', 'IMG_9976.jpeg', 'IMG_0088.jpeg', -8.60700000, -8.58800000, 116.11300000, 116.11600000, '08:22:24', '16:36:26', '08:14:02', 'Waktu Kerja Kurang 15 Menit'),
+(398, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-02-06', 'IMG_8691.png', 'IMG_8695.png', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:21', '16:53:27', '08:52:06', 'Waktu Kerja Sudah cukup'),
+(399, 323, 'Baiq Yessi Rahmah', 'hadir', 'Masuk', '2025-02-06', 'IMG-20250206-WA0003.jpg', 'IMG-20250206-WA0041.jpg', -8.58800000, -8.57800000, 116.11600000, 116.09300000, '08:01:47', '18:13:45', '10:11:58', 'Waktu Kerja Sudah cukup'),
+(400, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-06', '17388000902231951542156084112201.jpg', '17388309167743470843579657202836.jpg', -8.60100000, -8.58800000, 116.11900000, 116.11600000, '08:01:57', '16:35:37', '08:33:40', 'Waktu Kerja Sudah cukup'),
+(401, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-02-06', '17388001186954549042801152650163.jpg', '17388309341785388789821715501591.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:23', '16:35:49', '08:33:26', 'Waktu Kerja Sudah cukup'),
+(402, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-06', '1000456983.jpg', '1000457367.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:52', '16:36:20', '08:33:28', 'Waktu Kerja Sudah cukup'),
+(403, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-06', '17388001516872366075797142704681.jpg', '17388309741966965764994254483549.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:52', '16:36:29', '08:33:37', 'Waktu Kerja Sudah cukup'),
+(404, 27, 'Ni Putu Ayu Nila Anggreni ', 'hadir', 'Masuk', '2025-02-06', 'IMG_0098.jpeg', 'IMG_0110.jpeg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:03:18', '16:57:44', '08:54:26', 'Waktu Kerja Sudah cukup'),
+(405, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-06', '1000829746.heic', '1000829990.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:22:33', '16:55:09', '08:32:36', 'Waktu Kerja Sudah cukup'),
+(406, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-07', '1000457888.jpg', '1000458201.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:17', '16:30:20', '08:29:03', 'Waktu Kerja Kurang 0 Menit'),
+(407, 323, 'Baiq Yessi Rahmah', 'hadir', 'Masuk', '2025-02-07', 'IMG-20250207-WA0012.jpg', 'IMG-20250207-WA0087.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:42', '16:31:27', '08:28:45', 'Waktu Kerja Kurang 1 Menit'),
+(408, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-07', '1000830663.heic', '1000831211.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:04:13', '16:27:42', '08:23:29', 'Waktu Kerja Kurang 6 Menit'),
+(409, 310, 'Anindita Ghina Putri', 'hadir', 'Masuk', '2025-02-07', 'IMG_8709.png', 'IMG_8725.png', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:06:48', '16:17:49', '07:11:01', 'Waktu Kerja Kurang 1 jam 18 Menit'),
+(410, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-07', '17388909921317323241526475471187.jpg', '17389154057982409552628032386607.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:16:45', '16:03:36', '06:46:51', 'Waktu Kerja Kurang 1 jam 43 Menit'),
+(411, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-02-07', '1738891009793122016197756369837.jpg', '17389155961198714879539724975192.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:17:16', '16:06:48', '06:49:32', 'Waktu Kerja Kurang 1 jam 40 Menit'),
+(412, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-07', '17388910729303337964373364873209.jpg', '17389156551576621645781928627410.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:18:07', '16:07:56', '06:49:49', 'Waktu Kerja Kurang 1 jam 40 Menit'),
+(413, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-02-07', '1738891089586907706851141862055.jpg', '17389155097851200718350335442161.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '09:18:21', '16:05:16', '06:46:55', 'Waktu Kerja Kurang 1 jam 43 Menit'),
+(414, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-09', '1000460305.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '07:57:35', NULL, NULL, NULL),
+(415, 323, 'Baiq Yessi Rahmah', 'hadir', 'Masuk', '2025-02-10', 'IMG-20250210-WA0003.jpg', 'IMG-20250210-WA0021.jpg', -8.58800000, -8.58200000, 116.11600000, 116.09700000, '08:00:04', '16:55:57', '08:55:53', 'Waktu Kerja Sudah cukup'),
+(416, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-10', '17391456719953468109308727662504.jpg', '17391765179607514863700076376084.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:28', '16:35:32', '08:34:04', 'Waktu Kerja Sudah cukup'),
+(417, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-10', '1000833434.heic', '1000833938.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:08', '16:40:22', '08:38:14', 'Waktu Kerja Sudah cukup'),
+(418, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-10', '17391457190683048161410837077097.jpg', '17391766437015770102198927357367.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:02:09', '16:37:34', '08:35:25', 'Waktu Kerja Sudah cukup'),
+(419, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-02-10', '17391463946667890256961070742236.jpg', '17391765710402514747729061015603.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:13:26', '16:36:23', '08:22:57', 'Waktu Kerja Kurang 7 Menit'),
+(420, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-02-10', '17391470290547811015020277922722.jpg', '17391765461656671144634728169314.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:24:03', '16:35:53', '08:11:50', 'Waktu Kerja Kurang 18 Menit'),
+(421, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-10', '1000460305.jpg', '1000460530.jpg', -8.58200000, -8.58200000, 116.09700000, 116.09700000, '16:54:35', '16:54:52', '00:00:17', 'Waktu Kerja Kurang 8 jam 29 Menit'),
+(422, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-11', '17392320477335093900249784785248.jpg', '17392634774417533248393196930539.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:00:56', '16:44:54', '08:43:58', 'Waktu Kerja Sudah cukup'),
+(423, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-11', '17392320878217073248556088207493.jpg', '17392635304412766274721486725208.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:01:43', '16:45:53', '08:44:10', 'Waktu Kerja Sudah cukup'),
+(424, 316, 'Widiya Nasa Sapitri', 'izin', NULL, '2025-02-11', '17392320771992923785612764458613.jpg', NULL, NULL, NULL, NULL, NULL, '08:01:51', NULL, NULL, 'Kebanjiran, motor tidka bisa lewat'),
+(425, 314, 'Ashri Rizki Hidayati', 'izin', NULL, '2025-02-11', '17392321199292663719827848711666.jpg', NULL, NULL, NULL, NULL, NULL, '08:02:17', NULL, NULL, 'Kebanjiran motor tidak bisa lewat '),
+(426, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-11', '1000460820.jpg', '1000461181.jpg', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:06:30', '16:36:46', '08:30:16', 'Waktu Kerja Sudah cukup'),
+(427, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-11', '1000834531.heic', '1000835000.heic', -8.58800000, -8.58800000, 116.11600000, 116.11600000, '08:06:43', '16:40:04', '08:33:21', 'Waktu Kerja Sudah cukup'),
+(428, 323, 'Baiq Yessi Rahmah', 'hadir', 'Masuk', '2025-02-11', 'IMG_20250211_080456_276.webp', 'IMG_20250211_155844_609.webp', -8.58800000, -8.57800000, 116.11600000, 116.09300000, '08:08:41', '17:01:56', '08:53:15', 'Waktu Kerja Sudah cukup'),
+(429, 318, 'Irbah dzakiyatus sholehah', 'hadir', 'Masuk', '2025-02-12', '1000836088.heic', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:00:40', NULL, NULL, NULL),
+(430, 322, 'Alvia Wahyu Romadhoni ', 'hadir', 'Masuk', '2025-02-12', '1000461678.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:00:48', NULL, NULL, NULL),
+(431, 316, 'Widiya Nasa Sapitri', 'hadir', 'Masuk', '2025-02-12', '17393184448672949187276477514339.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:01:08', NULL, NULL, NULL),
+(432, 314, 'Ashri Rizki Hidayati', 'hadir', 'Masuk', '2025-02-12', '1739318473867869043050623960580.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:01:33', NULL, NULL, NULL),
+(433, 315, 'Ni Putu Wulan Kusuma Dewi', 'hadir', 'Masuk', '2025-02-12', '17393184761892282191490775911575.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:01:58', NULL, NULL, NULL),
+(434, 317, 'Ni Wayan Ari Kurnia Dewi', 'hadir', 'Masuk', '2025-02-12', '17393185045983303735246030961897.jpg', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:02:03', NULL, NULL, NULL),
+(435, 323, 'Baiq Yessi Rahmah', 'hadir', 'Masuk', '2025-02-12', 'IMG_20250212_080029_358.webp', NULL, -8.58800000, NULL, 116.11600000, NULL, '08:02:21', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -607,8 +718,7 @@ CREATE TABLE `penempatan_pkl` (
 INSERT INTO `penempatan_pkl` (`id`, `posisi`, `deskripsi`, `jurusan`, `kuota`) VALUES
 (3, 'Kimia Obat', 'Membantu Pekerjaan di Lab Kimia Obat', 'Farmasi, Kimia', 2),
 (4, 'Kimia Kosmetik', 'Membantu Pekerjaan di Lab Kimia Kosmetik', 'Farmasi, Kimia', 4),
-(5, 'Kimia OTSK', 'Membantu Pekerjaan di Lab Kimia OTSK', 'Farmasi, Kimia', 2),
-(6, 'sertifikasi', 'apapun', 'Informatika', 2);
+(5, 'Kimia OTSK', 'Membantu Pekerjaan di Lab Kimia OTSK', 'Farmasi, Kimia', 2);
 
 -- --------------------------------------------------------
 
@@ -796,7 +906,12 @@ INSERT INTO `users` (`id`, `nama`, `email`, `universitas`, `no_hp`, `password`, 
 (315, 'Ni Putu Wulan Kusuma Dewi', 'wulankusuma2004@gmail.com', 'Universitas Udayana', '087855783298', '$2y$10$5D5B57f6.eLYB7CJkveqEuDgM/hqjLgZ.475uY5rkF8NpBWHvp.4K', 'active', 'Asset/Gambar/profile.png'),
 (316, 'Widiya Nasa Sapitri', 'widiyanasa20@gmail.com', 'Universitas Udayana', '081931555688', '$2y$10$WQmB.50ftstjP48bquh2zuTOpkJRvzT9PTGvWxvZujMRegAqXgiBK', 'active', 'Asset/Gambar/profile.png'),
 (317, 'Ni Wayan Ari Kurnia Dewi', 'arikurniadewi04@gmail.com', 'Universitas Udayana', '088219357525', '$2y$10$y6SbuamBAg7OX1if.TwdSOYqwnhdAKo7p717duDhO0Fvk9S6d2.KS', 'active', 'Asset/Gambar/profile.png'),
-(318, 'Irbah dzakiyatus sholehah', 'irbahdzakiya@gmail.com', 'Universitas Airlangga', '085239038804', '$2y$10$SYcm/DjCFfMAUih.yt3kee5gN2xzqn0jbkReTuJ4yDQQezZa1xeUW', 'active', 'Asset/Gambar/profile.png');
+(318, 'Irbah dzakiyatus sholehah', 'irbahdzakiya@gmail.com', 'Universitas Airlangga', '085239038804', '$2y$10$SYcm/DjCFfMAUih.yt3kee5gN2xzqn0jbkReTuJ4yDQQezZa1xeUW', 'active', 'Asset/Gambar/profile.png'),
+(319, 'sadness', 'sadnessmct07@gmail.com', 'daw', '081233333333', '$2y$10$Afk4QxgegrdaPpl1auufvuoYwi/dud6wO.eae98owdvwFAgMESCRe', 'active', 'Asset/Gambar/profile.png'),
+(320, 'fuke', 'fuke@gmail.com', 'fuke', '404', '$2y$10$YSD7x.nzxknwBcyyO32zv.LQ14Fq/6kttpJ4jHeEQ1KtPZYUbTHYq', 'active', 'Asset/Gambar/profile.png'),
+(321, 'Shhshs', 'santamaria@tohru.org', 'dfgdfg', '09736674534', '$2y$10$3HvRdmI9gjGdKBi5yKHCsOhavbbmk5//OwtQ8VOWcK4ASv63cyL1q', 'active', 'Asset/Gambar/profile.png'),
+(322, 'Alvia Wahyu Romadhoni ', 'alviawahyu18@gmail.com', 'Universitas Nahdlatul Ulama Nisa Tenggara Barat', '+6281939646060', '$2y$10$q7AayiN.jhzGt31iIIX4teBguBmRGsp0BP5nJ4/dZlnidq0h1G19y', 'active', 'Asset/Gambar/profile.png'),
+(323, 'Baiq Yessi Rahmah', 'baiqyessi01@gmail.com', 'Universitas nahdlatul ulama NTB', '+62 859-5627-0629', '$2y$10$6lol6RhukfChqgyJ8fIJo.2ra.A8CG18TfHLnhJmyDlQ457BFH256', 'active', 'Asset/Gambar/profile.png');
 
 --
 -- Indexes for dumped tables
@@ -902,7 +1017,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=436;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -956,7 +1071,7 @@ ALTER TABLE `pengaduan`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=319;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

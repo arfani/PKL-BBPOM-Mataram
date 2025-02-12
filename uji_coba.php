@@ -408,6 +408,46 @@ if (!empty($message)) {
     </div>
         </div>
     </section>
+    <footer>
+        <div class="footer-container">
+            <div class="headfoot">
+                <p>Balai Besar Pengawas Obat dan Makanan</p>
+                <div class="medsos">
+                    <div class="logo">   
+                        <img src="Asset/Gambar/icon_instagram.png" alt="whatsapp">
+                    </div>
+                    <div class="logo">   
+                        <img src="Asset/Gambar/icon_instagram.png" alt="whatsapp">
+                    </div>
+                    <div class="logo">   
+                        <img src="Asset/Gambar/icon_instagram.png" alt="whatsapp">
+                    </div>
+                    <div class="logo">   
+                        <img src="Asset/Gambar/icon_instagram.png" alt="whatsapp">
+                    </div>
+                </div>
+            </div>
+            <div class="isi-footer">
+                <div class="peta">
+                    <!-- Peta -->
+                    <a
+                        href="https://www.google.com/maps/place/PT+Air+Minum+Giri+Menang/@-8.5903915,116.1178919,15z"
+                        target="_blank"
+                        style="display: block; width: 100%; height: 300px; position: relative; text-decoration: none;">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31591.648527671987!2d116.117891893311!3d-8.590391509705228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcdbf167e4da9d9%3A0x7ad50fdc80e75e17!2sPT%20Air%20Minum%20Giri%20Menang!5e0!3m2!1sid!2sid!4v1614604238573!5m2!1sid!2sid"
+                            width="100%"
+                            height="300"
+                            style="border:0; pointer-events: none;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         const calendarBody = document.getElementById("calendar-body");

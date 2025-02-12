@@ -544,6 +544,7 @@ a {
     gap: 3%;
     display: flex;
     margin-bottom: 50px;
+    flex-direction: row;
 }  
 .pengaduan .pengaduan-row1 {
     width: 45%;
@@ -727,6 +728,7 @@ textarea {
     .row1 button{
         margin-left: 50px;
     }
+    
 }
 @media screen and (max-width: 768px) {
     /* Mengatur ukuran font untuk tabel pada layar kecil */
@@ -803,6 +805,26 @@ textarea {
     .card {
         width: 90%; /* Card mengisi hampir seluruh lebar layar */
         margin-bottom: 20px; /* Memberi jarak antar card */
+    }
+    .pengaduan {
+        flex-direction: column;
+    }
+    .pengaduan .pengaduan-row1 .card {
+        margin: 0;
+        height: 140px;
+        width: 120px;
+    }
+    .pengaduan .pengaduan-row1 .card h2{
+        font-size: 25px;
+    }
+    .pengaduan .pengaduan-row1 .card h3{
+        font-size: 20px;
+    }
+    .pengaduan .pengaduan-row1 .card p {
+        font-size: smaller;
+    }
+    .hide{
+        display: none;
     }
   }
   @media screen and (max-width: 768px) {

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('koneksi.php');
+include('../koneksi.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Mengambil data dari form dan menghindari SQL injection
@@ -10,7 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kuota = intval($_POST['kuota']);
 
     // Menjalankan query untuk menambahkan data
-    $sql = "INSERT INTO penempatan_pkl (posisi, deskripsi, jurusan, kuota) VALUES ('$posisi', '$deskripsi', '$jurusan', $kuota)";
+    $sql = "INSERT INTO penempatan_pkl 
+        (posisi, deskripsi, jurusan, kuota) VALUES 
+        ('$posisi', '$deskripsi', '$jurusan', $kuota)";
     if ($conn->query($sql) === TRUE) {
         header('Location: ../admin_posisi.php');
         exit;

@@ -110,7 +110,6 @@ if (isset($_GET['message'])) {
                 <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>"
                     required>
             </div>
-            <input type="hidden" name="status" value="active">
             <div class="input-group">
                 <button name="submit" class="btn">Register</button>
             </div>

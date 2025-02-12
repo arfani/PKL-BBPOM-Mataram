@@ -16,6 +16,7 @@ foreach ($posisiList as $posisiItem) {
             <label class='form-check-label' for='position{$posisiItem}'>
                 {$posisiItem}
             </label>
+            <input type='hidden' value='active'>
         </div>
     ";
 }

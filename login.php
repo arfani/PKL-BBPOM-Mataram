@@ -131,7 +131,7 @@ if (isset($_GET['message'])) {
             </div>
             <div class="input-group">
                 <input type="password" placeholder="Password" name="password" id="password"
-                    value="<?php echo $_POST['password']; ?>" required>
+                    required>
             </div>
             <div class="mb-2 ms-2">
                 <input type="checkbox" id="showPassword"> <label for="showPassword">Lihat Password</label>

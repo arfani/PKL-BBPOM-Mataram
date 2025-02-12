@@ -682,6 +682,70 @@ textarea::placeholder {
 textarea {
     resize: none;
 }
+footer {
+    background: rgb(23, 22, 31);
+    width: 100%;
+    height: 500px;
+    color: white;
+    align-items: start;
+    justify-content: center;
+    display: flex;
+    margin:0;
+}
+.footer-container {
+    width: 80%;
+    height: 80%;
+}
+.headfoot {
+    margin-top: 50px;
+    width: 100%;
+    height: 100px;
+    padding:0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border-width: 0px 0px 3px 0px; /* Urutan: atas, kanan, bawah, kiri */
+    border-style: solid; /* Gaya border: solid, dashed, dll. */
+    border-color: gray; /* Urutan warna: atas, kanan, bawah, kiri */
+    
+}
+.headfoot p{
+    font-size: 20px;
+}
+.headfoot .medsos{
+    display: flex;
+    gap: 25px;
+}
+.headfoot .logo {
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    background: white ;
+    border: none;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.headfoot .logo img{
+    max-height: 30px;
+    max-width: 30px;
+    filter: grayscale(100%);
+    transition: .3s ease-in-out;
+}
+.headfoot .logo:hover,
+.headfoot .logo img:hover{
+    filter: grayscale(0%);
+}
+.peta{
+    width: 100%; 
+    max-width: 500px; 
+    margin: auto; 
+    text-align: center;
+    margin-top: 30px;
+}
 
 @media(max-width: 568px){
     .styled-table th, .styled-table td {

@@ -32,8 +32,6 @@ $selesai_pkl = mysqli_fetch_assoc($result)['jumlah'] ?? 0;
 
 $message = "";
 
-
-
 $sql2 = "SELECT * FROM api where id = 8";
 $result2 = mysqli_query($conn, $sql2);
 $row2 = mysqli_fetch_assoc($result2);
@@ -103,10 +101,10 @@ if (isset($_POST['submit'])) {
             header("Location: landing_page.php?kode_unik=$kode_unik&jenis=pengaduan");
             exit;
         } else {
-            echo "<script>alert('Gagal memperbarui kode unik.');</script>";
+            echo "<script>console.log('$update');</script>";
         }
     } else {
-        echo "<script>alert('Woops! Ada kesalahan saat menyimpan: " . $conn->error . "');</script>";
+        echo "<script>console.log('Woops! Ada kesalahan saat menyimpan: " . $conn->error . "');</script>";
     }
 }
 
@@ -133,10 +131,9 @@ if (!empty($message)) {
     <title>SIap Melayani</title>
     <link rel="stylesheet" href="Asset/CSS/uji_coba.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
-<div id="intro">
-    <img src="Asset/Gambar/Siap-Melayani-Logo.png" alt="Logo" id="logo">
-  </div>
+
 <body>
     <nav class="navbar">
                 <img src="Asset/Gambar/bpom.png" alt="Logo" class="logo">
@@ -363,60 +360,74 @@ if (!empty($message)) {
                 </div>
             </div>
             <div class="form-wrapper">
-        <form class="custom-form">
+        <form class="custom-form" method="POST" action="" enctype="multipart/form-data">
             <h1>Formulir Pengaduan</h1>
 
             <div class="form-group">
-                <label for="name">Nama Lengkap</label>
-                <input type="text" id="nama" placeholder="Masukkan nama lengkap Anda">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text"  placeholder="Masukkan nama lengkap Anda" name="nama">
             </div>
 
             <div class="form-group">
-                <label for="password">Alamat</label>
-                <input type="alamat" id="alamat" placeholder="Masukkan Alamat Anda">
+                <label for="alamat">Alamat</label>
+                <input type="alamat" name="alamat" placeholder="Masukkan Alamat Anda">
             </div>
             <div class="form-group">
-                <label for="password">Nomor Whatsapp</label>
-                <input type="number" id="no_hp" placeholder="Masukkan Nomor Anda">
+                <label for="no_hp">Nomor Whatsapp</label>
+                <input name="no_hp" type="number" placeholder="Masukkan Nomor Anda">
             </div>
             <div class="form-group">
                 <label style="color:#1c456d">Foto Kartu Identitas</label>
-                <label style="color:darkgray">(Kerahasiaan Terjamin, hanya digunakan untuk persyaratan pengaduan)</label>
+                <label class="hide" style="color:darkgray;">(Kerahasiaan Terjamin, hanya digunakan untuk persyaratan pengaduan)</label>
                 <input type="file" class="form-control" name="foto_identitas" placeholder="Foto Identitas" required>
             </div>
             <div class="form-group">
                 <label for="subject">Jenis Pengaduan</label>
-                    <select id="subject">
-                        <option value="" disabled selected hidden>Pilih Kategori</option>
-                        <option value="Obat">Obat</option>
-                        <option value="Obat Bahan Alam">Obat Bahan Alam</option>
-                        <option value="Pangan Olahan">Pangan Olahan</option>
-                        <option value="Kosmetik">Kosmetik</option>
-                        <option value="Suplemen Kesehatan">Suplemen kesehatan</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
+                <select name="subject" id="subject">
+                    <option value="" disabled selected hidden>Pilih Kategori</option>
+                    <option value="Obat">Obat</option>
+                    <option value="Obat Bahan Alam">Obat Bahan Alam</option>
+                    <option value="Pangan Olahan">Pangan Olahan</option>
+                    <option value="Kosmetik">Kosmetik</option>
+                    <option value="Suplemen Kesehatan">Suplemen kesehatan</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
             </div>
 
             <div class="form-group">
-                <label for="bio">Detail Pengaduan</label>
-                <textarea id="Pesan" rows="4" placeholder="Ceritakan sedikit tentang diri Anda"></textarea>
+                <label for="pesan">Detail Pengaduan</label>
+                <textarea name="pesan" id="Pesan" rows="4" placeholder="Berikan Keterangan Tentang Hal Yang Diadukan"></textarea>
             </div>
             <div class="form-group">
                 <label style="color:#1c456e">Dokumen Tambahan (Opsional)</label>
                 <input type="file" class="form-control" name="foto_pengaduan" placeholder="Foto Pengaduan">
             </div>
-            <button type="submit" class="submit-btn">Kirim</button>
+            <input type="hidden" id="jam" name="jam">
+            <input type="hidden" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>">
+            <button name="submit" type="submit" class="submit-btn">Kirim</button>
         </form>
     </div>
         </div>
     </section>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                document.getElementById('jam').value = `${hours}:${minutes}:${seconds}`;
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        });
     document.addEventListener("DOMContentLoaded", function () {
         const calendarBody = document.getElementById("calendar-body");
         const monthYear = document.getElementById("month-year");
 
         const months = [
-            "Januari", "Februari", "Marcet", "April", "Mei", "Juni",
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
             "Juli", "Augustus", "September", "Oktober", "November", "Desember"
         ];
 

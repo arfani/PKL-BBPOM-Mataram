@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update status pengajuan
-    $sql = "UPDATE pengajuan_pkl SET status='Diterima', penempatan='$positions' WHERE id_pengajuan='$id'";
+    $sql = "UPDATE pengajuan_pkl SET status='active', penempatan='$positions' WHERE id_pengajuan='$id'";
     if (!mysqli_query($conn, $sql)) {
         echo "Error updating status: " . mysqli_error($conn);
         exit();
